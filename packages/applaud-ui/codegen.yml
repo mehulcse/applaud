@@ -1,0 +1,21 @@
+overwrite: true
+schema: "schema.graphql"
+documents: "src/**/*.graphql"
+generates:
+  ./src/generated/graphql.tsx:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+    config:
+      reactApolloVersion: 3
+      withHooks: true
+      withResultType: true
+      scalars:
+        DateTime: Date
+        Date: string
+        Time: string
+hooks:
+  afterAllFileWrite:
+    - prettier --write
+    - tslint --fix
