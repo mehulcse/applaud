@@ -1,6 +1,6 @@
 # applaud
 
-# Setup in applaud-ui
+# Setup for applaud-ui
 
 - Copy .env.example file to .env
 - Change Graphql endpoint to production url
