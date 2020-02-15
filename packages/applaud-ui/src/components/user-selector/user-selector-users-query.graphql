@@ -1,0 +1,8 @@
+query UsersForSelector($search: String, $ids: [Int!]) {
+  users(search: $search, ids: $ids) {
+    nodes {
+      id
+      name
+    }
+  }
+}
