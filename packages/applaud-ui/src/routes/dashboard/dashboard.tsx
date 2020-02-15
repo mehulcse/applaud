@@ -1,8 +1,11 @@
 import React from "react";
+import PageLayout from "../../components/page-layout";
 
 function Dashboard() {
   return (
-    <div>Implement Dashboard</div>
+    <PageLayout>
+      Implement Dashboard
+    </PageLayout>
   );
 }
 
