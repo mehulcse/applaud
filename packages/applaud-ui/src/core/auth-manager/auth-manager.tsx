@@ -26,7 +26,7 @@ class AuthManager extends Component<Props> {
   render() {
     const contextValue: AuthContextValue = {
       isLoading: false,
-      isLoggedIn: true,
+      isLoggedIn: true, // TODO: set to false and do it with queryresult of viewer query
       refresh: async () => {},
       logout: async () => {},
       user: null
