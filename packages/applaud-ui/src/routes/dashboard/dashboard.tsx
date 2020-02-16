@@ -3,7 +3,7 @@ import PageLayout from "../../components/page-layout";
 
 function Dashboard() {
   return (
-    <PageLayout>
+    <PageLayout pageTitle="Dashboard">
       Implement Dashboard
     </PageLayout>
   );

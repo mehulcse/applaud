@@ -12,6 +12,7 @@ import { MuiThemeProvider } from "@material-ui/core/styles";
 import AuthManager from "./core/auth-manager";
 import Notifier from "./components/notifier";
 import Dashboard from "./routes/dashboard/dashboard";
+import Users from "./routes/users/users";
 import NotFoundRouteHandler from "./routes/not-found";
 
 function App() {
@@ -31,6 +32,11 @@ function App() {
                   path="/dashboard"
                   exact
                   component={Dashboard}
+                />
+                <Route
+                  path="/users"
+                  exact
+                  component={Users}
                 />
                 <Route path="*" component={NotFoundRouteHandler} />
               </Switch>
