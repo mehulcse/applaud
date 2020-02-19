@@ -159,6 +159,8 @@ export class CoinReceivedService {
       createdAt: moment.utc().toDate()
     });
 
+    // TODO: Slack trigger
+
     return coinReceived;
   }
 }

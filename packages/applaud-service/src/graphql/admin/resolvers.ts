@@ -1,6 +1,32 @@
 import { merge } from "lodash";
 import { GraphQLDate, GraphQLDateTime, GraphQLTime } from "graphql-iso-date";
 
+import team from "./queries/team";
+import department from "./queries/department";
+import userQuery from "./queries/user";
+import usersQuery from "./queries/users";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import categoriesQuery from "./queries/categories";
 import categoryQuery from "./queries/category";
 import createCategoryMutation from "./mutations/create-category";
@@ -45,8 +71,6 @@ import updateVendorMutation from "./mutations/update-vendor";
 import updateVendorUserMutation from "./mutations/update-vendor-user";
 import updateSitePostMutation from "./mutations/update-site-post";
 import deleteSitePostMutation from "./mutations/delete-site-post";
-import userQuery from "./queries/user";
-import usersQuery from "./queries/users";
 import userType from "./types/user";
 import vendorQuery from "./queries/vendor";
 import vendorsQuery from "./queries/vendors";
@@ -108,8 +132,12 @@ export default merge(
   updateVendorUserMutation,
   updateSitePostMutation,
   deleteSitePostMutation,
+
+  team,
+  department,
   userQuery,
   usersQuery,
+
   userType,
   vendorQuery,
   vendorsQuery,
