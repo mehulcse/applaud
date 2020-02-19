@@ -23,7 +23,7 @@ export const sendEmailTemporaryLoginCode = async (
   const html = template({ temporaryCode: code, magicLink });
   logger.debug(code)
   const message: SendMailOptions = {
-    from: "no-reply@redcanyonmedia.com",
+    from: "no-reply@thegeekstribe.com",
     to,
     subject: "Temporary Login Code",
     html,
