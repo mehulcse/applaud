@@ -11,7 +11,9 @@ import theme from "./core/mui-theme";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import AuthManager from "./core/auth-manager";
 import Notifier from "./components/notifier";
-import Mudra from "./routes/mudra/mudra";
+import Dashboard from "./routes/dashboard/dashboard";
+import Users from "./routes/users/users";
+import Applaud from "./routes/applaud/applaud";
 import NotFoundRouteHandler from "./routes/not-found";
 
 function App() {
@@ -25,12 +27,22 @@ function App() {
                 <Route
                   path="/"
                   exact
-                  render={() => <Redirect to="/mudra" />}
+                  render={() => <Redirect to="/dashboard" />}
                 />
                 <Route
-                  path="/mudra"
+                  path="/dashboard"
                   exact
-                  component={Mudra}
+                  component={Dashboard}
+                />
+                <Route
+                    path="/applaud"
+                    exact
+                    component={Applaud}
+                />
+                <Route
+                  path="/users"
+                  exact
+                  component={Users}
                 />
                 <Route path="*" component={NotFoundRouteHandler} />
               </Switch>

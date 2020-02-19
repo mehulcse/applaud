@@ -7,6 +7,7 @@ interface Props {
 
 export class AuthManagerContainer extends React.Component<Props> {
   render() {
+    // TODO: implement authcompoenent
     return (
       <AuthManager>
         {this.props.children}
