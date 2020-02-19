@@ -1,4 +1,4 @@
-import aws, { SharedIniFileCredentials } from "aws-sdk";
+import aws from "aws-sdk";
 import Config from "../../config";
 
 export function getSESClient() {
@@ -6,12 +6,17 @@ export function getSESClient() {
     apiVersion: "2010-12-01",
     region: "us-west-2"
   };
+  aws.config.update({
+    accessKeyId: Config.getAwsAccessKey(),
+    secretAccessKey: Config.getAwsSecretKey(),
+    region: Config.getAwsRegion(),
+  });
   if (Config.getIsLocal()) {
     return new aws.SES({
       ...defaultSettings,
-      credentials: new SharedIniFileCredentials({
-        profile: Config.getAwsProfileName()
-      })
+      // credentials: new SharedIniFileCredentials({
+      //   profile: Config.getAwsProfileName()
+      // })
     });
   }
 

@@ -96,5 +96,8 @@ export default class Config {
     ];
   };
   static getAwsProfileName = () => Config.getParameter("AWS_PROFILE");
+  static getAwsAccessKey = () => Config.getParameter("AWS_ACCESS_KEY_ID");
+  static getAwsSecretKey = () => Config.getParameter("AWS_SECRET_KEY_ID");
+  static getAwsRegion = () => Config.getParameter("AWS_REGION");
   static getBugsnagApiKey = () => Config.getParameter("BUGSNAG_API_KEY");
 }
