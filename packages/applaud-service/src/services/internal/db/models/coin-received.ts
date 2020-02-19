@@ -9,7 +9,9 @@ class CoinReceived extends Model {
   balance: number;
   allocatedToUserId: number;
   allocatedByUserId: number;
-  testimonyId: number;
+  message: string;
+  type: string;
+  createdAt: Date;
 }
 
 export default CoinReceived;
