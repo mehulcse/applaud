@@ -682,27 +682,6 @@ type Mutation {
 }
 
 type Query {
-  user(id: Int!): User
-  users(
-    limit: Int
-    offset: Int
-    sort: UsersSort
-    search: String
-  ): UserConnection
-  team(id: Int!): Team
-  teams(
-    limit: Int
-    offset: Int
-    sort: TeamsSort
-    search: String
-  ): TeamsConnection
-  department(id: Int!): Department
-  departments(
-    limit: Int
-    offset: Int
-    sort: DepartmentsSort
-    search: String
-  ): DepartmentsConnection
   applaudReceived(
     limit: Int
     offset: Int
@@ -710,8 +689,29 @@ type Query {
     allocatedToUserId: Int
     allocatedByUserId: Int
   ): ApplaudReceivedConnection
-  viewer: User
+  department(id: Int!): Department
+  departments(
+    limit: Int
+    offset: Int
+    sort: DepartmentsSort
+    search: String
+  ): DepartmentsConnection
   roles: RoleConnection
+  team(id: Int!): Team
+  teams(
+    limit: Int
+    offset: Int
+    sort: TeamsSort
+    search: String
+  ): TeamsConnection
+  user(id: Int!): User
+  users(
+    limit: Int
+    offset: Int
+    sort: UsersSort
+    search: String
+  ): UserConnection
+  viewer: User
 }
 
 schema {
