@@ -67,6 +67,25 @@ type UserConnection {
   nodes: [User!]!
 }
 
+input CreateTeamInput {
+  name: String!
+  description: String!
+}
+
+type CreateTeamResponse {
+  team: Team!
+}
+
+input UpdateTeamInput {
+  teamId: Int!
+  name: String
+  description: String
+}
+
+type UpdateTeamResponse {
+  team: Team!
+}
+
 type Team {
   id: Int!
   name: String!
@@ -82,6 +101,25 @@ type TeamsConnection {
   totalCount: Int!
   pageInfo: PageInfo
   nodes: [Team!]
+}
+
+input CreateDepartmentInput {
+  name: String!
+  description: String!
+}
+
+type CreateDepartmentResponse {
+  department: Department!
+}
+
+input UpdateDepartmentInput {
+  departmentId: Int!
+  name: String
+  description: String
+}
+
+type UpdateDepartmentResponse {
+  department: Department!
 }
 
 type Department {
@@ -648,37 +686,14 @@ type SiteConnection {
 }
 
 type Mutation {
-  createCategory(input: CreateCategoryInput!): CreateCategoryResponse!
-  createDomain(input: CreateDomainInput!): CreateDomainResponse!
-  createDomainCategory(
-    input: CreateDomainCategoryInput!
-  ): CreateDomainCategoryResponse!
-  createPartner(input: CreatePartnerInput!): CreatePartnerResponse!
-  createPartnerAvailableProduct(
-    input: CreatePartnerAvailableProductInput!
-  ): CreatePartnerAvailableProductResponse!
-  createPartnerUser(input: CreatePartnerUserInput!): CreatePartnerUserResponse!
-  createSite(input: CreateSiteInput!): CreateSiteResponse!
-  createSitePost(input: CreateSitePostInput!): CreateSitePostResponse!
+  createTeam(input: CreateTeamInput!): CreateTeamResponse!
+  createDepartment(input: CreateDepartmentInput!): CreateDepartmentResponse!
   createUser(input: CreateUserInput!): CreateUserResponse!
   createUserRole(input: CreateUserRoleInput!): CreateUserRoleResponse!
-  createVendor(input: CreateVendorInput!): CreateVendorResponse!
-  createVendorUser(input: CreateVendorUserInput!): CreateVendorUserResponse!
-  deleteDomainCategory(
-    input: DeleteDomainCategoryInput!
-  ): DeleteDomainCategoryResponse!
   loginUser(input: LoginUserInput!): LoginUserResponse!
   logoutUser: LogoutUserResponse!
-  updateCategory(input: UpdateCategoryInput!): UpdateCategoryResponse!
-  updatePartner(input: UpdatePartnerInput!): UpdatePartnerResponse!
-  updatePartnerAvailableProduct(
-    input: UpdatePartnerAvailableProductInput!
-  ): UpdatePartnerAvailableProductResponse!
-  updatePartnerUser(input: UpdatePartnerUserInput!): UpdatePartnerUserResponse!
-  updateVendor(input: UpdateVendorInput!): UpdateVendorResponse!
-  updateVendorUser(input: UpdateVendorUserInput!): UpdateVendorUserResponse!
-  updateSitePost(input: UpdateSitePostInput!): UpdateSitePostResponse!
-  deleteSitePost(input: DeleteSitePostInput!): DeleteSitePostResponse!
+  updateTeam(input: UpdateTeamInput!): UpdateTeamResponse!
+  updateDepartment(input: UpdateDepartmentInput!): UpdateDepartmentResponse!
 }
 
 type Query {
