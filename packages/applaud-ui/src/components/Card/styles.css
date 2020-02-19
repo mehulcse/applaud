@@ -1,0 +1,10 @@
+.applaudCard {
+  /* max-width: 320px; */
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+@font-face {
+  font-family: "Griffy";
+  src: local("Griffy"), url(../../fonts/Griffy-Regular.ttf) format("woff");
+}
