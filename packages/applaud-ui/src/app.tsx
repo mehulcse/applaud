@@ -14,6 +14,7 @@ import Notifier from "./components/notifier";
 import Mudra from "./routes/mudra/mudra";
 import ApplaudCard from "./components/Card/applaudCard";
 import NotFoundRouteHandler from "./routes/not-found";
+import StructureCard from "./components/ApplaudCards/StructureCards";
 import "./app.css";
 
 const applaudCardData = [
@@ -69,6 +70,7 @@ function App() {
         {applaudCardData.map(item => {
           return <ApplaudCard key={item.id} data={item} />;
         })}
+        <StructureCard />
       </section>
       <ConnectivityMonitor>
         <CustomApolloProvider>
