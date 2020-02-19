@@ -1,10 +1,14 @@
 import { merge } from "lodash";
 import { GraphQLDate, GraphQLDateTime, GraphQLTime } from "graphql-iso-date";
 
-import team from "./queries/team";
-import department from "./queries/department";
+import applaudReceived from "./queries/applaud-received";
+import departmentQuery from "./queries/department";
+import departmentsQuery from "./queries/departments";
+import teamQuery from "./queries/team";
+import teamsQuery from "./queries/teams";
 import userQuery from "./queries/user";
 import usersQuery from "./queries/users";
+
 
 
 
@@ -133,8 +137,11 @@ export default merge(
   updateSitePostMutation,
   deleteSitePostMutation,
 
-  team,
-  department,
+  applaudReceived,
+  departmentQuery,
+  departmentsQuery,
+  teamQuery,
+  teamsQuery,
   userQuery,
   usersQuery,
 

@@ -56,18 +56,6 @@ type User {
   email: String!
 }
 
-type Team {
-  id: Int!
-  name: String!
-  description: String!
-}
-
-type Department {
-  id: Int!
-  name: String!
-  description: String!
-}
-
 enum UsersSort {
   ID_ASC
   ID_DESC
@@ -78,6 +66,63 @@ type UserConnection {
   pageInfo: PageInfo
   nodes: [User!]!
 }
+
+type Team {
+  id: Int!
+  name: String!
+  description: String!
+}
+
+enum TeamsSort {
+  ID_ASC
+  ID_DESC
+}
+
+type TeamsConnection {
+  totalCount: Int!
+  pageInfo: PageInfo
+  nodes: [Team!]
+}
+
+type Department {
+  id: Int!
+  name: String!
+  description: String!
+}
+
+enum DepartmentsSort {
+  ID_ASC
+  ID_DESC
+}
+
+type DepartmentsConnection {
+  totalCount: Int!
+  pageInfo: PageInfo
+  nodes: [Department!]
+}
+
+type ApplaudReceived {
+  id: Int!
+  balance: Int!
+  allocatedToUserId: Int!
+  allocatedByUserId: Int!
+  message: String
+  type: String!
+  createdAt: DateTime!
+}
+
+enum ApplaudReceivedSort {
+  ID_ASC
+  ID_DESC
+}
+
+type ApplaudReceivedConnection {
+  totalCount: Int!
+  pageInfo: PageInfo
+  nodes: [ApplaudReceived!]
+}
+
+
 
 type Partner {
   id: Int!
@@ -637,57 +682,6 @@ type Mutation {
 }
 
 type Query {
-  categories(
-    limit: Int
-    offset: Int
-    sort: CategoriesSort
-    search: String
-    includeInactive: Boolean
-    categoryIds: [Int!]
-  ): CategoryConnection
-  category(id: Int!): Category
-  customer(id: Int!): Customer
-  customers(
-    limit: Int
-    offset: Int
-    sort: CustomersSort
-    search: String
-    partnerId: Int
-    ids: [Int!]
-  ): CustomerConnection
-  domains(
-    limit: Int
-    offset: Int
-    sort: DomainsSort
-    search: String
-    statusIds: [String!]
-    categoryIds: [Int!]
-  ): DomainConnection
-  domain(id: String!): Domain
-  domainStatuses: [DomainStatus!]!
-  order(id: Int!): Order
-  orderStatuses: [OrderStatus!]!
-  orders(
-    limit: Int
-    offset: Int
-    sort: OrdersSort
-    partnerId: Int
-    customerIds: [Int!]
-    statusIds: [String!]
-  ): OrderConnection
-  partner(id: Int!): Partner
-  partners(
-    limit: Int
-    offset: Int
-    sort: PartnersSort
-    search: String
-  ): PartnerConnection
-  products(
-    limit: Int
-    offset: Int
-    sort: ProductsSort
-    search: String
-  ): ProductConnection
   user(id: Int!): User
   users(
     limit: Int
@@ -696,33 +690,28 @@ type Query {
     search: String
   ): UserConnection
   team(id: Int!): Team
+  teams(
+    limit: Int
+    offset: Int
+    sort: TeamsSort
+    search: String
+  ): TeamsConnection
   department(id: Int!): Department
-  vendor(id: Int!): Vendor
-  vendors(
+  departments(
     limit: Int
     offset: Int
-    sort: VendorsSort
+    sort: DepartmentsSort
     search: String
-  ): VendorConnection
-  sitePost(sitePostId: Int!): SitePost
-  sitePosts(
+  ): DepartmentsConnection
+  applaudReceived(
     limit: Int
     offset: Int
-    sort: SitePostsSort
-    siteIds: [String!]
-    search: String
-    statusIds: [String!]
-  ): SitePostConnection!
+    sort: ApplaudReceivedSort
+    allocatedToUserId: Int
+    allocatedByUserId: Int
+  ): ApplaudReceivedConnection
   viewer: User
   roles: RoleConnection
-  sites(
-    limit: Int
-    offset: Int
-    sort: SitesSort
-    search: String
-  ): SiteConnection
-  site(siteId: String!): Site
-  siteDeployStatuses: [SiteDeployStatus!]!
 }
 
 schema {

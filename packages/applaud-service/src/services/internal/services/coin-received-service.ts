@@ -76,7 +76,7 @@ export class CoinReceivedService {
         query.orderBy(`${CoinReceived.tableName}.id`, "desc");
         break;
       default:
-        query.orderBy(`${CoinReceived.tableName}.id`, "asc");
+        query.orderBy(`${CoinReceived.tableName}.createdAt`, "desc");
         break;
     }
 
