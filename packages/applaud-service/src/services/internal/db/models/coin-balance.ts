@@ -7,7 +7,7 @@ class CoinBalance extends Model {
 
   id: number;
   balance: number;
-  userId: string;
+  userId: number;
   allocatedAt: Date;
 }
 
