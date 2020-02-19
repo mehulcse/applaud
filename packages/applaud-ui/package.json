@@ -53,6 +53,16 @@
     "@graphql-codegen/typescript-operations": "^1.9.1",
     "@graphql-codegen/typescript-react-apollo": "^1.9.1",
     "@types/graphql": "^14.5.0",
-    "@types/react-select": "^3.0.10"
+    "@types/react-select": "^3.0.10",
+    "lint-staged": "^10.0.7",
+    "prettier": "^1.19.1",
+    "tslint": "^6.0.0"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": [
+      "prettier --write",
+      "git add",
+      "npx tslint --fix --project tsconfig.json --config tslint.json"
+    ]
   }
 }
