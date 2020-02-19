@@ -1,0 +1,717 @@
+scalar Date
+scalar DateTime
+scalar Time
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+}
+
+input LoginUserInput {
+  googleIdToken: String
+  email: String
+  temporaryLoginCode: String
+  magicLink: String
+}
+
+type LoginUserResponse {
+  isLoggedIn: Boolean
+}
+
+type LogoutUserResponse {
+  isLoggedOut: Boolean!
+}
+
+input CreatePartnerInput {
+  name: String!
+}
+
+type CreatePartnerResponse {
+  partner: Partner
+}
+
+input UpdatePartnerInput {
+  partnerId: Int!
+  name: String
+}
+
+type UpdatePartnerResponse {
+  partner: Partner
+}
+
+input UpdatePartnerUserInput {
+  partnerUserId: Int!
+  isActive: Boolean
+  isAdmin: Boolean
+}
+
+type UpdatePartnerUserResponse {
+  partnerUser: PartnerUser!
+}
+
+type User {
+  id: Int!
+  firstName: String!
+  lastName: String!
+  email: String!
+}
+
+enum UsersSort {
+  ID_ASC
+  ID_DESC
+}
+
+type UserConnection {
+  totalCount: Int!
+  pageInfo: PageInfo
+  nodes: [User!]!
+}
+
+type Partner {
+  id: Int!
+  name: String!
+  createdAt: DateTime!
+
+  # relationships
+  partnerUsers(
+    limit: Int
+    offset: Int
+    includeInactive: Boolean
+  ): PartnerUserConnection!
+  partnerProducts: [PartnerProduct!]!
+  partnerAvailableProducts: [PartnerAvailableProduct!]!
+}
+
+enum PartnersSort {
+  ID_ASC
+  ID_DESC
+}
+
+enum ProductsSort {
+  ID_ASC
+  ID_DESC
+}
+
+type PartnerConnection {
+  totalCount: Int!
+  pageInfo: PageInfo
+  nodes: [Partner!]!
+}
+
+type PartnerUserConnection {
+  totalCount: Int!
+  pageInfo: PageInfo
+  nodes: [PartnerUser!]!
+}
+
+type PartnerAvailableProduct {
+  id: Int!
+  partnerId: Int!
+  productId: String!
+  createdAt: DateTime!
+  wholesalePrice: Float!
+
+  # relationships
+  partner: Partner!
+  product: Product!
+}
+
+type Customer {
+  id: Int!
+  name: String!
+  createdAt: DateTime!
+  partnerId: Int!
+  website: String!
+
+  # Relationships
+  partner: Partner!
+}
+
+enum CustomersSort {
+  ID_ASC
+  ID_DESC
+}
+
+type CustomerConnection {
+  totalCount: Int!
+  pageInfo: PageInfo
+  nodes: [Customer!]!
+}
+
+type CustomerKeyword {
+  id: Int!
+  name: String!
+  createdAt: DateTime!
+  customerId: Int!
+  addedByUserId: Int!
+  isActive: Boolean!
+
+  # relationships
+  addedByUser: User!
+}
+
+type Order {
+  id: Int!
+  createdAt: DateTime!
+  customerId: Int!
+  userId: Int!
+  status: OrderStatus!
+  customerKeywordId: Int
+  completedAt: Date
+
+  # Relationships
+  customer: Customer!
+  user: User!
+  partnerProduct: PartnerProduct!
+  customerKeyword: CustomerKeyword
+}
+
+enum OrdersSort {
+  ID_ASC
+  ID_DESC
+  CREATED_AT_ASC
+  CREATED_AT_DESC
+}
+
+type OrderConnection {
+  totalCount: Int!
+  pageInfo: PageInfo
+  nodes: [Order!]!
+}
+
+type OrderStatus {
+  id: String!
+  name: String!
+}
+
+type Product {
+  id: String!
+  name: String!
+  isKeywordRequired: Boolean!
+}
+
+type ProductConnection {
+  totalCount: Int!
+  pageInfo: PageInfo
+  nodes: [Product!]!
+}
+
+input CreateUserInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+}
+
+type CreateUserResponse {
+  user: User
+}
+
+type Role {
+  id: String!
+  name: String!
+}
+
+type RoleConnection {
+  totalCount: Int!
+  pageInfo: PageInfo
+  nodes: [Role!]!
+}
+
+type UserRole {
+  id: Int!
+  userId: Int!
+  roleId: String!
+  createdAt: DateTime!
+  addedByUserId: Int!
+
+  # relationships
+  user: User!
+  role: Role!
+  addedByUser: User!
+}
+
+input CreateUserRoleInput {
+  userId: Int!
+  roleId: String!
+}
+
+type CreateUserRoleResponse {
+  userRole: UserRole
+}
+
+type PartnerUser {
+  id: Int!
+  userId: Int!
+  partnerId: Int!
+  createdAt: DateTime!
+  addedByUserId: Int!
+  isActive: Boolean!
+  isAdmin: Boolean!
+
+  # relationships
+  user: User!
+  partner: Partner!
+  addedByUser: User!
+}
+
+input CreatePartnerUserInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  partnerId: Int!
+  isAdmin: Boolean!
+}
+
+type CreatePartnerUserResponse {
+  partnerUser: PartnerUser
+}
+
+type Vendor {
+  id: Int!
+  name: String!
+  createdAt: DateTime!
+  partnerId: Int
+
+  # relationships
+  vendorUsers(
+    limit: Int
+    offset: Int
+    includeInactive: Boolean
+  ): VendorUserConnection
+  partner: Partner
+}
+
+type VendorUser {
+  id: Int!
+  vendorId: Int!
+  userId: Int!
+  createdAt: DateTime!
+  isActive: Boolean!
+  addedByUserId: Int!
+
+  # relationships
+  vendor: Vendor!
+  user: User!
+  addedByUser: User!
+}
+
+input UpdateVendorUserInput {
+  vendorUserId: Int!
+  isActive: Boolean!
+}
+
+type UpdateVendorUserResponse {
+  vendorUser: VendorUser!
+}
+
+enum VendorsSort {
+  ID_ASC
+  ID_DESC
+}
+
+type VendorConnection {
+  totalCount: Int!
+  pageInfo: PageInfo
+  nodes: [Vendor!]!
+}
+
+type VendorUserConnection {
+  totalCount: Int!
+  pageInfo: PageInfo
+  nodes: [VendorUser!]!
+}
+
+input CreateVendorInput {
+  name: String!
+  partnerId: Int
+}
+
+type CreateVendorResponse {
+  vendor: Vendor
+}
+
+input UpdateVendorInput {
+  vendorId: Int!
+  name: String
+}
+
+type UpdateVendorResponse {
+  vendor: Vendor
+}
+
+input CreateVendorUserInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  vendorId: Int!
+}
+
+type CreateVendorUserResponse {
+  vendorUser: VendorUser
+}
+
+type PartnerProduct {
+  id: Int!
+  name: String!
+  partnerId: Int!
+  productId: String!
+  createdAt: DateTime!
+  activeAt: DateTime!
+  inactiveAt: DateTime
+  addedByUserId: Int!
+  vendorId: Int
+  checklistDefinitionId: Int
+
+  # relationships
+  addedByUser: User!
+  product: Product!
+  partner: Partner!
+}
+
+input CreatePartnerAvailableProductInput {
+  partnerId: Int!
+  productId: String!
+  wholesalePrice: Float!
+}
+
+type CreatePartnerAvailableProductResponse {
+  partnerAvailableProduct: PartnerAvailableProduct!
+}
+
+input UpdatePartnerAvailableProductInput {
+  partnerAvailableProductId: Int!
+  wholesalePrice: Float!
+}
+
+type UpdatePartnerAvailableProductResponse {
+  partnerAvailableProduct: PartnerAvailableProduct!
+}
+
+type PartnerProductPrice {
+  id: Int!
+  partnerProductId: Int!
+  startsAt: DateTime!
+  endsAt: DateTime!
+  price: Float!
+  createdAt: DateTime!
+  addedByUserId: Int!
+
+  # relationships
+  partnerProduct: PartnerProduct!
+}
+
+input CreateSiteInput {
+  id: String!
+}
+
+type CreateSiteResponse {
+  site: Site!
+}
+
+type SitePost {
+  id: Int!
+  siteId: String
+  title: String!
+  content: String!
+  createdAt: DateTime!
+  lastUpdatedAt: DateTime
+  addedByUserId: Int!
+
+  # relationships
+  site: Site
+}
+
+input CreateSitePostInput {
+  siteId: String
+  title: String!
+  content: String!
+}
+
+type CreateSitePostResponse {
+  sitePost: SitePost!
+}
+
+input UpdateSitePostInput {
+  sitePostId: Int!
+  title: String
+  content: String
+}
+
+type UpdateSitePostResponse {
+  sitePost: SitePost!
+}
+
+enum SitePostsSort {
+  ID_ASC
+  ID_DESC
+}
+
+type SiteDeployStatus {
+  id: String!
+  name: String!
+}
+
+type Site {
+  id: String!
+  deployStatus: SiteDeployStatus!
+  lastPublishedAt: DateTime
+  categoryId: Int
+  siteTemplateId: Int
+}
+
+enum SitesSort {
+  ID_ASC
+  ID_DESC
+}
+
+type Category {
+  id: Int!
+  name: String!
+  isActive: Boolean!
+}
+
+enum CategoriesSort {
+  ID_ASC
+  ID_DESC
+}
+
+type CategoryConnection {
+  totalCount: Int!
+  pageInfo: PageInfo!
+  nodes: [Category!]!
+}
+
+input CreateCategoryInput {
+  name: String!
+}
+
+type CreateCategoryResponse {
+  category: Category
+}
+
+input UpdateCategoryInput {
+  categoryId: Int!
+  isActive: Boolean
+}
+
+type UpdateCategoryResponse {
+  category: Category!
+}
+
+type Domain {
+  id: String!
+  createdAt: Date!
+  status: DomainStatus!
+  availabilityLastCheckedAt: Date
+  expiresAt: Date
+  purchasedAt: Date
+  registrar: String
+  registrarId: String
+  purchasedByUserId: Int
+
+  # relationships
+  domainCategories(limit: Int, offset: Int): DomainCategoryConnection!
+}
+
+enum DomainsSort {
+  ID_ASC
+  ID_DESC
+}
+
+type DomainConnection {
+  totalCount: Int!
+  pageInfo: PageInfo!
+  nodes: [Domain!]!
+}
+
+input CreateDomainInput {
+  id: String!
+}
+
+type CreateDomainResponse {
+  domain: Domain
+}
+
+type DomainCategory {
+  id: Int!
+  domainId: String!
+  categoryId: Int!
+
+  # relationships
+  category: Category
+  domain: Domain
+}
+
+type DomainCategoryConnection {
+  totalCount: Int!
+  pageInfo: PageInfo
+  nodes: [DomainCategory!]!
+}
+
+input CreateDomainCategoryInput {
+  domainId: String!
+  categoryId: Int!
+}
+
+type CreateDomainCategoryResponse {
+  domainCategory: DomainCategory
+}
+
+input DeleteDomainCategoryInput {
+  id: Int!
+}
+
+type DeleteDomainCategoryResponse {
+  isDeleted: Boolean!
+}
+
+type DomainStatus {
+  id: String!
+  name: String!
+}
+
+type SitePostConnection {
+  totalCount: Int!
+  pageInfo: PageInfo
+  nodes: [SitePost!]!
+}
+
+input DeleteSitePostInput {
+  sitePostId: Int!
+}
+
+type DeleteSitePostResponse {
+  isDeleted: Boolean!
+}
+
+type SiteConnection {
+  totalCount: Int!
+  pageInfo: PageInfo!
+  nodes: [Site!]!
+}
+
+type Mutation {
+  createCategory(input: CreateCategoryInput!): CreateCategoryResponse!
+  createDomain(input: CreateDomainInput!): CreateDomainResponse!
+  createDomainCategory(
+    input: CreateDomainCategoryInput!
+  ): CreateDomainCategoryResponse!
+  createPartner(input: CreatePartnerInput!): CreatePartnerResponse!
+  createPartnerAvailableProduct(
+    input: CreatePartnerAvailableProductInput!
+  ): CreatePartnerAvailableProductResponse!
+  createPartnerUser(input: CreatePartnerUserInput!): CreatePartnerUserResponse!
+  createSite(input: CreateSiteInput!): CreateSiteResponse!
+  createSitePost(input: CreateSitePostInput!): CreateSitePostResponse!
+  createUser(input: CreateUserInput!): CreateUserResponse!
+  createUserRole(input: CreateUserRoleInput!): CreateUserRoleResponse!
+  createVendor(input: CreateVendorInput!): CreateVendorResponse!
+  createVendorUser(input: CreateVendorUserInput!): CreateVendorUserResponse!
+  deleteDomainCategory(
+    input: DeleteDomainCategoryInput!
+  ): DeleteDomainCategoryResponse!
+  loginUser(input: LoginUserInput!): LoginUserResponse!
+  logoutUser: LogoutUserResponse!
+  updateCategory(input: UpdateCategoryInput!): UpdateCategoryResponse!
+  updatePartner(input: UpdatePartnerInput!): UpdatePartnerResponse!
+  updatePartnerAvailableProduct(
+    input: UpdatePartnerAvailableProductInput!
+  ): UpdatePartnerAvailableProductResponse!
+  updatePartnerUser(input: UpdatePartnerUserInput!): UpdatePartnerUserResponse!
+  updateVendor(input: UpdateVendorInput!): UpdateVendorResponse!
+  updateVendorUser(input: UpdateVendorUserInput!): UpdateVendorUserResponse!
+  updateSitePost(input: UpdateSitePostInput!): UpdateSitePostResponse!
+  deleteSitePost(input: DeleteSitePostInput!): DeleteSitePostResponse!
+}
+
+type Query {
+  categories(
+    limit: Int
+    offset: Int
+    sort: CategoriesSort
+    search: String
+    includeInactive: Boolean
+    categoryIds: [Int!]
+  ): CategoryConnection
+  category(id: Int!): Category
+  customer(id: Int!): Customer
+  customers(
+    limit: Int
+    offset: Int
+    sort: CustomersSort
+    search: String
+    partnerId: Int
+    ids: [Int!]
+  ): CustomerConnection
+  domains(
+    limit: Int
+    offset: Int
+    sort: DomainsSort
+    search: String
+    statusIds: [String!]
+    categoryIds: [Int!]
+  ): DomainConnection
+  domain(id: String!): Domain
+  domainStatuses: [DomainStatus!]!
+  order(id: Int!): Order
+  orderStatuses: [OrderStatus!]!
+  orders(
+    limit: Int
+    offset: Int
+    sort: OrdersSort
+    partnerId: Int
+    customerIds: [Int!]
+    statusIds: [String!]
+  ): OrderConnection
+  partner(id: Int!): Partner
+  partners(
+    limit: Int
+    offset: Int
+    sort: PartnersSort
+    search: String
+  ): PartnerConnection
+  products(
+    limit: Int
+    offset: Int
+    sort: ProductsSort
+    search: String
+  ): ProductConnection
+  user(id: Int!): User
+  users(
+    limit: Int
+    offset: Int
+    sort: UsersSort
+    search: String
+  ): UserConnection
+  vendor(id: Int!): Vendor
+  vendors(
+    limit: Int
+    offset: Int
+    sort: VendorsSort
+    search: String
+  ): VendorConnection
+  sitePost(sitePostId: Int!): SitePost
+  sitePosts(
+    limit: Int
+    offset: Int
+    sort: SitePostsSort
+    siteIds: [String!]
+    search: String
+    statusIds: [String!]
+  ): SitePostConnection!
+  viewer: User
+  roles: RoleConnection
+  sites(
+    limit: Int
+    offset: Int
+    sort: SitesSort
+    search: String
+  ): SiteConnection
+  site(siteId: String!): Site
+  siteDeployStatuses: [SiteDeployStatus!]!
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}
