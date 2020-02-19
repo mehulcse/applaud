@@ -56,6 +56,18 @@ type User {
   email: String!
 }
 
+type Team {
+  id: Int!
+  name: String!
+  description: String!
+}
+
+type Department {
+  id: Int!
+  name: String!
+  description: String!
+}
+
 enum UsersSort {
   ID_ASC
   ID_DESC
@@ -683,6 +695,8 @@ type Query {
     sort: UsersSort
     search: String
   ): UserConnection
+  team(id: Int!): Team
+  department(id: Int!): Department
   vendor(id: Int!): Vendor
   vendors(
     limit: Int

@@ -1,5 +1,6 @@
 import moment from "moment";
 import * as yup from "yup";
+import Objection from "objection";
 import { QueryInitializationResult } from "../common";
 import { PaginationArgs } from "../common";
 import {
@@ -100,7 +101,7 @@ export class CoinBalanceService {
     return await executeSelectAll(query);
   }
 
-  async create(input: CreateCoinBalanceInput) {
+  async create(input: CreateCoinBalanceInput, trx?: Objection.Transaction) {
     ensureAdmin(this.context.viewer)
     // Validation
     const schema = yup.object().shape({
@@ -128,7 +129,7 @@ export class CoinBalanceService {
       throw new Error("Invalid User ID specified.");
     }
 
-    let coinBalance = await CoinBalance.query().insertAndFetch({
+    let coinBalance = await CoinBalance.query(trx).insertAndFetch({
       userId: user.id,
       balance: validatedInput.balance,
       allocatedAt: moment.utc().toDate()
