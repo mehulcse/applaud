@@ -11,8 +11,10 @@ import {
 import {ensureUser} from "../../auth/helpers";
 import User from "../db/models/user";
 import {UserRoleService} from "./user-role-service";
+import {CoinBalanceService} from "./coin-balance-service";
 import {AppContext} from "../../auth/app-context";
 import {ROLES} from "../../../constants";
+import {DEFAULT_BALANCE} from "../db/models/coin-balance";
 
 export interface UsersOptions extends PaginationArgs {
   search?: string;
@@ -179,6 +181,11 @@ export class UserService {
       await new UserRoleService(this.context).create({
         userId: user.id,
         roleId: ROLES.EMPLOYEE
+      }, trx);
+
+      await new CoinBalanceService(this.context).create({
+        userId: user.id,
+        balance: DEFAULT_BALANCE
       }, trx);
 
       return user;
