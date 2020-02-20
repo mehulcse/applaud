@@ -3,16 +3,7 @@ query Users($search: String, $limit: Int, $offset: Int) {
     totalCount
     nodes {
       id
-      fullName
       email
-      team {
-        id
-        name
-      }
-      department {
-        id
-        name
-      }
     }
   }
 }
