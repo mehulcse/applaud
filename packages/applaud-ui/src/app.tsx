@@ -14,6 +14,7 @@ import Notifier from "./components/notifier";
 import { LoginContainer } from "./routes/login/login-container";
 import Dashboard from "./routes/dashboard/dashboard";
 import Users from "./routes/users/users";
+import UserDetail from "./routes/user-detail/user-detail";
 import Applaud from "./routes/applaud/applaud";
 import NotFoundRouteHandler from "./routes/not-found";
 
@@ -34,6 +35,7 @@ function App() {
                 <Route path="/dashboard" exact component={Dashboard} />
                 <Route path="/applaud" exact component={Applaud} />
                 <Route path="/users" exact component={Users} />
+                <Route path="/users/:id" exact component={UserDetail} />
                 <Route path="*" component={NotFoundRouteHandler} />
               </Switch>
             </AuthManager>
