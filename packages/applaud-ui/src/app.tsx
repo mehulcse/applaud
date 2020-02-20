@@ -11,11 +11,12 @@ import theme from "./core/mui-theme";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import AuthManager from "./core/auth-manager";
 import Notifier from "./components/notifier";
-import Mudra from "./routes/mudra/mudra";
-import ApplaudCard from "./components/Card/applaudCard";
+import Dashboard from "./routes/dashboard/dashboard";
+import Users from "./routes/users/users";
+import Applaud from "./routes/applaud/applaud";
 import NotFoundRouteHandler from "./routes/not-found";
-import StructureCard from "./components/ApplaudCards/StructureCards";
 import "./app.css";
+import ApplaudCard from "./components/Card/applaudCard";
 
 const applaudCardData = [
   {
@@ -66,19 +67,24 @@ const applaudCardData = [
 function App() {
   return (
     <MuiThemeProvider theme={theme}>
-      <section className="cardContainer">
+      {/* <section className="cardContainer">
         {applaudCardData.map(item => {
           return <ApplaudCard key={item.id} data={item} />;
         })}
-        <StructureCard />
-      </section>
+      </section> */}
       <ConnectivityMonitor>
         <CustomApolloProvider>
           <Router>
             <AuthManager>
               <Switch>
-                <Route path="/" exact render={() => <Redirect to="/mudra" />} />
-                <Route path="/mudra" exact component={Mudra} />
+                <Route
+                  path="/"
+                  exact
+                  render={() => <Redirect to="/dashboard" />}
+                />
+                <Route path="/dashboard" exact component={Dashboard} />
+                <Route path="/applaud" exact component={Applaud} />
+                <Route path="/users" exact component={Users} />
                 <Route path="*" component={NotFoundRouteHandler} />
               </Switch>
             </AuthManager>

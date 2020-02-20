@@ -1,0 +1,18 @@
+query Users($search: String, $limit: Int, $offset: Int) {
+  users(search: $search, limit: $limit, offset: $offset) {
+    totalCount
+    nodes {
+      id
+      fullName
+      email
+      team {
+        id
+        name
+      }
+      department {
+        id
+        name
+      }
+    }
+  }
+}

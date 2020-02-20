@@ -1,0 +1,9 @@
+.card-tiles {
+  background-color: rgba(63, 191, 237, 0.1);
+  border: 1px solid #000;
+  height: 150px;
+  width: 150px;
+  padding: 10px 10px 40px;
+  text-align: center;
+  margin: 5px;
+}

@@ -1,0 +1,16 @@
+query User($id: Int) {
+  user(id: $id) {
+    id
+    firstName
+    lastName
+    email
+    team {
+      id
+      name
+    }
+    department {
+      id
+      name
+    }
+  }
+}

@@ -1,24 +1,39 @@
 import React, { Component } from "react";
 import Lottie from "react-lottie";
-import animationData from "../../lotties/4999-rocket";
+import Typography from "@material-ui/core/Typography";
+import "./cards.css";
 
-class StructureCards extends Component {
-  render() {
-    const defaultOptions = {
-      loop: true,
-      autoplay: true,
-      animationData: animationData,
-      rendererSettings: {
-        preserveAspectRatio: "xMidYMid slice"
-      }
-    };
+const StructureCards = ({ data }) => {
+  // render() {
 
-    return (
-      <div>
-        <Lottie options={defaultOptions} height={400} width={400} />
-      </div>
-    );
-  }
-}
+  // }
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: data.animation,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  };
+
+  return (
+    <section className="card-tiles" id={data.id}>
+      <Typography
+        className={data.header}
+        color="textSecondary"
+        gutterBottom
+        style={{
+          fontFamily: "Griffy",
+          color: "#3FBEED",
+          fontWeight: "bold",
+          fontSize: "16px"
+        }}
+      >
+        {data.header}
+      </Typography>
+      <Lottie options={defaultOptions} className="lottieFiles" />
+    </section>
+  );
+};
 
 export default StructureCards;
