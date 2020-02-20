@@ -1,0 +1,15 @@
+mutation CreateDepartment($input: CreateDepartmentInput!){
+  createDepartment(input: $input){
+    department {
+      id
+    }
+  }
+}
+
+mutation UpdateDepartment($input: UpdateDepartmentInput!){
+  updateDepartment(input: $input){
+    department {
+      id
+    }
+  }
+}

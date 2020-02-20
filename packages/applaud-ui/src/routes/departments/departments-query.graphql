@@ -1,0 +1,9 @@
+query Departments($search: String, $limit: Int, $offset: Int) {
+  departments(search: $search, limit: $limit, offset: $offset) {
+    totalCount
+    nodes {
+      id
+      name
+    }
+  }
+}

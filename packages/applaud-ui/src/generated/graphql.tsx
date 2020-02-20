@@ -495,6 +495,58 @@ export type LogoutUserMutation = { __typename?: "Mutation" } & {
   >;
 };
 
+export type DepartmentQueryVariables = {
+  id: Scalars["Int"];
+};
+
+export type DepartmentQuery = { __typename?: "Query" } & {
+  department: Maybe<
+    { __typename?: "Department" } & Pick<
+      Department,
+      "id" | "name" | "description"
+    >
+  >;
+};
+
+export type CreateDepartmentMutationVariables = {
+  input: CreateDepartmentInput;
+};
+
+export type CreateDepartmentMutation = { __typename?: "Mutation" } & {
+  createDepartment: { __typename?: "CreateDepartmentResponse" } & {
+    department: { __typename?: "Department" } & Pick<Department, "id">;
+  };
+};
+
+export type UpdateDepartmentMutationVariables = {
+  input: UpdateDepartmentInput;
+};
+
+export type UpdateDepartmentMutation = { __typename?: "Mutation" } & {
+  updateDepartment: { __typename?: "UpdateDepartmentResponse" } & {
+    department: { __typename?: "Department" } & Pick<Department, "id">;
+  };
+};
+
+export type DepartmentsQueryVariables = {
+  search?: Maybe<Scalars["String"]>;
+  limit?: Maybe<Scalars["Int"]>;
+  offset?: Maybe<Scalars["Int"]>;
+};
+
+export type DepartmentsQuery = { __typename?: "Query" } & {
+  departments: Maybe<
+    { __typename?: "DepartmentsConnection" } & Pick<
+      DepartmentsConnection,
+      "totalCount"
+    > & {
+        nodes: Maybe<
+          Array<{ __typename?: "Department" } & Pick<Department, "id" | "name">>
+        >;
+      }
+  >;
+};
+
 export type LoginUserMutationVariables = {
   input: LoginUserInput;
 };
@@ -917,6 +969,321 @@ export type LogoutUserMutationResult = ApolloReactCommon.MutationResult<
 export type LogoutUserMutationOptions = ApolloReactCommon.BaseMutationOptions<
   LogoutUserMutation,
   LogoutUserMutationVariables
+>;
+export const DepartmentDocument = gql`
+  query Department($id: Int!) {
+    department(id: $id) {
+      id
+      name
+      description
+    }
+  }
+`;
+export type DepartmentComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<
+    DepartmentQuery,
+    DepartmentQueryVariables
+  >,
+  "query"
+> &
+  ({ variables: DepartmentQueryVariables; skip?: boolean } | { skip: boolean });
+
+export const DepartmentComponent = (props: DepartmentComponentProps) => (
+  <ApolloReactComponents.Query<DepartmentQuery, DepartmentQueryVariables>
+    query={DepartmentDocument}
+    {...props}
+  />
+);
+
+export type DepartmentProps<TChildProps = {}> = ApolloReactHoc.DataProps<
+  DepartmentQuery,
+  DepartmentQueryVariables
+> &
+  TChildProps;
+export function withDepartment<TProps, TChildProps = {}>(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    DepartmentQuery,
+    DepartmentQueryVariables,
+    DepartmentProps<TChildProps>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    DepartmentQuery,
+    DepartmentQueryVariables,
+    DepartmentProps<TChildProps>
+  >(DepartmentDocument, {
+    alias: "withDepartment",
+    ...operationOptions
+  });
+}
+
+export function useDepartmentQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    DepartmentQuery,
+    DepartmentQueryVariables
+  >
+) {
+  return ApolloReactHooks.useQuery<DepartmentQuery, DepartmentQueryVariables>(
+    DepartmentDocument,
+    baseOptions
+  );
+}
+export function useDepartmentLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    DepartmentQuery,
+    DepartmentQueryVariables
+  >
+) {
+  return ApolloReactHooks.useLazyQuery<
+    DepartmentQuery,
+    DepartmentQueryVariables
+  >(DepartmentDocument, baseOptions);
+}
+
+export type DepartmentQueryHookResult = ReturnType<typeof useDepartmentQuery>;
+export type DepartmentQueryResult = ApolloReactCommon.QueryResult<
+  DepartmentQuery,
+  DepartmentQueryVariables
+>;
+export const CreateDepartmentDocument = gql`
+  mutation CreateDepartment($input: CreateDepartmentInput!) {
+    createDepartment(input: $input) {
+      department {
+        id
+      }
+    }
+  }
+`;
+export type CreateDepartmentMutationFn = ApolloReactCommon.MutationFunction<
+  CreateDepartmentMutation,
+  CreateDepartmentMutationVariables
+>;
+export type CreateDepartmentComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<
+    CreateDepartmentMutation,
+    CreateDepartmentMutationVariables
+  >,
+  "mutation"
+>;
+
+export const CreateDepartmentComponent = (
+  props: CreateDepartmentComponentProps
+) => (
+  <ApolloReactComponents.Mutation<
+    CreateDepartmentMutation,
+    CreateDepartmentMutationVariables
+  >
+    mutation={CreateDepartmentDocument}
+    {...props}
+  />
+);
+
+export type CreateDepartmentProps<
+  TChildProps = {}
+> = ApolloReactHoc.MutateProps<
+  CreateDepartmentMutation,
+  CreateDepartmentMutationVariables
+> &
+  TChildProps;
+export function withCreateDepartment<TProps, TChildProps = {}>(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    CreateDepartmentMutation,
+    CreateDepartmentMutationVariables,
+    CreateDepartmentProps<TChildProps>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    CreateDepartmentMutation,
+    CreateDepartmentMutationVariables,
+    CreateDepartmentProps<TChildProps>
+  >(CreateDepartmentDocument, {
+    alias: "withCreateDepartment",
+    ...operationOptions
+  });
+}
+
+export function useCreateDepartmentMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    CreateDepartmentMutation,
+    CreateDepartmentMutationVariables
+  >
+) {
+  return ApolloReactHooks.useMutation<
+    CreateDepartmentMutation,
+    CreateDepartmentMutationVariables
+  >(CreateDepartmentDocument, baseOptions);
+}
+export type CreateDepartmentMutationHookResult = ReturnType<
+  typeof useCreateDepartmentMutation
+>;
+export type CreateDepartmentMutationResult = ApolloReactCommon.MutationResult<
+  CreateDepartmentMutation
+>;
+export type CreateDepartmentMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  CreateDepartmentMutation,
+  CreateDepartmentMutationVariables
+>;
+export const UpdateDepartmentDocument = gql`
+  mutation UpdateDepartment($input: UpdateDepartmentInput!) {
+    updateDepartment(input: $input) {
+      department {
+        id
+      }
+    }
+  }
+`;
+export type UpdateDepartmentMutationFn = ApolloReactCommon.MutationFunction<
+  UpdateDepartmentMutation,
+  UpdateDepartmentMutationVariables
+>;
+export type UpdateDepartmentComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<
+    UpdateDepartmentMutation,
+    UpdateDepartmentMutationVariables
+  >,
+  "mutation"
+>;
+
+export const UpdateDepartmentComponent = (
+  props: UpdateDepartmentComponentProps
+) => (
+  <ApolloReactComponents.Mutation<
+    UpdateDepartmentMutation,
+    UpdateDepartmentMutationVariables
+  >
+    mutation={UpdateDepartmentDocument}
+    {...props}
+  />
+);
+
+export type UpdateDepartmentProps<
+  TChildProps = {}
+> = ApolloReactHoc.MutateProps<
+  UpdateDepartmentMutation,
+  UpdateDepartmentMutationVariables
+> &
+  TChildProps;
+export function withUpdateDepartment<TProps, TChildProps = {}>(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    UpdateDepartmentMutation,
+    UpdateDepartmentMutationVariables,
+    UpdateDepartmentProps<TChildProps>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    UpdateDepartmentMutation,
+    UpdateDepartmentMutationVariables,
+    UpdateDepartmentProps<TChildProps>
+  >(UpdateDepartmentDocument, {
+    alias: "withUpdateDepartment",
+    ...operationOptions
+  });
+}
+
+export function useUpdateDepartmentMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    UpdateDepartmentMutation,
+    UpdateDepartmentMutationVariables
+  >
+) {
+  return ApolloReactHooks.useMutation<
+    UpdateDepartmentMutation,
+    UpdateDepartmentMutationVariables
+  >(UpdateDepartmentDocument, baseOptions);
+}
+export type UpdateDepartmentMutationHookResult = ReturnType<
+  typeof useUpdateDepartmentMutation
+>;
+export type UpdateDepartmentMutationResult = ApolloReactCommon.MutationResult<
+  UpdateDepartmentMutation
+>;
+export type UpdateDepartmentMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  UpdateDepartmentMutation,
+  UpdateDepartmentMutationVariables
+>;
+export const DepartmentsDocument = gql`
+  query Departments($search: String, $limit: Int, $offset: Int) {
+    departments(search: $search, limit: $limit, offset: $offset) {
+      totalCount
+      nodes {
+        id
+        name
+      }
+    }
+  }
+`;
+export type DepartmentsComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<
+    DepartmentsQuery,
+    DepartmentsQueryVariables
+  >,
+  "query"
+>;
+
+export const DepartmentsComponent = (props: DepartmentsComponentProps) => (
+  <ApolloReactComponents.Query<DepartmentsQuery, DepartmentsQueryVariables>
+    query={DepartmentsDocument}
+    {...props}
+  />
+);
+
+export type DepartmentsProps<TChildProps = {}> = ApolloReactHoc.DataProps<
+  DepartmentsQuery,
+  DepartmentsQueryVariables
+> &
+  TChildProps;
+export function withDepartments<TProps, TChildProps = {}>(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    DepartmentsQuery,
+    DepartmentsQueryVariables,
+    DepartmentsProps<TChildProps>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    DepartmentsQuery,
+    DepartmentsQueryVariables,
+    DepartmentsProps<TChildProps>
+  >(DepartmentsDocument, {
+    alias: "withDepartments",
+    ...operationOptions
+  });
+}
+
+export function useDepartmentsQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    DepartmentsQuery,
+    DepartmentsQueryVariables
+  >
+) {
+  return ApolloReactHooks.useQuery<DepartmentsQuery, DepartmentsQueryVariables>(
+    DepartmentsDocument,
+    baseOptions
+  );
+}
+export function useDepartmentsLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    DepartmentsQuery,
+    DepartmentsQueryVariables
+  >
+) {
+  return ApolloReactHooks.useLazyQuery<
+    DepartmentsQuery,
+    DepartmentsQueryVariables
+  >(DepartmentsDocument, baseOptions);
+}
+
+export type DepartmentsQueryHookResult = ReturnType<typeof useDepartmentsQuery>;
+export type DepartmentsQueryResult = ApolloReactCommon.QueryResult<
+  DepartmentsQuery,
+  DepartmentsQueryVariables
 >;
 export const LoginUserDocument = gql`
   mutation loginUser($input: LoginUserInput!) {
