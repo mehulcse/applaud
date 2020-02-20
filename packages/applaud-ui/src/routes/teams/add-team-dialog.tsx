@@ -85,7 +85,12 @@ function AddTeamDialog(props: Props) {
       <DialogActions>
         <ButtonList>
           <Button onClick={() => onClose()}>Cancel</Button>
-          <Button variant="contained" color="primary" onClick={handleCreate}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleCreate}
+            disabled={!loading}
+          >
             <AppIcon icon={faCheck} standardRightMargin />
             Add Team
           </Button>

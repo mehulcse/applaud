@@ -92,7 +92,12 @@ function UpdateTeamDialog(props: Props) {
       <DialogActions>
         <ButtonList>
           <Button onClick={() => onClose()}>Cancel</Button>
-          <Button variant="contained" color="primary" onClick={handleUpdate}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleUpdate}
+            disabled={!updateLoading}
+          >
             <AppIcon icon={faCheck} standardRightMargin />
             Update Team
           </Button>
