@@ -1,5 +1,5 @@
-query User($id: Int!) {
-  user(id: $id) {
+query AuthManager {
+  viewer {
     id
     firstName
     lastName

@@ -11,6 +11,7 @@ import theme from "./core/mui-theme";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import AuthManager from "./core/auth-manager";
 import Notifier from "./components/notifier";
+import { LoginContainer } from "./routes/login/login-container";
 import Dashboard from "./routes/dashboard/dashboard";
 import Users from "./routes/users/users";
 import Applaud from "./routes/applaud/applaud";
@@ -29,21 +30,10 @@ function App() {
                   exact
                   render={() => <Redirect to="/dashboard" />}
                 />
-                <Route
-                  path="/dashboard"
-                  exact
-                  component={Dashboard}
-                />
-                <Route
-                    path="/applaud"
-                    exact
-                    component={Applaud}
-                />
-                <Route
-                  path="/users"
-                  exact
-                  component={Users}
-                />
+                <Route path="/login" exact component={LoginContainer} />
+                <Route path="/dashboard" exact component={Dashboard} />
+                <Route path="/applaud" exact component={Applaud} />
+                <Route path="/users" exact component={Users} />
                 <Route path="*" component={NotFoundRouteHandler} />
               </Switch>
             </AuthManager>
