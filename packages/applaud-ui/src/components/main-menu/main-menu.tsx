@@ -7,7 +7,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTachometerAlt,
   faUsers,
-  faPeopleCarry
+  faPeopleCarry,
+  faStore
 } from "@fortawesome/free-solid-svg-icons";
 
 import AppLink from "../app-link";
@@ -64,6 +65,14 @@ function MainMenuContent({ location }: { location: any }) {
             <StyledFontAwesomeIcon icon={faPeopleCarry} fixedWidth />
           </ListItemIcon>
           <StyledListItemText primary="Teams" />
+        </ListItem>
+      </AppLink>
+      <AppLink to="/departments">
+        <ListItem button selected={basePath === "/departments"}>
+          <ListItemIcon>
+            <StyledFontAwesomeIcon icon={faStore} fixedWidth />
+          </ListItemIcon>
+          <StyledListItemText primary="Departments" />
         </ListItem>
       </AppLink>
     </List>
