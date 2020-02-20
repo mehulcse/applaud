@@ -17,6 +17,7 @@ import Users from "./routes/users/users";
 import UserDetail from "./routes/user-detail/user-detail";
 import Applaud from "./routes/applaud/applaud";
 import NotFoundRouteHandler from "./routes/not-found";
+import LandingPage from "./routes/landing-page";
 
 function App() {
   return (
