@@ -3,7 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 // import bugsnagExpress from "@bugsnag/plugin-express";
 import { getLogger } from "./logger";
-import config from "./config";
+import Config from "./config";
 import authMiddleware from "./auth-middleware";
 import bodyParser from "body-parser";
 import helmet from "helmet";
@@ -16,7 +16,7 @@ import {
 } from "./utilities/graceful-shutdown";
 import { getDb } from "./services/internal/db";
 // import { bugsnagClient } from "./services/bugsnag";
-import Config from "./config";
+// import Config from "./config";
 
 const PORT = process.env.PORT || 3000;
 
@@ -26,25 +26,25 @@ export async function start() {
   // bugsnagClient.use(bugsnagExpress);
   // const bugsnagMiddleware = bugsnagClient.getPlugin("express");
 
-  const corsOrigin = config.getCorsOrigin();
+  // const corsOrigin = config.getCorsOrigin();
 
   const app = express();
   // app.use(bugsnagMiddleware.requestHandler);
   app.use(helmet());
 
-  const corsOptions = {
-    credentials: true,
-    origin: corsOrigin
-  };
-  app.options("*", cors(corsOptions));
+  // const corsOptions = {
+  //   credentials: true,
+  //   origin: corsOrigin
+  // };
+  app.options("*", cors());
   await getDb();
 
-  app.get("/health", cors(corsOptions), (_req, res) => {
+  app.get("/health", cors(), (_req, res) => {
     res.send({ ok: true }).status(200);
   });
 
   app.use(gracefulShutdownMiddleware(app));
-  app.use(cors(corsOptions));
+  app.use(cors());
   app.use(bodyParser.json());
   app.use(cookieParser());
   app.use(authMiddleware);
@@ -55,8 +55,8 @@ export async function start() {
 
   adminApiServer.applyMiddleware({
     app,
-    cors: corsOptions,
-    path: "local/admin/graphql"
+    cors: true,
+    path: "/local/admin/graphql"
   });
   // partnerApiServer.applyMiddleware({
   //   app,

@@ -85,16 +85,19 @@ export default class Config {
   //   return `${scheme}://${Config.getAppWorkerDomain()}`;
   // };
   static getCorsOrigin = () => {
-    // return [
-    //   Config.getApiUrl(),
-    //   Config.getAppAdminUrl(),
-    //   "http://localhost:3000",
-    //   "https://localhost:3000",
-    //   "localhost:3000"
-    //   // Config.getAppPartnerUrl(),
-    //   // Config.getAppWorkerUrl()
-    // ];
-    return "*";
+    return [
+      Config.getApiUrl(),
+      Config.getAppAdminUrl(),
+      "http://localhost:3000",
+      "https://localhost:3000",
+      "localhost:3000",
+      "http://localhost",
+      "localhost",
+      "https://localhost"
+      // Config.getAppPartnerUrl(),
+      // Config.getAppWorkerUrl()
+    ];
+    // return "*";
   };
   static getAwsProfileName = () => Config.getParameter("AWS_PROFILE");
   static getAwsAccessKey = () =>

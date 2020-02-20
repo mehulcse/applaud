@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import { useUsersForSelectorQuery } from "../../generated/graphql";
+import { useUsersForSelectorQuery } from "../../generated/graphql";
 import AutoComplete, { OptionType } from "../../components/autocomplete-input";
 import { ValueType } from "react-select/src/types";
 
@@ -20,15 +20,15 @@ function UserSelectorContainer({
 }: Props) {
   const [userSearch, setUserSearch] = useState("");
 
-  // const selectedUsersResult = useUsersForSelectorQuery({
-  //   variables: {
-  //     search: "",
-  //     ids: userIds
-  //   },
-  //   skip: !userIds.length
-  // });
+  const selectedUsersResult = useUsersForSelectorQuery({
+    variables: {
+      search: "",
+      ids: userIds
+    },
+    skip: !userIds.length
+  });
 
-  let selectedUsers: ValueType<OptionType> = [];
+  const selectedUsers: ValueType<OptionType> = [];
 
   // if (selectedUsersResult?.data?.users?.nodes) {
   //   selectedUsers = selectedUsersResult.data.users.nodes.map(
@@ -39,14 +39,14 @@ function UserSelectorContainer({
   //   );
   // }
 
-  // const usersResult = useUsersForSelectorQuery({
-  //   variables: {
-  //     search: userSearch
-  //   },
-  //   fetchPolicy: "network-only"
-  // });
+  const usersResult = useUsersForSelectorQuery({
+    variables: {
+      search: userSearch
+    },
+    fetchPolicy: "network-only"
+  });
 
-  let users: OptionType[] = [];
+  const users: OptionType[] = [];
 
   // if (usersResult?.data?.users?.nodes) {
   //   users = usersResult.data.users.nodes.map(user => ({

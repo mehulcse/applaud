@@ -1,0 +1,8 @@
+query TeamsForSelector($search: String, $ids: [Int!]) {
+  teams(search: $search) {
+    nodes {
+      id
+      name
+    }
+  }
+}
