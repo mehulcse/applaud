@@ -55,7 +55,7 @@ export async function start() {
 
   adminApiServer.applyMiddleware({
     app,
-    cors: true,
+    cors: corsOptions,
     path: "/local/admin/graphql"
   });
   // partnerApiServer.applyMiddleware({
@@ -70,6 +70,20 @@ export async function start() {
   // });
 
   // app.use(bugsnagMiddleware.errorHandler);
+
+  // To handle intentionally malformed requests
+  app.use((err: any, _req: express.Request, res: any, next: any) => {
+    if (!err) return next();
+    if (err instanceof URIError) {
+      return res.status(400).json({
+        status: 400,
+        error: "Bad Request"
+      });
+    }
+    return res
+      .status(500)
+      .json({ message: "An error occurred while processing the request." });
+  });
 
   const server = app.listen({ port: PORT }, () => {
     logger.debug(`Server ready, listening on ${PORT}...`);

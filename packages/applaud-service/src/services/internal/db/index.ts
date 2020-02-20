@@ -57,7 +57,7 @@ export const canConnect = async () => {
 
 export const migrate = async () => {
   const knex = await getDb();
-  const migrationsDirectory = resolve(join(__dirname, 'migrations'));
+  const migrationsDirectory = resolve(join("build/", "migrations"));
   try {
     const migrationsConfig = {
       directory: migrationsDirectory,

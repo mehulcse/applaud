@@ -1,13 +1,14 @@
 {
-  "name": "rcm-service",
+  "name": "applaud-service",
   "version": "1.0.0",
-  "description": "Formerly Project Alita",
+  "description": "Applaud",
   "main": "build/index.js",
   "private": true,
   "scripts": {
     "build": "shx rm -rf build/ && run-p build:**",
     "build:ts": "tsc -p tsconfig.json",
     "build:graphql": "cpx \"src/graphql/**/*.graphql\" build/graphql",
+    "build:migrations": "cpx \"src/migrations/*.js\" build/migrations",
     "build:emails": "mkdir -p build/services/email/templates && npx mjml src/services/email/templates/*.mjml -o build/services/email/templates",
     "clean": "shx rm -rf build",
     "migrate": "PROCESS=migrate env-cmd node build/index.js",
@@ -30,7 +31,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/cogitech/alita#readme",
+  "homepage": "https://github.com/mehulcse/applaud/blob/master/README.md",
   "dependencies": {
     "@bugsnag/js": "^6.4.1",
     "@bugsnag/plugin-express": "^6.4.1",
