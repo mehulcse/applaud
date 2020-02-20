@@ -56,7 +56,7 @@ export async function start() {
   adminApiServer.applyMiddleware({
     app,
     cors: corsOptions,
-    path: "/admin/graphql"
+    path: "local/admin/graphql"
   });
   // partnerApiServer.applyMiddleware({
   //   app,

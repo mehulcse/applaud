@@ -1,7 +1,17 @@
 import React, { Component } from "react";
 import { Redirect, RouteComponentProps, withRouter } from "react-router-dom";
 import Loader from "../../components/loader";
+import {
+  AuthManagerQueryResult,
+  LogoutUserMutationFn,
+  User
+} from "../../generated/graphql";
 import { ConnectivityContext } from "../connectivity-monitor";
+
+type ViewerUser = { __typename?: "User" } & Pick<
+  User,
+  "id" | "firstName" | "lastName" | "email"
+>;
 
 export interface AuthContextValue {
   isLoading: boolean;
@@ -12,6 +22,9 @@ export interface AuthContextValue {
 }
 
 interface Props extends RouteComponentProps {
+  queryResult: AuthManagerQueryResult;
+  children: React.ReactNode;
+  logoutUserMutation: LogoutUserMutationFn;
 }
 
 export const AuthContext = React.createContext<AuthContextValue>({
@@ -24,13 +37,25 @@ export const AuthContext = React.createContext<AuthContextValue>({
 
 class AuthManager extends Component<Props> {
   render() {
+    const { queryResult, logoutUserMutation } = this.props;
     const contextValue: AuthContextValue = {
-      isLoading: false,
-      isLoggedIn: true, // TODO: set to false and do it with queryresult of viewer query
-      refresh: async () => {},
-      logout: async () => {},
+      isLoading: queryResult.loading,
+      isLoggedIn: false,
+      refresh: queryResult.refetch,
+      logout: async () => {
+        await logoutUserMutation();
+        await queryResult.refetch();
+      },
       user: null
     };
+
+    if (!queryResult.loading) {
+      const { data, error } = queryResult;
+      if (data) {
+        contextValue.isLoggedIn = !error && !!data.viewer;
+        // contextValue.user = data.viewer; // TODO: uncomment it
+      }
+    }
 
     return (
       <AuthContext.Provider value={contextValue}>
