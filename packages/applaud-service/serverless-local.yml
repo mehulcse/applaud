@@ -1,4 +1,5 @@
 DB_HOST: applaud.cluster-cjgm6dycuc6c.us-west-2.rds.amazonaws.com
+#DB_HOST: 127.0.0.1
 DB_DIALECT: 'mysql'
 DB_USER: admin
 DB_PASSWORD: Kalam-002
@@ -12,7 +13,7 @@ GOOGLE_CLIENT_SECRET: XhjFOkTWWU8YrHgHXu58F6v0
 ROOT_DOMAIN: thegeekstribe.com
 SQS_QUEUE_ENDPOINT: http://localhost:9324/queue/default
 ENVIRONMENT: dev
-IS_LOCAL: false
+IS_LOCAL: true
 BUGSNAG_API_KEY: b4d63547ba22e2b21f07994596861787
 STATSD_ENDPOINT: localhost:8125
 NAMESILO_API_KEY: 80b200a15d5e6322f8c71\8a

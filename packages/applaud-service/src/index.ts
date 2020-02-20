@@ -16,16 +16,10 @@ async function start() {
   if (targetProcess === "api") {
     const api = await import("./api");
     await api.start();
-  } else if (targetProcess === "worker") {
-    const worker = await import("./worker");
-    await worker.start();
   } else if (targetProcess === "migrate") {
     logger.debug("Migrating DB");
     await migrate();
     process.exit(0);
-  } else if (targetProcess === "repl") {
-    const cli = await import("./repl");
-    await cli.runCli();
   } else {
     logger.error("❌ Unknown process, exiting...");
   }

@@ -15,6 +15,8 @@ import { LoginContainer } from "./routes/login/login-container";
 import Dashboard from "./routes/dashboard/dashboard";
 import Users from "./routes/users/users";
 import UserDetail from "./routes/user-detail/user-detail";
+import Teams from "./routes/teams/teams";
+import Departments from "./routes/departments/departments";
 import Applaud from "./routes/applaud/applaud";
 import NotFoundRouteHandler from "./routes/not-found";
 import "./app.css";
@@ -25,22 +27,24 @@ function App() {
       <ConnectivityMonitor>
         <CustomApolloProvider>
           <Router>
-            {/* <AuthManager> */}
-            <Switch>
-              <Route
-                path="/"
-                exact
-                render={() => <Redirect to="/dashboard" />}
-              />
-              <Route path="/login" exact component={LoginContainer} />
-              <Route path="/dashboard" exact component={Dashboard} />
-              <Route path="/applaud" exact component={Applaud} />
-              <Route path="/users" exact component={Users} />
-              <Route path="/users/:id" exact component={UserDetail} />
-              <Route path="*" component={NotFoundRouteHandler} />
-            </Switch>
-            {/* </AuthManager> */}
-            <Notifier />s
+            <AuthManager>
+              <Switch>
+                <Route
+                  path="/"
+                  exact
+                  render={() => <Redirect to="/dashboard" />}
+                />
+                <Route path="/login" exact component={LoginContainer} />
+                <Route path="/dashboard" exact component={Dashboard} />
+                <Route path="/applaud" exact component={Applaud} />
+                <Route path="/users" exact component={Users} />
+                <Route path="/users/:id" exact component={UserDetail} />
+                <Route path="/teams" exact component={Teams} />
+                <Route path="/departments" exact component={Departments} />
+                <Route path="*" component={NotFoundRouteHandler} />
+              </Switch>
+            </AuthManager>
+            <Notifier />
           </Router>
         </CustomApolloProvider>
       </ConnectivityMonitor>

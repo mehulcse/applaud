@@ -9,9 +9,10 @@ import {
   Button
 } from "@material-ui/core";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { useCreateUserMutation } from "../../generated/graphql";
 import { ButtonList } from "../../components/button-list";
 import AppIcon from "../../components/app-icon";
-// import { openSnackbar } from "../../components/notifier";
+import { openSnackbar } from "../../components/notifier";
 
 interface Props {
   open: boolean;
@@ -24,16 +25,16 @@ function AddUserDialog(props: Props) {
   // TODO: generate graphql
   // const [createUser, {loading}] = useCreateUserMutation();
 
-  const [{email, firstName, lastName, teamId, departmentId}, setUser] = useReducer(
-    (state: any, newState: any) => ({...state, ...newState}),
-    {
-      firstName: "",
-      lastName: "",
-      email: "",
-      teamId: 0,
-      departmentId: 0
-    }
-  );
+  const [
+    { email, firstName, lastName, teamId, departmentId },
+    setUser
+  ] = useReducer((state: any, newState: any) => ({ ...state, ...newState }), {
+    firstName: "",
+    lastName: "",
+    email: "",
+    teamId: 0,
+    departmentId: 0
+  });
 
   async function handleCreate() {
     // const response = await createUser({
@@ -47,7 +48,6 @@ function AddUserDialog(props: Props) {
     //     }
     //   }
     // });
-
     // if (response?.data?.createUser?.user) {
     //   openSnackbar({ message: "User created successfully" }, "success");
     //   onClose();
@@ -57,7 +57,7 @@ function AddUserDialog(props: Props) {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const key = event.target.name;
     const value = event.target.value;
-    setUser({[key]: value});
+    setUser({ [key]: value });
   };
 
   return (
@@ -106,11 +106,7 @@ function AddUserDialog(props: Props) {
       <DialogActions>
         <ButtonList>
           <Button onClick={onClose}>Cancel</Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleCreate}
-          >
+          <Button variant="contained" color="primary" onClick={handleCreate}>
             <AppIcon icon={faCheck} standardRightMargin />
             Add User
           </Button>

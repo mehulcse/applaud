@@ -27,6 +27,10 @@ type User {
   firstName: String!
   lastName: String!
   email: String!
+
+  #Relations
+  userRoles: [UserRole!]!
+  fullName: String!
 }
 
 enum UsersSort {
