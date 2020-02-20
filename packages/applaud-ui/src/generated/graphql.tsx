@@ -447,6 +447,19 @@ export enum UserTeamsSort {
   IdAsc = "ID_ASC",
   IdDesc = "ID_DESC"
 }
+export type TeamsForSelectorQueryVariables = {
+  search?: Maybe<Scalars["String"]>;
+  ids?: Maybe<Array<Scalars["Int"]>>;
+};
+
+export type TeamsForSelectorQuery = { __typename?: "Query" } & {
+  teams: Maybe<
+    { __typename?: "TeamsConnection" } & {
+      nodes: Maybe<Array<{ __typename?: "Team" } & Pick<Team, "id" | "name">>>;
+    }
+  >;
+};
+
 export type UsersForSelectorQueryVariables = {
   search?: Maybe<Scalars["String"]>;
   ids?: Maybe<Array<Scalars["Int"]>>;
@@ -491,6 +504,19 @@ export type LoginUserMutation = { __typename?: "Mutation" } & {
   >;
 };
 
+export type UserDetailQueryVariables = {
+  id: Scalars["Int"];
+};
+
+export type UserDetailQuery = { __typename?: "Query" } & {
+  user: Maybe<
+    { __typename?: "User" } & Pick<
+      User,
+      "id" | "firstName" | "lastName" | "email"
+    >
+  >;
+};
+
 export type UserQueryVariables = {
   id: Scalars["Int"];
 };
@@ -528,6 +554,90 @@ export type UsersQuery = { __typename?: "Query" } & {
   >;
 };
 
+export const TeamsForSelectorDocument = gql`
+  query TeamsForSelector($search: String, $ids: [Int!]) {
+    teams(search: $search) {
+      nodes {
+        id
+        name
+      }
+    }
+  }
+`;
+export type TeamsForSelectorComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<
+    TeamsForSelectorQuery,
+    TeamsForSelectorQueryVariables
+  >,
+  "query"
+>;
+
+export const TeamsForSelectorComponent = (
+  props: TeamsForSelectorComponentProps
+) => (
+  <ApolloReactComponents.Query<
+    TeamsForSelectorQuery,
+    TeamsForSelectorQueryVariables
+  >
+    query={TeamsForSelectorDocument}
+    {...props}
+  />
+);
+
+export type TeamsForSelectorProps<TChildProps = {}> = ApolloReactHoc.DataProps<
+  TeamsForSelectorQuery,
+  TeamsForSelectorQueryVariables
+> &
+  TChildProps;
+export function withTeamsForSelector<TProps, TChildProps = {}>(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    TeamsForSelectorQuery,
+    TeamsForSelectorQueryVariables,
+    TeamsForSelectorProps<TChildProps>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    TeamsForSelectorQuery,
+    TeamsForSelectorQueryVariables,
+    TeamsForSelectorProps<TChildProps>
+  >(TeamsForSelectorDocument, {
+    alias: "withTeamsForSelector",
+    ...operationOptions
+  });
+}
+
+export function useTeamsForSelectorQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    TeamsForSelectorQuery,
+    TeamsForSelectorQueryVariables
+  >
+) {
+  return ApolloReactHooks.useQuery<
+    TeamsForSelectorQuery,
+    TeamsForSelectorQueryVariables
+  >(TeamsForSelectorDocument, baseOptions);
+}
+export function useTeamsForSelectorLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    TeamsForSelectorQuery,
+    TeamsForSelectorQueryVariables
+  >
+) {
+  return ApolloReactHooks.useLazyQuery<
+    TeamsForSelectorQuery,
+    TeamsForSelectorQueryVariables
+  >(TeamsForSelectorDocument, baseOptions);
+}
+
+export type TeamsForSelectorQueryHookResult = ReturnType<
+  typeof useTeamsForSelectorQuery
+>;
+export type TeamsForSelectorQueryResult = ApolloReactCommon.QueryResult<
+  TeamsForSelectorQuery,
+  TeamsForSelectorQueryVariables
+>;
 export const UsersForSelectorDocument = gql`
   query UsersForSelector($search: String, $ids: [Int!]) {
     users(search: $search) {
@@ -832,6 +942,84 @@ export type LoginUserMutationResult = ApolloReactCommon.MutationResult<
 export type LoginUserMutationOptions = ApolloReactCommon.BaseMutationOptions<
   LoginUserMutation,
   LoginUserMutationVariables
+>;
+export const UserDetailDocument = gql`
+  query UserDetail($id: Int!) {
+    user(id: $id) {
+      id
+      firstName
+      lastName
+      email
+    }
+  }
+`;
+export type UserDetailComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<
+    UserDetailQuery,
+    UserDetailQueryVariables
+  >,
+  "query"
+> &
+  ({ variables: UserDetailQueryVariables; skip?: boolean } | { skip: boolean });
+
+export const UserDetailComponent = (props: UserDetailComponentProps) => (
+  <ApolloReactComponents.Query<UserDetailQuery, UserDetailQueryVariables>
+    query={UserDetailDocument}
+    {...props}
+  />
+);
+
+export type UserDetailProps<TChildProps = {}> = ApolloReactHoc.DataProps<
+  UserDetailQuery,
+  UserDetailQueryVariables
+> &
+  TChildProps;
+export function withUserDetail<TProps, TChildProps = {}>(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    UserDetailQuery,
+    UserDetailQueryVariables,
+    UserDetailProps<TChildProps>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    UserDetailQuery,
+    UserDetailQueryVariables,
+    UserDetailProps<TChildProps>
+  >(UserDetailDocument, {
+    alias: "withUserDetail",
+    ...operationOptions
+  });
+}
+
+export function useUserDetailQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    UserDetailQuery,
+    UserDetailQueryVariables
+  >
+) {
+  return ApolloReactHooks.useQuery<UserDetailQuery, UserDetailQueryVariables>(
+    UserDetailDocument,
+    baseOptions
+  );
+}
+export function useUserDetailLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    UserDetailQuery,
+    UserDetailQueryVariables
+  >
+) {
+  return ApolloReactHooks.useLazyQuery<
+    UserDetailQuery,
+    UserDetailQueryVariables
+  >(UserDetailDocument, baseOptions);
+}
+
+export type UserDetailQueryHookResult = ReturnType<typeof useUserDetailQuery>;
+export type UserDetailQueryResult = ApolloReactCommon.QueryResult<
+  UserDetailQuery,
+  UserDetailQueryVariables
 >;
 export const UserDocument = gql`
   query User($id: Int!) {
