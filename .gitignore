@@ -32,3 +32,4 @@ yarn-error.log*
 
 # editor
 .idea
+packages/applaud-service/.webpack/*
