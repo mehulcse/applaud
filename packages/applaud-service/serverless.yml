@@ -63,13 +63,11 @@ functions:
       - http:
           method: post
           path: admin/graphql
-          cors: true
   adminGraphQLPlayground:
     handler: src/handlers.adminGraphQL
     events:
       - http:
           method: get
           path: admin/graphql
-          cors: true
   migrate:
     handler: migration.migrate

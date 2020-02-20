@@ -9,16 +9,16 @@ export function getSESClient() {
   aws.config.update({
     accessKeyId: Config.getAwsAccessKey(),
     secretAccessKey: Config.getAwsSecretKey(),
-    region: Config.getAwsRegion(),
+    region: Config.getAwsRegion()
   });
-  if (Config.getIsLocal()) {
-    return new aws.SES({
-      ...defaultSettings,
-      // credentials: new SharedIniFileCredentials({
-      //   profile: Config.getAwsProfileName()
-      // })
-    });
-  }
+  // if (Config.getIsLocal()) {
+  //   return new aws.SES({
+  //     ...defaultSettings,
+  //     // credentials: new SharedIniFileCredentials({
+  //     //   profile: Config.getAwsProfileName()
+  //     // })
+  //   });
+  // }
 
   return new aws.SES(defaultSettings);
 }

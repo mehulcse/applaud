@@ -176,8 +176,8 @@ export default {
           const magicLink = Buffer.from(
             `${user.email}|${userTemporaryLoginCode.code}`
           ).toString("base64");
-          const url = `${config.getAppPartnerUrl()}/login/${magicLink}`;
-          sendEmailTemporaryLoginCode(
+          const url = `${config.getAppAdminUrl()}/login/${magicLink}`;
+          await sendEmailTemporaryLoginCode(
             user.email,
             userTemporaryLoginCode.code,
             url

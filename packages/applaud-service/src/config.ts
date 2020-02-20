@@ -1,7 +1,4 @@
-import {
-  APP_ADMIN_SUBDOMAIN,
-  API_SUBDOMAIN
-} from "./constants";
+import { APP_ADMIN_SUBDOMAIN, API_SUBDOMAIN } from "./constants";
 
 export default class Config {
   private static getParameter = (
@@ -88,16 +85,22 @@ export default class Config {
   //   return `${scheme}://${Config.getAppWorkerDomain()}`;
   // };
   static getCorsOrigin = () => {
-    return [
-      Config.getApiUrl(),
-      Config.getAppAdminUrl(),
-      // Config.getAppPartnerUrl(),
-      // Config.getAppWorkerUrl()
-    ];
+    // return [
+    //   Config.getApiUrl(),
+    //   Config.getAppAdminUrl(),
+    //   "http://localhost:3000",
+    //   "https://localhost:3000",
+    //   "localhost:3000"
+    //   // Config.getAppPartnerUrl(),
+    //   // Config.getAppWorkerUrl()
+    // ];
+    return "*";
   };
   static getAwsProfileName = () => Config.getParameter("AWS_PROFILE");
-  static getAwsAccessKey = () => Config.getParameter("AWS_ACCESS_KEY_ID");
-  static getAwsSecretKey = () => Config.getParameter("AWS_SECRET_KEY_ID");
-  static getAwsRegion = () => Config.getParameter("AWS_REGION");
+  static getAwsAccessKey = () =>
+    Config.getParameter("AWS_MAILER_ACCESS_KEY_ID");
+  static getAwsSecretKey = () =>
+    Config.getParameter("AWS_MAILER_SECRET_KEY_ID");
+  static getAwsRegion = () => Config.getParameter("AWS_MAILER_REGION");
   static getBugsnagApiKey = () => Config.getParameter("BUGSNAG_API_KEY");
 }
