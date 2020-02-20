@@ -8,8 +8,8 @@ import { UserTemporaryLoginCodeService } from "../../../services/internal/servic
 import { setAuthCookie } from "../../cookie-helper";
 import { getSystemViewer } from "../../../services/auth/helpers";
 import { UserService } from "../../../services/internal/services/user-service";
-import { UserRoleService } from "../../../services/internal/services/user-role-service";
-import { ROLES } from "../../../constants";
+// import { UserRoleService } from "../../../services/internal/services/user-role-service";
+// import { ROLES } from "../../../constants";
 
 const logger = getLogger("login-user.ts");
 
@@ -39,34 +39,37 @@ export default {
             idToken: args.input.googleIdToken,
             audience: googleClientId
           });
+          logger.debug(ticket);
           const payload = ticket.getPayload();
 
           if (!payload || !payload.email) {
             return { isLoggedIn: false };
           }
 
+          logger.debug(payload);
           const user = await new UserService(systemContext).getByEmail(
             payload.email
           );
 
+          logger.debug(user);
           if (!user) {
             return { isLoggedIn: false };
           }
 
-          const userRoles = await new UserRoleService(systemContext).getAll({
-            userId: user.id
-          });
-          const isAdmin = !!userRoles.find(x => x.roleId === ROLES.ADMIN);
-          const isSuperAdmin = !!userRoles.find(
-            x => x.roleId === ROLES.SUPER_ADMIN
-          );
+          // const userRoles = await new UserRoleService(systemContext).getAll({
+          //   userId: user.id
+          // });
+          // const isAdmin = !!userRoles.find(x => x.roleId === ROLES.ADMIN);
+          // const isSuperAdmin = !!userRoles.find(
+          //   x => x.roleId === ROLES.SUPER_ADMIN
+          // );
 
-          if (!isAdmin && !isSuperAdmin) {
-            return { isLoggedIn: false };
-          }
+          // if (!isAdmin && !isSuperAdmin) {
+          //   return { isLoggedIn: false };
+          // }
 
           await setAuthCookie(context, user.id);
-          return { isLoggedIn: false };
+          return { isLoggedIn: true };
         } catch (e) {
           logger.error("Error processing Auth Token", { e });
           return { isLoggedIn: false };
@@ -84,17 +87,17 @@ export default {
           return { isLoggedIn: false };
         }
 
-        const userRoles = await new UserRoleService(systemContext).getAll({
-          userId: user.id
-        });
-        const isAdmin = !!userRoles.find(x => x.roleId === ROLES.ADMIN);
-        const isSuperAdmin = !!userRoles.find(
-          x => x.roleId === ROLES.SUPER_ADMIN
-        );
-
-        if (!isAdmin && !isSuperAdmin) {
-          return { isLoggedIn: false };
-        }
+        // const userRoles = await new UserRoleService(systemContext).getAll({
+        //   userId: user.id
+        // });
+        // const isAdmin = !!userRoles.find(x => x.roleId === ROLES.ADMIN);
+        // const isSuperAdmin = !!userRoles.find(
+        //   x => x.roleId === ROLES.SUPER_ADMIN
+        // );
+        //
+        // if (!isAdmin && !isSuperAdmin) {
+        //   return { isLoggedIn: false };
+        // }
 
         const userTemporaryLoginCode = await new UserTemporaryLoginCodeService(
           systemContext
@@ -123,17 +126,17 @@ export default {
           return { isLoggedIn: false };
         }
 
-        const userRoles = await new UserRoleService(systemContext).getAll({
-          userId: user.id
-        });
-        const isAdmin = !!userRoles.find(x => x.roleId === ROLES.ADMIN);
-        const isSuperAdmin = !!userRoles.find(
-          x => x.roleId === ROLES.SUPER_ADMIN
-        );
-
-        if (!isAdmin && !isSuperAdmin) {
-          return { isLoggedIn: false };
-        }
+        // const userRoles = await new UserRoleService(systemContext).getAll({
+        //   userId: user.id
+        // });
+        // const isAdmin = !!userRoles.find(x => x.roleId === ROLES.ADMIN);
+        // const isSuperAdmin = !!userRoles.find(
+        //   x => x.roleId === ROLES.SUPER_ADMIN
+        // );
+        //
+        // if (!isAdmin && !isSuperAdmin) {
+        //   return { isLoggedIn: false };
+        // }
 
         const userTemporaryLoginCode = await new UserTemporaryLoginCodeService(
           systemContext
