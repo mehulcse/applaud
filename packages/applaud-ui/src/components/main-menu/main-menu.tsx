@@ -1,17 +1,14 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 
-import {
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  ListSubheader,
-  Divider
-} from "@material-ui/core";
+import { List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 import { styled } from "@material-ui/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTachometerAlt, faUsers } from "@fortawesome/free-solid-svg-icons";
+import {
+  faTachometerAlt,
+  faUsers,
+  faPeopleCarry
+} from "@fortawesome/free-solid-svg-icons";
 
 import AppLink from "../app-link";
 
@@ -22,7 +19,8 @@ const StyledListItemText = styled(ListItemText)({
 });
 
 const StyledFontAwesomeIcon = styled(FontAwesomeIcon)({
-  fontSize: "0.9rem"
+  fontSize: "0.9rem",
+  color: "black"
 });
 
 function MainMenuContent({ location }: { location: any }) {
@@ -58,6 +56,14 @@ function MainMenuContent({ location }: { location: any }) {
             <StyledFontAwesomeIcon icon={faUsers} fixedWidth />
           </ListItemIcon>
           <StyledListItemText primary="Users" />
+        </ListItem>
+      </AppLink>
+      <AppLink to="/teams">
+        <ListItem button selected={basePath === "/teams"}>
+          <ListItemIcon>
+            <StyledFontAwesomeIcon icon={faPeopleCarry} fixedWidth />
+          </ListItemIcon>
+          <StyledListItemText primary="Teams" />
         </ListItem>
       </AppLink>
     </List>
