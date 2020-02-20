@@ -404,6 +404,8 @@ export type User = {
   firstName: Scalars["String"];
   lastName: Scalars["String"];
   email: Scalars["String"];
+  userRoles: Array<UserRole>;
+  fullName: Scalars["String"];
 };
 
 export type UserConnection = {
@@ -501,6 +503,50 @@ export type LoginUserMutation = { __typename?: "Mutation" } & {
   loginUser: { __typename?: "LoginUserResponse" } & Pick<
     LoginUserResponse,
     "isLoggedIn"
+  >;
+};
+
+export type TeamQueryVariables = {
+  id: Scalars["Int"];
+};
+
+export type TeamQuery = { __typename?: "Query" } & {
+  team: Maybe<{ __typename?: "Team" } & Pick<Team, "id" | "name">>;
+};
+
+export type CreateTeamMutationVariables = {
+  input: CreateTeamInput;
+};
+
+export type CreateTeamMutation = { __typename?: "Mutation" } & {
+  createTeam: { __typename?: "CreateTeamResponse" } & {
+    team: { __typename?: "Team" } & Pick<Team, "id">;
+  };
+};
+
+export type UpdateTeamMutationVariables = {
+  input: UpdateTeamInput;
+};
+
+export type UpdateTeamMutation = { __typename?: "Mutation" } & {
+  updateTeam: { __typename?: "UpdateTeamResponse" } & {
+    team: { __typename?: "Team" } & Pick<Team, "id">;
+  };
+};
+
+export type TeamsQueryVariables = {
+  search?: Maybe<Scalars["String"]>;
+  limit?: Maybe<Scalars["Int"]>;
+  offset?: Maybe<Scalars["Int"]>;
+};
+
+export type TeamsQuery = { __typename?: "Query" } & {
+  teams: Maybe<
+    { __typename?: "TeamsConnection" } & Pick<TeamsConnection, "totalCount"> & {
+        nodes: Maybe<
+          Array<{ __typename?: "Team" } & Pick<Team, "id" | "name">>
+        >;
+      }
   >;
 };
 
@@ -942,6 +988,303 @@ export type LoginUserMutationResult = ApolloReactCommon.MutationResult<
 export type LoginUserMutationOptions = ApolloReactCommon.BaseMutationOptions<
   LoginUserMutation,
   LoginUserMutationVariables
+>;
+export const TeamDocument = gql`
+  query Team($id: Int!) {
+    team(id: $id) {
+      id
+      name
+    }
+  }
+`;
+export type TeamComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<TeamQuery, TeamQueryVariables>,
+  "query"
+> &
+  ({ variables: TeamQueryVariables; skip?: boolean } | { skip: boolean });
+
+export const TeamComponent = (props: TeamComponentProps) => (
+  <ApolloReactComponents.Query<TeamQuery, TeamQueryVariables>
+    query={TeamDocument}
+    {...props}
+  />
+);
+
+export type TeamProps<TChildProps = {}> = ApolloReactHoc.DataProps<
+  TeamQuery,
+  TeamQueryVariables
+> &
+  TChildProps;
+export function withTeam<TProps, TChildProps = {}>(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    TeamQuery,
+    TeamQueryVariables,
+    TeamProps<TChildProps>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    TeamQuery,
+    TeamQueryVariables,
+    TeamProps<TChildProps>
+  >(TeamDocument, {
+    alias: "withTeam",
+    ...operationOptions
+  });
+}
+
+export function useTeamQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<TeamQuery, TeamQueryVariables>
+) {
+  return ApolloReactHooks.useQuery<TeamQuery, TeamQueryVariables>(
+    TeamDocument,
+    baseOptions
+  );
+}
+export function useTeamLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    TeamQuery,
+    TeamQueryVariables
+  >
+) {
+  return ApolloReactHooks.useLazyQuery<TeamQuery, TeamQueryVariables>(
+    TeamDocument,
+    baseOptions
+  );
+}
+
+export type TeamQueryHookResult = ReturnType<typeof useTeamQuery>;
+export type TeamQueryResult = ApolloReactCommon.QueryResult<
+  TeamQuery,
+  TeamQueryVariables
+>;
+export const CreateTeamDocument = gql`
+  mutation CreateTeam($input: CreateTeamInput!) {
+    createTeam(input: $input) {
+      team {
+        id
+      }
+    }
+  }
+`;
+export type CreateTeamMutationFn = ApolloReactCommon.MutationFunction<
+  CreateTeamMutation,
+  CreateTeamMutationVariables
+>;
+export type CreateTeamComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<
+    CreateTeamMutation,
+    CreateTeamMutationVariables
+  >,
+  "mutation"
+>;
+
+export const CreateTeamComponent = (props: CreateTeamComponentProps) => (
+  <ApolloReactComponents.Mutation<
+    CreateTeamMutation,
+    CreateTeamMutationVariables
+  >
+    mutation={CreateTeamDocument}
+    {...props}
+  />
+);
+
+export type CreateTeamProps<TChildProps = {}> = ApolloReactHoc.MutateProps<
+  CreateTeamMutation,
+  CreateTeamMutationVariables
+> &
+  TChildProps;
+export function withCreateTeam<TProps, TChildProps = {}>(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    CreateTeamMutation,
+    CreateTeamMutationVariables,
+    CreateTeamProps<TChildProps>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    CreateTeamMutation,
+    CreateTeamMutationVariables,
+    CreateTeamProps<TChildProps>
+  >(CreateTeamDocument, {
+    alias: "withCreateTeam",
+    ...operationOptions
+  });
+}
+
+export function useCreateTeamMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    CreateTeamMutation,
+    CreateTeamMutationVariables
+  >
+) {
+  return ApolloReactHooks.useMutation<
+    CreateTeamMutation,
+    CreateTeamMutationVariables
+  >(CreateTeamDocument, baseOptions);
+}
+export type CreateTeamMutationHookResult = ReturnType<
+  typeof useCreateTeamMutation
+>;
+export type CreateTeamMutationResult = ApolloReactCommon.MutationResult<
+  CreateTeamMutation
+>;
+export type CreateTeamMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  CreateTeamMutation,
+  CreateTeamMutationVariables
+>;
+export const UpdateTeamDocument = gql`
+  mutation UpdateTeam($input: UpdateTeamInput!) {
+    updateTeam(input: $input) {
+      team {
+        id
+      }
+    }
+  }
+`;
+export type UpdateTeamMutationFn = ApolloReactCommon.MutationFunction<
+  UpdateTeamMutation,
+  UpdateTeamMutationVariables
+>;
+export type UpdateTeamComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<
+    UpdateTeamMutation,
+    UpdateTeamMutationVariables
+  >,
+  "mutation"
+>;
+
+export const UpdateTeamComponent = (props: UpdateTeamComponentProps) => (
+  <ApolloReactComponents.Mutation<
+    UpdateTeamMutation,
+    UpdateTeamMutationVariables
+  >
+    mutation={UpdateTeamDocument}
+    {...props}
+  />
+);
+
+export type UpdateTeamProps<TChildProps = {}> = ApolloReactHoc.MutateProps<
+  UpdateTeamMutation,
+  UpdateTeamMutationVariables
+> &
+  TChildProps;
+export function withUpdateTeam<TProps, TChildProps = {}>(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    UpdateTeamMutation,
+    UpdateTeamMutationVariables,
+    UpdateTeamProps<TChildProps>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    UpdateTeamMutation,
+    UpdateTeamMutationVariables,
+    UpdateTeamProps<TChildProps>
+  >(UpdateTeamDocument, {
+    alias: "withUpdateTeam",
+    ...operationOptions
+  });
+}
+
+export function useUpdateTeamMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    UpdateTeamMutation,
+    UpdateTeamMutationVariables
+  >
+) {
+  return ApolloReactHooks.useMutation<
+    UpdateTeamMutation,
+    UpdateTeamMutationVariables
+  >(UpdateTeamDocument, baseOptions);
+}
+export type UpdateTeamMutationHookResult = ReturnType<
+  typeof useUpdateTeamMutation
+>;
+export type UpdateTeamMutationResult = ApolloReactCommon.MutationResult<
+  UpdateTeamMutation
+>;
+export type UpdateTeamMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  UpdateTeamMutation,
+  UpdateTeamMutationVariables
+>;
+export const TeamsDocument = gql`
+  query Teams($search: String, $limit: Int, $offset: Int) {
+    teams(search: $search, limit: $limit, offset: $offset) {
+      totalCount
+      nodes {
+        id
+        name
+      }
+    }
+  }
+`;
+export type TeamsComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<TeamsQuery, TeamsQueryVariables>,
+  "query"
+>;
+
+export const TeamsComponent = (props: TeamsComponentProps) => (
+  <ApolloReactComponents.Query<TeamsQuery, TeamsQueryVariables>
+    query={TeamsDocument}
+    {...props}
+  />
+);
+
+export type TeamsProps<TChildProps = {}> = ApolloReactHoc.DataProps<
+  TeamsQuery,
+  TeamsQueryVariables
+> &
+  TChildProps;
+export function withTeams<TProps, TChildProps = {}>(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    TeamsQuery,
+    TeamsQueryVariables,
+    TeamsProps<TChildProps>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    TeamsQuery,
+    TeamsQueryVariables,
+    TeamsProps<TChildProps>
+  >(TeamsDocument, {
+    alias: "withTeams",
+    ...operationOptions
+  });
+}
+
+export function useTeamsQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    TeamsQuery,
+    TeamsQueryVariables
+  >
+) {
+  return ApolloReactHooks.useQuery<TeamsQuery, TeamsQueryVariables>(
+    TeamsDocument,
+    baseOptions
+  );
+}
+export function useTeamsLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    TeamsQuery,
+    TeamsQueryVariables
+  >
+) {
+  return ApolloReactHooks.useLazyQuery<TeamsQuery, TeamsQueryVariables>(
+    TeamsDocument,
+    baseOptions
+  );
+}
+
+export type TeamsQueryHookResult = ReturnType<typeof useTeamsQuery>;
+export type TeamsQueryResult = ApolloReactCommon.QueryResult<
+  TeamsQuery,
+  TeamsQueryVariables
 >;
 export const UserDetailDocument = gql`
   query UserDetail($id: Int!) {
