@@ -1,0 +1,8 @@
+query AuthManager {
+  viewer {
+    id
+    firstName
+    lastName
+    email
+  }
+}

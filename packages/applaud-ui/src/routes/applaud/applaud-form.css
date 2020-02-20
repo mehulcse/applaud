@@ -19,7 +19,7 @@
 }
 .preview {
   height: 400px;
-  width: 400px;
+  width: 100%;
   border: 1px solid;
 }
 .message-preview {

@@ -25,7 +25,7 @@ function MessageEditor(props: Props) {
   };
 
   return (
-    <Grid container spacing={3} xs={6}>
+    <Grid container spacing={3} item xs={6}>
       <MdEditor
         name="content-editor"
         ref={editorRef}

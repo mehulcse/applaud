@@ -1,0 +1,61 @@
+version: "3.7"
+
+services:
+  db_migrate:
+    build: .
+    env_file:
+      - ./.env
+    environment:
+      PROCESS: migrate
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: alita
+      DB_NAME: alita
+  api:
+    build: .
+    ports:
+      - "4000:3000"
+    depends_on:
+      - db_migrate
+      - mysql
+    env_file:
+      - ./.env
+    environment:
+      PROCESS: api
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: alita
+      DB_NAME: alita
+  worker:
+    build: .
+    depends_on:
+      - db_migrate
+      - mysql
+    env_file:
+      - ./.env
+    environment:
+      PROCESS: worker
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: alita
+      DB_NAME: alita
+  mysql:
+    image: mysql:5.7.25
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: alita
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_DATABASE: alita
+    ports:
+      - 33306:3306
+    volumes:
+      - ./.data/mysql:/var/lib/mysql
+#  sqs:
+#    image: docker.pkg.github.com/jordanfarrer/alpine-sqs/alpine-sqs:1.0
+#    restart: unless-stopped
+#    ports:
+#      - 9324:9324
+#      - 9325:9325

@@ -1,5 +1,5 @@
 overwrite: true
-schema: "schema.graphql"
+schema: "../applaud-service/src/graphql/admin/schema.graphql"
 documents: "src/**/*.graphql"
 generates:
   ./src/generated/graphql.tsx:
