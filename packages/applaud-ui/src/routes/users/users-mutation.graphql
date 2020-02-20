@@ -5,11 +5,3 @@ mutation CreateUser($input: CreateUserInput!){
     }
   }
 }
-
-mutation UpdateUser($input: UpdateUserInput!){
-  updateUser(input: $input){
-    user {
-      id
-    }
-  }
-}

@@ -126,9 +126,6 @@ class PageLayout extends Component<Props, State> {
             open={Boolean(this.state.openEl)}
             onClose={this.handleClose}
           >
-            <MenuItem button component={Link} to={`/profile`}>
-              Profile
-            </MenuItem>
             <MenuItem onClick={this.signOut}>Sign out</MenuItem>
           </StyledMenu>
         </ListItem>

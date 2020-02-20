@@ -11,10 +11,7 @@ import {
 } from "@material-ui/core";
 import { styled } from "@material-ui/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faTachometerAlt,
-  faUsers
-} from "@fortawesome/free-solid-svg-icons";
+import { faTachometerAlt, faUsers } from "@fortawesome/free-solid-svg-icons";
 
 import AppLink from "../app-link";
 
@@ -35,14 +32,7 @@ function MainMenuContent({ location }: { location: any }) {
     basePath = pathParts[0];
   }
   return (
-    <List
-      subheader={
-        <>
-          <ListSubheader>ADMIN</ListSubheader>
-          <Divider />
-        </>
-      }
-    >
+    <List>
       <AppLink to="/dashboard">
         <ListItem button selected={basePath === "/dashboard"}>
           <ListItemIcon>
@@ -56,7 +46,8 @@ function MainMenuContent({ location }: { location: any }) {
           <ListItemIcon>
             <img
               style={{ maxHeight: "15px" }}
-              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAABmJLR0QA/wD/AP+gvaeTAAACY0lEQVRIia3WS4jOURjH8Y/RCA1yqzFFJhuzsWBDKQshpSQ02ExuG8rGLSWFhSQ7Jtm4LiiUjR2xwMIlMkljQcmlXJIhgzGvxXn+8/69/vMO73jq9P5/5/J8zznPec55qc3WoBMLaxzfr43BZWwLvR8lfETL/wTNCMcltGE4bod+inH/E7YLD/AVczAJLwJ2FfWDcT4SV8JpZoujbihm4UvA2ivGLsQhNA8EWY3Z8V2Pizifa6+L31b0BmxT1I1Dd9TdrAZZEJ06Q7eFfh+AtfiOldG+L9p/YD6mKMe0OzepP+y68nbU4XHovRimHJuN0b8Rd3KTaUFPDtZUBJmbm10zlofuwnhsCP0GIwIyLSbwMNoe410ONFuBXYnGU6Hvhj4sHYDO0Dulw/IytmcCduec50trJWSmFNifsfxFyvvchFWhP2A0toR+GSs62g9oRyXoYjRcCH0j9DEMwX3lWNXjeeitGBUTKAIdyUNaYiUl6URlTnukGCzxe6zWh36Hhph1EaSEc3nQ6X46dcUWZVdOFqunofdIV9LrKqC+/GuWTll/HfNlupTMJXzCWClRq405noHa/xJSwjM8ie+DUqyeDTCmjXR6Pv8DKCtfpRxaoRzbovJKemasqwFSko5yZhNxsqBPr5Tw4EwNkO+YKp3Es+GsDvdyfXpiEX12rQbQNenFzfQ36To6EPotlqqwSzVuXb48ihWdkHKmsRICmwcB6JXyb2L4KrylM2tQTr5/KR2YV81xkbUo31sDlc/YbhD/EcZLifutCuQCJtfifEhB3Vgsk57zJule65BicasWCPwCXKNZew8dx5sAAAAASUVORK5CYII=" />
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAABmJLR0QA/wD/AP+gvaeTAAACY0lEQVRIia3WS4jOURjH8Y/RCA1yqzFFJhuzsWBDKQshpSQ02ExuG8rGLSWFhSQ7Jtm4LiiUjR2xwMIlMkljQcmlXJIhgzGvxXn+8/69/vMO73jq9P5/5/J8zznPec55qc3WoBMLaxzfr43BZWwLvR8lfETL/wTNCMcltGE4bod+inH/E7YLD/AVczAJLwJ2FfWDcT4SV8JpZoujbihm4UvA2ivGLsQhNA8EWY3Z8V2Pizifa6+L31b0BmxT1I1Dd9TdrAZZEJ06Q7eFfh+AtfiOldG+L9p/YD6mKMe0OzepP+y68nbU4XHovRimHJuN0b8Rd3KTaUFPDtZUBJmbm10zlofuwnhsCP0GIwIyLSbwMNoe410ONFuBXYnGU6Hvhj4sHYDO0Dulw/IytmcCduec50trJWSmFNifsfxFyvvchFWhP2A0toR+GSs62g9oRyXoYjRcCH0j9DEMwX3lWNXjeeitGBUTKAIdyUNaYiUl6URlTnukGCzxe6zWh36Hhph1EaSEc3nQ6X46dcUWZVdOFqunofdIV9LrKqC+/GuWTll/HfNlupTMJXzCWClRq405noHa/xJSwjM8ie+DUqyeDTCmjXR6Pv8DKCtfpRxaoRzbovJKemasqwFSko5yZhNxsqBPr5Tw4EwNkO+YKp3Es+GsDvdyfXpiEX12rQbQNenFzfQ36To6EPotlqqwSzVuXb48ihWdkHKmsRICmwcB6JXyb2L4KrylM2tQTr5/KR2YV81xkbUo31sDlc/YbhD/EcZLifutCuQCJtfifEhB3Vgsk57zJule65BicasWCPwCXKNZew8dx5sAAAAASUVORK5CYII="
+            />
           </ListItemIcon>
           <StyledListItemText primary="Applaud" />
         </ListItem>
