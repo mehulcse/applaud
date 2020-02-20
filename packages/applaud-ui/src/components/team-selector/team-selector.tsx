@@ -76,7 +76,7 @@ function TeamSelectorContainer({
       placeholder={placeholder || "Select Team"}
       id="team-select"
       label={label}
-      isLoading={false} // TODO: set loading bool
+      isLoading={selectedTeamsResult.loading || teamsResult.loading}
       onInputChange={onInputChange}
       onValueChange={onValueChange}
     />
