@@ -3,8 +3,10 @@ import { sign } from "jsonwebtoken";
 import Config from "../config";
 import { AUTH_COOKIE_NAME } from "../constants";
 import { GraphQLContext } from "../types/graphql-context";
+import { getLogger } from "../logger";
 
 export async function setAuthCookie(context: GraphQLContext, userId: number) {
+  const logger = getLogger("cookieHelper");
   const jwtSecret = Config.getJwtSecret();
   // Make all tokens expire each Saturday at 11:59:59 PM
   const expirationDate = moment()
@@ -20,7 +22,9 @@ export async function setAuthCookie(context: GraphQLContext, userId: number) {
     issuer: "alita"
   });
 
+  logger.debug(context);
   if (context.response) {
+    logger.debug("in if");
     context.response.cookie(AUTH_COOKIE_NAME, ourToken, {
       httpOnly: true,
       domain: Config.getIsLocal() ? "localhost" : Config.getRootDomain(),
@@ -28,6 +32,7 @@ export async function setAuthCookie(context: GraphQLContext, userId: number) {
       expires: expirationDate.toDate()
     });
   } else {
+    logger.debug("in else");
     context.cookiesToAdd = [
       {
         name: AUTH_COOKIE_NAME,
@@ -39,4 +44,5 @@ export async function setAuthCookie(context: GraphQLContext, userId: number) {
       }
     ];
   }
+  logger.debug(context);
 }

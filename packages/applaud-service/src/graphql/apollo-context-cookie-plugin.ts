@@ -37,10 +37,12 @@ export const ApolloContextCookiePlugin: ApolloServerPlugin = {
               cookieString += "HttpOnly; ";
             }
             if (cookie.secure === true) {
-              cookieString += "Secure";
+              cookieString += "Secure;";
             }
+            cookieString += "SameSite=None;";
             return cookieString;
           });
+          getLogger().debug(cookieStrings);
           cookieStrings.forEach(cookieString => {
             http.headers.set("Set-Cookie", cookieString);
           });

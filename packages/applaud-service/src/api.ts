@@ -26,25 +26,25 @@ export async function start() {
   // bugsnagClient.use(bugsnagExpress);
   // const bugsnagMiddleware = bugsnagClient.getPlugin("express");
 
-  // const corsOrigin = config.getCorsOrigin();
+  const corsOrigin = Config.getCorsOrigin();
 
   const app = express();
   // app.use(bugsnagMiddleware.requestHandler);
   app.use(helmet());
 
-  // const corsOptions = {
-  //   credentials: true,
-  //   origin: corsOrigin
-  // };
-  app.options("*", cors());
+  const corsOptions = {
+    credentials: true,
+    origin: corsOrigin
+  };
+  app.options("*", cors(corsOptions));
   await getDb();
 
-  app.get("/health", cors(), (_req, res) => {
+  app.get("/health", cors(corsOptions), (_req, res) => {
     res.send({ ok: true }).status(200);
   });
 
   app.use(gracefulShutdownMiddleware(app));
-  app.use(cors());
+  app.use(cors(corsOptions));
   app.use(bodyParser.json());
   app.use(cookieParser());
   app.use(authMiddleware);

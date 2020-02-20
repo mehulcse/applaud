@@ -55,6 +55,7 @@ export default {
           if (!user) {
             return { isLoggedIn: false };
           }
+          debugger;
 
           // const userRoles = await new UserRoleService(systemContext).getAll({
           //   userId: user.id
@@ -67,7 +68,8 @@ export default {
           // if (!isAdmin && !isSuperAdmin) {
           //   return { isLoggedIn: false };
           // }
-
+          logger.debug(context);
+          logger.debug(systemContext);
           await setAuthCookie(context, user.id);
           return { isLoggedIn: true };
         } catch (e) {

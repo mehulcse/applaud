@@ -1,6 +1,6 @@
 export const SYSTEM_USER_ID = 1;
 
-export const COOKIE_PREFIX = "rcm";
+export const COOKIE_PREFIX = "applaud";
 export const AUTH_COOKIE_NAME = `${COOKIE_PREFIX}:auth`;
 export const PARTNER_COOKIE_NAME = `${COOKIE_PREFIX}:partner`;
 export const VENDOR_COOKIE_NAME = `${COOKIE_PREFIX}:vendor`;
