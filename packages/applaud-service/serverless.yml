@@ -1,0 +1,75 @@
+service:
+  name: applaud-service
+
+custom:
+  serverless-offline:
+    port: 4000
+    disableCookieValidation: true
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: true
+
+plugins:
+  - serverless-webpack
+  - serverless-offline
+
+Resources:
+  AWSLambdaVPCAccessExecutionRole:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      Description: Creating policy for vpc connetion.
+      Roles:
+        - {"Ref" : "IamRoleLambdaExecution"}
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - ec2:CreateNetworkInterface
+              - ec2:DescribeNetworkInterfaces
+              - ec2:DeleteNetworkInterface
+            Resource: "*"
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: us-west-2
+  timeout: 30
+  stage: ${opt:stage,'local'}
+  apiGateway:
+    minimumCompressionSize: 256 # Enable gzip compression for responses > 1 KB
+    restApiId: ${file(./serverless-${self:provider.stage}.yml):API_GATEWAY_REST_ID}
+    restApiRootResourceId: ${file(./serverless-${self:provider.stage}.yml):API_GATEWAY_REST_RESOURCE_ID}
+  environment: ${file(./serverless-${self:provider.stage}.yml)}
+  vpc:
+    securityGroupIds:
+      - sg-0a8b0cf86a5913290
+    subnetIds:
+      - subnet-49b6fa13
+      - subnet-e3c2dfcb
+      - subnet-7b0d7d02
+      - subnet-b87deff3
+
+functions:
+  health:
+    handler: src/handlers.health
+    events:
+      - http:
+          method: get
+          path: health
+  adminGraphQL:
+    handler: src/handlers.adminGraphQL
+    events:
+      - http:
+          method: post
+          path: admin/graphql
+          cors: true
+  adminGraphQLPlayground:
+    handler: src/handlers.adminGraphQL
+    events:
+      - http:
+          method: get
+          path: admin/graphql
+          cors: true
+  migrate:
+    handler: migration.migrate

@@ -23,10 +23,10 @@ yarn-debug.log*
 yarn-error.log*
 
 .env
-/packages/rcm-*/.env
-/packages/rcm-*/.env.example
-
-/packages/rcm-*/.data
+/packages/applaud-*/.env
+/packages/applaud-*/.env.example
+/packages/applaud-*/.serverless
+/packages/applaud-*/.data
 
 .vscode
 
