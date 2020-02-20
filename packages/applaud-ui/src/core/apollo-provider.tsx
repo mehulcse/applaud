@@ -12,7 +12,7 @@ interface ClientOptions {
 export const getClient = (options?: ClientOptions) =>
   new ApolloClient({
     uri: process.env.REACT_APP_GRAPHQL_URL,
-    credentials: "include",
+    // credentials: "include",
     fetchOptions: {
       fetchOptions: {
         mode: "no-cors"
