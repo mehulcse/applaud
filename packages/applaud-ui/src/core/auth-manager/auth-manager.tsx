@@ -19,6 +19,8 @@ export interface AuthContextValue {
   refresh: () => Promise<any>;
   logout: () => Promise<any>;
   user: ViewerUser | null;
+  userRoles: string[];
+  isAdmin: boolean;
 }
 
 interface Props extends RouteComponentProps {
@@ -32,7 +34,9 @@ export const AuthContext = React.createContext<AuthContextValue>({
   isLoggedIn: false,
   refresh: async () => {},
   logout: async () => {},
-  user: null
+  user: null,
+  userRoles: [],
+  isAdmin: false
 });
 
 class AuthManager extends Component<Props> {
@@ -46,14 +50,23 @@ class AuthManager extends Component<Props> {
         await logoutUserMutation();
         await queryResult.refetch();
       },
-      user: null
+      user: null,
+      userRoles: [],
+      isAdmin: false
     };
 
     if (!queryResult.loading) {
       const { data, error } = queryResult;
       if (data) {
-        contextValue.isLoggedIn = !error && !!data.viewer;
-        contextValue.user = data.viewer;
+        contextValue.isLoggedIn = !error && !!data.viewer && !!data.viewer.user;
+        contextValue.user =
+          data && data.viewer && data.viewer.user ? data.viewer.user : null;
+        contextValue.userRoles =
+          data && data.viewer && data.viewer.userRoles
+            ? data.viewer.userRoles
+            : [];
+        contextValue.isAdmin =
+          data && data.viewer && data.viewer ? !!data.viewer.isAdmin : false;
       }
     }
 

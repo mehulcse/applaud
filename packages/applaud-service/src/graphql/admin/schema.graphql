@@ -278,6 +278,14 @@ type UserRole {
   role: Role!
 }
 
+type Viewer {
+  isAdmin: Boolean
+  userRoles: [String!]!
+
+  # relationships
+  user: User!
+}
+
 input CreateUserRoleInput {
   userId: Int!
   roleId: String!
@@ -317,6 +325,7 @@ type Query {
     offset: Int
     sort: DepartmentsSort
     search: String
+    ids: [Int!]
   ): DepartmentsConnection
   roles: RoleConnection
   team(id: Int!): Team
@@ -325,6 +334,7 @@ type Query {
     offset: Int
     sort: TeamsSort
     search: String
+    ids: [Int!]
   ): TeamsConnection
   user(id: Int!): User
   users(
@@ -332,8 +342,9 @@ type Query {
     offset: Int
     sort: UsersSort
     search: String
+    ids: [Int!]
   ): UserConnection
-  viewer: User
+  viewer: Viewer
 }
 
 schema {

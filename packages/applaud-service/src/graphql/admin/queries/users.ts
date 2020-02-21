@@ -5,6 +5,8 @@ import User from "../../../services/internal/db/models/user";
 
 interface Args extends PaginationArgs {
   search?: string;
+  roleIds?: string[];
+  ids?: number[];
 }
 
 export default {

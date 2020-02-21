@@ -1,14 +1,5 @@
-// import nodemailer, {SendMailOptions} from "nodemailer";
 import AWS from "aws-sdk";
 import Config from "../../config";
-// import {getSESClient} from "../aws";
-// import Handlebars from "handlebars";
-// import fs from "fs";
-// const previewEmail = require("preview-email");
-// import htmlToText from "html-to-text";
-
-// import path from "path";
-
 import { getLogger } from "../../logger";
 
 const logger = getLogger("emails");
@@ -19,29 +10,17 @@ export const sendEmailTemporaryLoginCode = async (
   magicLink: string
 ) => {
   logger.debug("Generating temporary code email");
-  // const templateString = await getTemplateString("login-temporary-code");
-  // const template = Handlebars.compile(templateString);
-  // const html = template({ temporaryCode: code, magicLink });
   logger.debug(code);
-  // const message: SendMailOptions = {
-  //   from: "mehulthakkar02@gmail.com",
-  //   to,
-  //   subject: "Temporary Login Code",
-  //   text: code,
-  //   html: `<p>${code}</p>`
-  // };
-
   AWS.config.update({
     accessKeyId: Config.getAwsAccessKey(),
     secretAccessKey: Config.getAwsSecretKey(),
     region: Config.getAwsRegion()
   });
 
-  let params = {
+  const params = {
     Destination: {
       /* required */
       CcAddresses: [
-        "mehulthakkar02@gmail.com"
         /* more items */
       ],
       ToAddresses: [
@@ -67,39 +46,19 @@ export const sendEmailTemporaryLoginCode = async (
         Data: "Temporary Login Code"
       }
     },
-    Source: "mehulthakkar02@gmail.com" /* required */,
+    Source: "mehul.thakkar@tech9.com" /* required */,
     ReplyToAddresses: [
-      "mehulthakkar02@gmail.com"
+      "mehul.thakkar@tech9.com"
       /* more items */
     ]
   };
 
-  let sendPromise = await new AWS.SES({ apiVersion: "2010-12-01" })
+  const sendPromise = await new AWS.SES({ apiVersion: "2010-12-01" })
     .sendEmail(params)
     .promise();
 
-  // const transporter = nodemailer.createTransport({
-  //   SES: getSESClient()
-  // });
-  // if (config.getIsLocal()) {
-  //   await previewEmail(message);
-  // } else {
   logger.debug(params);
-  // const result = await transporter.sendMail(message);
   logger.debug(sendPromise);
   logger.debug("mail sent");
   // }
 };
-
-// export const getTemplateString = (name: string) => {
-//   return new Promise((resolve, reject) => {
-//     const filePath = path.resolve(__dirname, "templates", `${name}.html`);
-//     logger.debug(`Reading template file ${filePath}...`);
-//     fs.readFile(filePath, (err, data) => {
-//       if (err) {
-//         reject(err);
-//       }
-//       resolve(data.toString());
-//     });
-//   });
-// };

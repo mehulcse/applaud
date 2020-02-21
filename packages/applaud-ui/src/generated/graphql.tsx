@@ -279,7 +279,7 @@ export type Query = {
   teams?: Maybe<TeamsConnection>;
   user?: Maybe<User>;
   users?: Maybe<UserConnection>;
-  viewer?: Maybe<User>;
+  viewer?: Maybe<Viewer>;
 };
 
 export type QueryApplaudArgs = {
@@ -299,6 +299,7 @@ export type QueryDepartmentsArgs = {
   offset?: Maybe<Scalars["Int"]>;
   sort?: Maybe<DepartmentsSort>;
   search?: Maybe<Scalars["String"]>;
+  ids?: Maybe<Array<Scalars["Int"]>>;
 };
 
 export type QueryTeamArgs = {
@@ -310,6 +311,7 @@ export type QueryTeamsArgs = {
   offset?: Maybe<Scalars["Int"]>;
   sort?: Maybe<TeamsSort>;
   search?: Maybe<Scalars["String"]>;
+  ids?: Maybe<Array<Scalars["Int"]>>;
 };
 
 export type QueryUserArgs = {
@@ -321,6 +323,7 @@ export type QueryUsersArgs = {
   offset?: Maybe<Scalars["Int"]>;
   sort?: Maybe<UsersSort>;
   search?: Maybe<Scalars["String"]>;
+  ids?: Maybe<Array<Scalars["Int"]>>;
 };
 
 export type Role = {
@@ -449,6 +452,13 @@ export enum UserTeamsSort {
   IdAsc = "ID_ASC",
   IdDesc = "ID_DESC"
 }
+
+export type Viewer = {
+  __typename?: "Viewer";
+  isAdmin?: Maybe<Scalars["Boolean"]>;
+  userRoles: Array<Scalars["String"]>;
+  user: User;
+};
 export type DepartmentsForSelectorQueryVariables = {
   search?: Maybe<Scalars["String"]>;
   ids?: Maybe<Array<Scalars["Int"]>>;
@@ -494,10 +504,12 @@ export type AuthManagerQueryVariables = {};
 
 export type AuthManagerQuery = { __typename?: "Query" } & {
   viewer: Maybe<
-    { __typename?: "User" } & Pick<
-      User,
-      "id" | "firstName" | "lastName" | "email"
-    >
+    { __typename?: "Viewer" } & Pick<Viewer, "userRoles" | "isAdmin"> & {
+        user: { __typename?: "User" } & Pick<
+          User,
+          "id" | "firstName" | "lastName" | "email"
+        >;
+      }
   >;
 };
 
@@ -953,10 +965,14 @@ export type UsersForSelectorQueryResult = ApolloReactCommon.QueryResult<
 export const AuthManagerDocument = gql`
   query AuthManager {
     viewer {
-      id
-      firstName
-      lastName
-      email
+      userRoles
+      isAdmin
+      user {
+        id
+        firstName
+        lastName
+        email
+      }
     }
   }
 `;

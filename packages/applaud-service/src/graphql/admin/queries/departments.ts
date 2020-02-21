@@ -5,6 +5,7 @@ import Department from "../../../services/internal/db/models/department";
 
 interface Args extends PaginationArgs {
   search?: string;
+  ids?: number[];
 }
 
 export default {

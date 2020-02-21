@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { withRouter } from "react-router-dom";
-
 import { List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 import { styled } from "@material-ui/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { AuthContext } from "../../core/auth-manager";
 import {
   faTachometerAlt,
   faUsers,
@@ -26,6 +26,7 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)({
 
 function MainMenuContent({ location }: { location: any }) {
   const pathParts = location.pathname.match(/^\/([a-zA-Z-]+)/i);
+  const authContext = useContext(AuthContext);
   let basePath = "/";
   if (pathParts && pathParts.length && pathParts.length > 0) {
     basePath = pathParts[0];
@@ -51,30 +52,34 @@ function MainMenuContent({ location }: { location: any }) {
           <StyledListItemText primary="Applaud" />
         </ListItem>
       </AppLink>
-      <AppLink to="/users">
-        <ListItem button selected={basePath === "/users"}>
-          <ListItemIcon>
-            <StyledFontAwesomeIcon icon={faUsers} fixedWidth />
-          </ListItemIcon>
-          <StyledListItemText primary="Users" />
-        </ListItem>
-      </AppLink>
-      <AppLink to="/teams">
-        <ListItem button selected={basePath === "/teams"}>
-          <ListItemIcon>
-            <StyledFontAwesomeIcon icon={faPeopleCarry} fixedWidth />
-          </ListItemIcon>
-          <StyledListItemText primary="Teams" />
-        </ListItem>
-      </AppLink>
-      <AppLink to="/departments">
-        <ListItem button selected={basePath === "/departments"}>
-          <ListItemIcon>
-            <StyledFontAwesomeIcon icon={faStore} fixedWidth />
-          </ListItemIcon>
-          <StyledListItemText primary="Departments" />
-        </ListItem>
-      </AppLink>
+      {authContext && authContext.isAdmin && (
+        <>
+          <AppLink to="/users">
+            <ListItem button selected={basePath === "/users"}>
+              <ListItemIcon>
+                <StyledFontAwesomeIcon icon={faUsers} fixedWidth />
+              </ListItemIcon>
+              <StyledListItemText primary="Users" />
+            </ListItem>
+          </AppLink>
+          <AppLink to="/teams">
+            <ListItem button selected={basePath === "/teams"}>
+              <ListItemIcon>
+                <StyledFontAwesomeIcon icon={faPeopleCarry} fixedWidth />
+              </ListItemIcon>
+              <StyledListItemText primary="Teams" />
+            </ListItem>
+          </AppLink>
+          <AppLink to="/departments">
+            <ListItem button selected={basePath === "/departments"}>
+              <ListItemIcon>
+                <StyledFontAwesomeIcon icon={faStore} fixedWidth />
+              </ListItemIcon>
+              <StyledListItemText primary="Departments" />
+            </ListItem>
+          </AppLink>
+        </>
+      )}
     </List>
   );
 }
