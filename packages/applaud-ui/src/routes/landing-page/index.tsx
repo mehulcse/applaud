@@ -8,6 +8,7 @@ import {
   Toolbar,
   AppBar
 } from "@material-ui/core";
+import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import AppLink from "../../components/app-link";
 import Section from "./home-section";
 import logo from '../../logo.svg';
@@ -113,8 +114,27 @@ const useStyles = makeStyles(() =>
   })
 );
 
+interface Props {
+    children: React.ReactElement;
+}
+
 function LandingPage() {
   const classes = useStyles();
+
+    function ColorChangeScroll(props: Props) {
+        const { children } = props;
+        // Note that you normally won't need to set the window ref as useScrollTrigger
+        // will default to window.
+        // This is only being set here because the demo is in an iframe.
+        const trigger = useScrollTrigger({
+            disableHysteresis: true,
+            threshold: 0,
+        });
+
+        return React.cloneElement(children, {
+            color: trigger ? "" : "transparent",
+        });
+    }
 
   return (
     <div id="home" className={classes.container}>
@@ -122,19 +142,21 @@ function LandingPage() {
       <Box display={{ xs: 'none', lg: 'block' }}>
           {patches.map((patch, index) => <img src={patch.image} style={{position:'absolute'}} className={classes[patch.class as keyof typeof classes]} key={index} />)}
       </Box>
-      <AppBar color="transparent" className={classes.bar}>
-        <Toolbar className={classes.toolbar}>
-            <img src={logo} alt="logo" className={classes.logo} />
-          <AppLink to="/login">
-            <Button
-                variant="contained"
-                color="secondary"
-            >
-                Login
-            </Button>
-          </AppLink>
-        </Toolbar>
-      </AppBar>
+      <ColorChangeScroll>
+          <AppBar color="transparent" className={classes.bar}>
+              <Toolbar className={classes.toolbar}>
+                  <img src={logo} alt="logo" className={classes.logo} />
+                  <AppLink to="/login">
+                      <Button
+                          variant="contained"
+                          color="secondary"
+                      >
+                          Login
+                      </Button>
+                  </AppLink>
+              </Toolbar>
+          </AppBar>
+      </ColorChangeScroll>
       <Grid container justify="center">
         {content.map((section, index) => (
           <Section
