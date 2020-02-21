@@ -38,8 +38,35 @@ const content = [
   }
 ];
 
+const patches = [
+  {
+    image: "homepage-images/green.svg",
+    class: "green",
+  },
+  {
+    image: "homepage-images/maroon.svg",
+    class: "maroon",
+  },
+  {
+    image: "homepage-images/skyblue.svg",
+    class: "skyblue",
+  },
+  {
+    image: "homepage-images/rose.svg",
+    class: "rose",
+  },
+  {
+    image: "homepage-images/blue.svg",
+    class: "blue",
+  }
+];
+
 const useStyles = makeStyles(() =>
   createStyles({
+    container: {
+      position: "relative",
+      overflowX: "hidden"
+    },
     bar: {
       boxShadow: "none"
     },
@@ -50,6 +77,31 @@ const useStyles = makeStyles(() =>
     button: {
       backgroundColor: "#E01E5A",
       color: "white"
+    },
+    green: {
+      top: "-1%",
+      width: '50%',
+      right: "-2%",
+    },
+    maroon: {
+      top: "15%",
+      width: '7%',
+      left: "-3%",
+    },
+    skyblue: {
+      top: "27%",
+      width: '48%',
+      right: "-2%",
+    },
+    rose: {
+      top: "35%",
+      width: '7%',
+      left: "2%",
+    },
+    blue: {
+      bottom: "-7%",
+      width: '22%',
+      left: "-5%",
     }
   })
 );
@@ -58,9 +110,10 @@ function LandingPage() {
   const classes = useStyles();
 
   return (
-    <div id="home">
+    <div id="home" className={classes.container}>
       <CssBaseline />
-      <AppBar position="sticky" color="transparent" className={classes.bar}>
+      {patches.map((patch, index) => <img src={patch.image} style={{position:'absolute'}} className={classes[patch.class as keyof typeof classes]} key={index} />)}
+      <AppBar position="fixed" color="transparent" className={classes.bar}>
         <Toolbar>
           <Typography variant="h3" className={classes.title}>
             Applaud
