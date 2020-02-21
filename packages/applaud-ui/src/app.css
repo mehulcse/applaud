@@ -1,3 +1,6 @@
+body, h1, h2, h3, h4, h5, h6, span, p, button {
+  font-family: 'Comfortaa' !important;
+}
 .cardContainer {
   display: grid;
   grid-template-columns: auto auto auto;

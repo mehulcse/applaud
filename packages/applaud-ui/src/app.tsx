@@ -30,7 +30,6 @@ function App() {
           <Router>
             <AuthManager>
               <Switch>
-                <Route path="/" component={LandingPage} />
                 <Route path="/login" exact component={LoginContainer} />
                 <Route path="/dashboard" exact component={Dashboard} />
                 <Route path="/applaud" exact component={Applaud} />
@@ -38,6 +37,7 @@ function App() {
                 <Route path="/users/:id" exact component={UserDetail} />
                 <Route path="/teams" exact component={Teams} />
                 <Route path="/departments" exact component={Departments} />
+                <Route path="/" component={LandingPage} />
                 <Route path="*" component={NotFoundRouteHandler} />
               </Switch>
             </AuthManager>

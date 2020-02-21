@@ -96,6 +96,7 @@ class AuthManager extends Component<Props> {
       return null;
     }
     const { isLoading, isLoggedIn } = contextValue;
+
     if (isLoading) {
       return <Loader />;
     }
