@@ -299,6 +299,7 @@ export type QueryDepartmentsArgs = {
   offset?: Maybe<Scalars["Int"]>;
   sort?: Maybe<DepartmentsSort>;
   search?: Maybe<Scalars["String"]>;
+  ids?: Maybe<Array<Scalars["Int"]>>;
 };
 
 export type QueryTeamArgs = {
@@ -310,6 +311,7 @@ export type QueryTeamsArgs = {
   offset?: Maybe<Scalars["Int"]>;
   sort?: Maybe<TeamsSort>;
   search?: Maybe<Scalars["String"]>;
+  ids?: Maybe<Array<Scalars["Int"]>>;
 };
 
 export type QueryUserArgs = {
@@ -321,6 +323,7 @@ export type QueryUsersArgs = {
   offset?: Maybe<Scalars["Int"]>;
   sort?: Maybe<UsersSort>;
   search?: Maybe<Scalars["String"]>;
+  ids?: Maybe<Array<Scalars["Int"]>>;
 };
 
 export type Role = {
