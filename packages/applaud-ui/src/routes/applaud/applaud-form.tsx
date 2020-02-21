@@ -15,6 +15,7 @@ import congrats from "../../lotties/11272-party-popper.json";
 import gladiator from "../../lotties/15634-orange-super-hero.json";
 import { openSnackbar } from "../../components/notifier";
 import { AuthContext } from "../../core/auth-manager";
+import theme from "../../core/mui-theme";
 
 export const applaudCardData = [
   {
@@ -150,7 +151,7 @@ function ApplaudForm() {
         justify="center"
         style={{ minHeight: "70vh" }}
       >
-        <Grid container item xs={10}>
+        <Grid container item xs={10} spacing={2}>
           <Grid item xs={12}>
             <UserSelectorContainer
               label="To"
@@ -159,23 +160,31 @@ function ApplaudForm() {
             />
           </Grid>
           <Grid item xs={12}>
+            <Grid style={{ marginBottom: theme.spacing(1) }}>
+              <Typography variant="subtitle1">Card:</Typography>
+            </Grid>
             <section className="cardsWrapper">
               <section className="card-tiles-details">
-                {applaudCardData.map(item => {
-                  return (
-                    <StructureCard
-                      key={item.id}
-                      data={item}
-                      onClick={onCardClick.bind(null, item.id)}
-                      selected={cardId === item.id}
-                    />
-                  );
-                })}
+                <Grid container>
+                  {applaudCardData.map(item => {
+                    return (
+                      <Grid item xs={4}>
+                        <StructureCard
+                          key={item.id}
+                          data={item}
+                          onClick={onCardClick.bind(null, item.id)}
+                          selected={cardId === item.id}
+                        />
+                      </Grid>
+                    );
+                  })}
+                </Grid>
               </section>
             </section>
           </Grid>
           <Grid item xs={12}>
             <Grid item xs={8}>
+              <Typography variant="subtitle1">Clap:</Typography>
               <StarRatingComponent
                 name="clap"
                 value={clap}
@@ -203,7 +212,7 @@ function ApplaudForm() {
             <Button
               variant="contained"
               color="primary"
-              style={{ marginRight: 5 }}
+              style={{ marginRight: theme.spacing(1) }}
               onClick={onSend}
               disabled={!clap || !userId || !cardId || loading}
             >
