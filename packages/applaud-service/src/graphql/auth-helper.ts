@@ -15,13 +15,16 @@ export async function handleContext({
   context
 }: HandleContextOptions): Promise<GraphQLContext> {
   const logger = getLogger("auth helper");
-  const cookies = event.headers["Cookie"];
+  const cookies = event.headers["Cookie"] || event.headers["cookie"];
   const cookieArray = cookies
     ? cookies.split(";").map((x: any) => ({
         name: x.split("=")[0].trim(),
         value: x.split("=")[1].trim()
       }))
     : [];
+  logger.debug(event.headers);
+  logger.debug(cookies);
+  logger.debug(cookieArray);
   const authCookie = cookieArray.find((x: any) => x.name === AUTH_COOKIE_NAME);
   logger.debug(authCookie);
   const appContext: AppContext = {

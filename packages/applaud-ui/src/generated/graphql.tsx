@@ -449,6 +449,21 @@ export enum UserTeamsSort {
   IdAsc = "ID_ASC",
   IdDesc = "ID_DESC"
 }
+export type DepartmentsForSelectorQueryVariables = {
+  search?: Maybe<Scalars["String"]>;
+  ids?: Maybe<Array<Scalars["Int"]>>;
+};
+
+export type DepartmentsForSelectorQuery = { __typename?: "Query" } & {
+  departments: Maybe<
+    { __typename?: "DepartmentsConnection" } & {
+      nodes: Maybe<
+        Array<{ __typename?: "Department" } & Pick<Department, "id" | "name">>
+      >;
+    }
+  >;
+};
+
 export type TeamsForSelectorQueryVariables = {
   search?: Maybe<Scalars["String"]>;
   ids?: Maybe<Array<Scalars["Int"]>>;
@@ -492,6 +507,36 @@ export type LogoutUserMutation = { __typename?: "Mutation" } & {
   logoutUser: { __typename?: "LogoutUserResponse" } & Pick<
     LogoutUserResponse,
     "isLoggedOut"
+  >;
+};
+
+export type ApplaudQueryVariables = {
+  limit?: Maybe<Scalars["Int"]>;
+  offset?: Maybe<Scalars["Int"]>;
+  allocatedToUserId?: Maybe<Scalars["Int"]>;
+  allocatedByUserId?: Maybe<Scalars["Int"]>;
+};
+
+export type ApplaudQuery = { __typename?: "Query" } & {
+  applaud: Maybe<
+    { __typename?: "ApplaudConnection" } & Pick<
+      ApplaudConnection,
+      "totalCount"
+    > & {
+        nodes: Maybe<
+          Array<
+            { __typename?: "Applaud" } & Pick<
+              Applaud,
+              | "id"
+              | "allocatedByUserId"
+              | "allocatedToUserId"
+              | "message"
+              | "type"
+              | "createdAt"
+            >
+          >
+        >;
+      }
   >;
 };
 
@@ -652,6 +697,92 @@ export type UsersQuery = { __typename?: "Query" } & {
   >;
 };
 
+export const DepartmentsForSelectorDocument = gql`
+  query DepartmentsForSelector($search: String, $ids: [Int!]) {
+    departments(search: $search) {
+      nodes {
+        id
+        name
+      }
+    }
+  }
+`;
+export type DepartmentsForSelectorComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<
+    DepartmentsForSelectorQuery,
+    DepartmentsForSelectorQueryVariables
+  >,
+  "query"
+>;
+
+export const DepartmentsForSelectorComponent = (
+  props: DepartmentsForSelectorComponentProps
+) => (
+  <ApolloReactComponents.Query<
+    DepartmentsForSelectorQuery,
+    DepartmentsForSelectorQueryVariables
+  >
+    query={DepartmentsForSelectorDocument}
+    {...props}
+  />
+);
+
+export type DepartmentsForSelectorProps<
+  TChildProps = {}
+> = ApolloReactHoc.DataProps<
+  DepartmentsForSelectorQuery,
+  DepartmentsForSelectorQueryVariables
+> &
+  TChildProps;
+export function withDepartmentsForSelector<TProps, TChildProps = {}>(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    DepartmentsForSelectorQuery,
+    DepartmentsForSelectorQueryVariables,
+    DepartmentsForSelectorProps<TChildProps>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    DepartmentsForSelectorQuery,
+    DepartmentsForSelectorQueryVariables,
+    DepartmentsForSelectorProps<TChildProps>
+  >(DepartmentsForSelectorDocument, {
+    alias: "withDepartmentsForSelector",
+    ...operationOptions
+  });
+}
+
+export function useDepartmentsForSelectorQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    DepartmentsForSelectorQuery,
+    DepartmentsForSelectorQueryVariables
+  >
+) {
+  return ApolloReactHooks.useQuery<
+    DepartmentsForSelectorQuery,
+    DepartmentsForSelectorQueryVariables
+  >(DepartmentsForSelectorDocument, baseOptions);
+}
+export function useDepartmentsForSelectorLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    DepartmentsForSelectorQuery,
+    DepartmentsForSelectorQueryVariables
+  >
+) {
+  return ApolloReactHooks.useLazyQuery<
+    DepartmentsForSelectorQuery,
+    DepartmentsForSelectorQueryVariables
+  >(DepartmentsForSelectorDocument, baseOptions);
+}
+
+export type DepartmentsForSelectorQueryHookResult = ReturnType<
+  typeof useDepartmentsForSelectorQuery
+>;
+export type DepartmentsForSelectorQueryResult = ApolloReactCommon.QueryResult<
+  DepartmentsForSelectorQuery,
+  DepartmentsForSelectorQueryVariables
+>;
 export const TeamsForSelectorDocument = gql`
   query TeamsForSelector($search: String, $ids: [Int!]) {
     teams(search: $search) {
@@ -969,6 +1100,98 @@ export type LogoutUserMutationResult = ApolloReactCommon.MutationResult<
 export type LogoutUserMutationOptions = ApolloReactCommon.BaseMutationOptions<
   LogoutUserMutation,
   LogoutUserMutationVariables
+>;
+export const ApplaudDocument = gql`
+  query Applaud(
+    $limit: Int
+    $offset: Int
+    $allocatedToUserId: Int
+    $allocatedByUserId: Int
+  ) {
+    applaud(
+      limit: $limit
+      offset: $offset
+      allocatedToUserId: $allocatedToUserId
+      allocatedByUserId: $allocatedByUserId
+    ) {
+      totalCount
+      nodes {
+        id
+        allocatedByUserId
+        allocatedToUserId
+        message
+        type
+        createdAt
+      }
+    }
+  }
+`;
+export type ApplaudComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<
+    ApplaudQuery,
+    ApplaudQueryVariables
+  >,
+  "query"
+>;
+
+export const ApplaudComponent = (props: ApplaudComponentProps) => (
+  <ApolloReactComponents.Query<ApplaudQuery, ApplaudQueryVariables>
+    query={ApplaudDocument}
+    {...props}
+  />
+);
+
+export type ApplaudProps<TChildProps = {}> = ApolloReactHoc.DataProps<
+  ApplaudQuery,
+  ApplaudQueryVariables
+> &
+  TChildProps;
+export function withApplaud<TProps, TChildProps = {}>(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    ApplaudQuery,
+    ApplaudQueryVariables,
+    ApplaudProps<TChildProps>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    ApplaudQuery,
+    ApplaudQueryVariables,
+    ApplaudProps<TChildProps>
+  >(ApplaudDocument, {
+    alias: "withApplaud",
+    ...operationOptions
+  });
+}
+
+export function useApplaudQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    ApplaudQuery,
+    ApplaudQueryVariables
+  >
+) {
+  return ApolloReactHooks.useQuery<ApplaudQuery, ApplaudQueryVariables>(
+    ApplaudDocument,
+    baseOptions
+  );
+}
+export function useApplaudLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    ApplaudQuery,
+    ApplaudQueryVariables
+  >
+) {
+  return ApolloReactHooks.useLazyQuery<ApplaudQuery, ApplaudQueryVariables>(
+    ApplaudDocument,
+    baseOptions
+  );
+}
+
+export type ApplaudQueryHookResult = ReturnType<typeof useApplaudQuery>;
+export type ApplaudQueryResult = ApolloReactCommon.QueryResult<
+  ApplaudQuery,
+  ApplaudQueryVariables
 >;
 export const DepartmentDocument = gql`
   query Department($id: Int!) {
