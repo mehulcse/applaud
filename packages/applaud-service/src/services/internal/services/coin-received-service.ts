@@ -157,7 +157,7 @@ export class CoinReceivedService {
       throw new Error("Not enough claps available.");
     }
 
-    let coinReceived = await CoinReceived.query().insertAndFetch({
+    const coinReceived = await CoinReceived.query().insertAndFetch({
       balance: validatedInput.balance,
       allocatedToUserId: validatedInput.allocatedToUserId,
       allocatedByUserId: validatedInput.allocatedByUserId,
