@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core";
 import AppLink from "../../components/app-link";
 import Section from "./home-section";
+import logo from '../../logo.svg';
 
 const content = [
   {
@@ -50,6 +51,12 @@ const useStyles = makeStyles(() =>
     button: {
       backgroundColor: "#E01E5A",
       color: "white"
+    },
+    toolbar: {
+      justifyContent: 'space-between'
+    },
+    logo: {
+      maxWidth: 200
     }
   })
 );
@@ -61,10 +68,8 @@ function LandingPage() {
     <div id="home">
       <CssBaseline />
       <AppBar position="sticky" color="transparent" className={classes.bar}>
-        <Toolbar>
-          <Typography variant="h3" className={classes.title}>
-            Applaud
-          </Typography>
+        <Toolbar className={classes.toolbar}>
+          <img src={logo} alt="logo" className={classes.logo} />
           <AppLink to="/login">
             <Button className={classes.button}>Login</Button>
           </AppLink>

@@ -7,6 +7,8 @@ import { getSystemViewer } from "./helpers";
 import { UserService } from "../internal/services/user-service";
 import { UserRoleService } from "../internal/services/user-role-service";
 import { AppContext } from "./app-context";
+import CoinBalance from "../internal/db/models/coin-balance";
+import { CoinBalanceService } from "../internal/services/coin-balance-service";
 
 export interface Viewer {
   userId: number;
@@ -16,6 +18,7 @@ export interface Viewer {
   isSuperAdmin: boolean;
   isSystem: boolean;
   canViewAdmin: boolean;
+  coinBalance: CoinBalance | null;
 }
 
 interface GetViewerOptions {
@@ -48,6 +51,10 @@ export const getViewer = async (options: GetViewerOptions): Promise<Viewer> => {
     })
   ]);
 
+  const coinBalance = await new CoinBalanceService(systemContext).getFirst({
+    userId: user.id
+  });
+
   const isAdmin = !!userRoles.find(x => x.roleId === ROLES.ADMIN);
   const isSuperAdmin = !!userRoles.find(x => x.roleId === ROLES.SUPER_ADMIN);
   const canViewAdmin = isAdmin || isSuperAdmin;
@@ -59,6 +66,7 @@ export const getViewer = async (options: GetViewerOptions): Promise<Viewer> => {
     isAdmin: isAdmin || isSuperAdmin,
     isSuperAdmin,
     isSystem: false,
-    canViewAdmin
+    canViewAdmin,
+    coinBalance
   };
 };
