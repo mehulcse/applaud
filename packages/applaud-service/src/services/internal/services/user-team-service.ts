@@ -17,10 +17,16 @@ import { AppContext } from "../../auth/app-context";
 
 export interface UserTeamsOptions extends PaginationArgs {
   userId?: number;
+  teamId?: number;
   teamsIds?: number[];
 }
 
 export interface CreateUserTeamInput {
+  userId: number;
+  teamId: number;
+}
+
+export interface DeleteUserTeamInput {
   userId: number;
   teamId: number;
 }
@@ -60,6 +66,11 @@ export class UserTeamService {
     if (options.userId) {
       query.where({ userId: options.userId });
     }
+
+    if (options.teamId) {
+      query.where({ teamId: options.teamId });
+    }
+
     if (options.teamsIds && options.teamsIds.length > 0) {
       query.whereIn("teamId", options.teamsIds);
     }
@@ -144,5 +155,46 @@ export class UserTeamService {
     });
 
     return userTeam;
+  }
+
+  async delete(input: DeleteUserTeamInput) {
+    ensureAdmin(this.context.viewer);
+
+    const schema = yup.object().shape({
+      userId: yup
+        .number()
+        .label("User ID")
+        .required()
+        .nullable(false),
+      teamId: yup
+        .number()
+        .label("Team ID")
+        .required()
+        .nullable(false)
+    });
+    const validatedInput = (await schema.validate(input, {
+      abortEarly: false,
+      stripUnknown: true
+    })) as CreateUserTeamInput;
+
+    const userTeam = await this.getFirst({
+      userId: validatedInput.userId,
+      teamId: validatedInput.teamId
+    });
+
+    if (!userTeam) {
+      throw new Error("Invalid User Team ID specified.");
+    }
+
+    await UserTeam.query()
+      .where({
+        userId: validatedInput.userId,
+        teamId: validatedInput.teamId
+      })
+      .delete();
+
+    return {
+      isDeleted: true
+    };
   }
 }

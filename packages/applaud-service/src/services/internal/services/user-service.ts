@@ -1,20 +1,20 @@
 import * as yup from "yup";
-import {transaction} from "objection";
-import {QueryInitializationResult} from "../common";
-import {PaginationArgs} from "../common";
+import { transaction } from "objection";
+import { QueryInitializationResult } from "../common";
+import { PaginationArgs } from "../common";
 import {
   handlePagination,
   executeSelectFirst,
   executeSelectCount,
   executeSelectAll
 } from "../helpers";
-import {ensureUser} from "../../auth/helpers";
+import { ensureUser } from "../../auth/helpers";
 import User from "../db/models/user";
-import {UserRoleService} from "./user-role-service";
-import {CoinBalanceService} from "./coin-balance-service";
-import {AppContext} from "../../auth/app-context";
-import {ROLES} from "../../../constants";
-import {DEFAULT_BALANCE} from "../db/models/coin-balance";
+import { UserRoleService } from "./user-role-service";
+import { CoinBalanceService } from "./coin-balance-service";
+import { AppContext } from "../../auth/app-context";
+import { ROLES } from "../../../constants";
+import { DEFAULT_BALANCE } from "../db/models/coin-balance";
 
 export interface UsersOptions extends PaginationArgs {
   search?: string;
@@ -28,8 +28,7 @@ export interface CreateUserInput {
   email: string;
 }
 
-export interface UpdateUserInput {
-}
+export interface UpdateUserInput {}
 
 const SORTS = {
   ID_ASC: "ID_ASC",
@@ -61,25 +60,27 @@ export class UserService {
     //   );
     // }
 
+    query.whereNot("id", 1);
+
     return {
       query
     };
   }
 
   async getById(id: number) {
-    const {query} = this.initializeAuthorizedQuery();
+    const { query } = this.initializeAuthorizedQuery();
     const user = await query.findById(id);
     return user || null;
   }
 
   async getByEmail(email: string) {
-    const {query} = this.initializeAuthorizedQuery();
-    const user = await query.first().where({email});
+    const { query } = this.initializeAuthorizedQuery();
+    const user = await query.first().where({ email });
     return user || null;
   }
 
   private getAllQuery(options: UsersOptions) {
-    const {query} = this.initializeAuthorizedQuery();
+    const { query } = this.initializeAuthorizedQuery();
 
     handlePagination(query, options);
 
@@ -168,7 +169,7 @@ export class UserService {
 
     const existingUser = await this.getByEmail(validatedInput.email);
     if (existingUser) {
-      return existingUser;
+      throw new Error("User Already Exist.");
     }
 
     const user = await transaction(User.knex(), async trx => {
@@ -178,15 +179,21 @@ export class UserService {
         email: validatedInput.email
       });
 
-      await new UserRoleService(this.context).create({
-        userId: user.id,
-        roleId: ROLES.EMPLOYEE
-      }, trx);
+      await new UserRoleService(this.context).create(
+        {
+          userId: user.id,
+          roleId: ROLES.EMPLOYEE
+        },
+        trx
+      );
 
-      await new CoinBalanceService(this.context).create({
-        userId: user.id,
-        balance: DEFAULT_BALANCE
-      }, trx);
+      await new CoinBalanceService(this.context).create(
+        {
+          userId: user.id,
+          balance: DEFAULT_BALANCE
+        },
+        trx
+      );
 
       return user;
     });

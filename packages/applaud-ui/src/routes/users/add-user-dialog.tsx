@@ -23,35 +23,31 @@ function AddUserDialog(props: Props) {
   const { open, onClose } = props;
 
   // TODO: generate graphql
-  // const [createUser, {loading}] = useCreateUserMutation();
+  const [createUser, {loading}] = useCreateUserMutation();
 
   const [
-    { email, firstName, lastName, teamId, departmentId },
+    { email, firstName, lastName },
     setUser
   ] = useReducer((state: any, newState: any) => ({ ...state, ...newState }), {
     firstName: "",
     lastName: "",
-    email: "",
-    teamId: 0,
-    departmentId: 0
+    email: ""
   });
 
   async function handleCreate() {
-    // const response = await createUser({
-    //   variables: {
-    //     input: {
-    //       firstName,
-    //       lastName,
-    //       email,
-    //       teamId,
-    //       departmentId
-    //     }
-    //   }
-    // });
-    // if (response?.data?.createUser?.user) {
-    //   openSnackbar({ message: "User created successfully" }, "success");
-    //   onClose();
-    // }
+    const response = await createUser({
+      variables: {
+        input: {
+          firstName,
+          lastName,
+          email
+        }
+      }
+    });
+    if (response?.data?.createUser?.user) {
+      openSnackbar({ message: "User created successfully" }, "success");
+      onClose();
+    }
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

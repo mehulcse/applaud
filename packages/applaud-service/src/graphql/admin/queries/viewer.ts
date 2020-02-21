@@ -12,7 +12,8 @@ export default {
       return {
         isAdmin: context.context.viewer.isAdmin,
         userRoles: context.context.viewer.userRoles,
-        user: context.context.viewer.user
+        user: context.context.viewer.user,
+        coinBalance: context.context.viewer.coinBalance
       };
     }
   }

@@ -4,9 +4,10 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  TableHead
+  TableHead,
+  Typography
 } from "@material-ui/core";
-import { UsersQueryResult } from "../../generated/graphql";
+import { UsersQueryResult, Team } from "../../generated/graphql";
 import NoDataAvailable from "../../components/no-data-available";
 import AppLink from "../../components/app-link";
 import Loader from "../../components/loader";
@@ -85,8 +86,7 @@ function UsersTable(props: Props) {
             <AppLink to={`/users/${user.id}`}>{user.fullName}</AppLink>
           </TableCell>
           <TableCell>{user.email}</TableCell>
-          <TableCell>{/* TODO: uncomment user.team.name */}</TableCell>
-          <TableCell>{/* TODO: uncomment user.department.name */}</TableCell>
+          <TableCell>{user.teams && user.teams.length > 0 && user.teams.map((team: Team, index: number) => (<Typography variant="body2" key={index}>{team.name}</Typography>))}</TableCell>
         </TableRow>
       ));
     } else if (error) {
@@ -122,9 +122,6 @@ function UsersTable(props: Props) {
           </TableCell>
           <TableCell>
             <strong>Team</strong>
-          </TableCell>
-          <TableCell>
-            <strong>Department</strong>
           </TableCell>
         </TableRow>
       </TableHead>

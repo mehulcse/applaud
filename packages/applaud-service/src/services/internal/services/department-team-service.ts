@@ -26,6 +26,11 @@ export interface CreateDepartmentTeamInput {
   teamId: number;
 }
 
+export interface DeleteDepartmentTeamInput {
+  teamId: number;
+  departmentId: number;
+}
+
 const SORTS = {
   ID_ASC: "ID_ASC",
   ID_DESC: "ID_DESC"
@@ -153,5 +158,46 @@ export class DepartmentTeamService {
     });
 
     return departmentTeam;
+  }
+
+  async delete(input: DeleteDepartmentTeamInput) {
+    ensureAdmin(this.context.viewer);
+
+    const schema = yup.object().shape({
+      departmentId: yup
+        .number()
+        .label("Department ID")
+        .required()
+        .nullable(false),
+      teamId: yup
+        .number()
+        .label("Team ID")
+        .required()
+        .nullable(false)
+    });
+    const validatedInput = (await schema.validate(input, {
+      abortEarly: false,
+      stripUnknown: true
+    })) as CreateDepartmentTeamInput;
+
+    const departmentTeam = await this.getFirst({
+      teamId: validatedInput.teamId,
+      departmentId: validatedInput.departmentId
+    });
+
+    if (!departmentTeam) {
+      throw new Error("Invalid Department Team ID specified.");
+    }
+
+    await DepartmentTeam.query()
+      .where({
+        teamId: validatedInput.teamId,
+        departmentId: validatedInput.departmentId
+      })
+      .delete();
+
+    return {
+      isDeleted: true
+    };
   }
 }

@@ -49,6 +49,13 @@ export enum ApplaudSort {
   IdDesc = "ID_DESC"
 }
 
+export type CoinBalance = {
+  __typename?: "CoinBalance";
+  id: Scalars["Int"];
+  balance: Scalars["Int"];
+  userId: Scalars["Int"];
+};
+
 export type Constant = {
   __typename?: "Constant";
   id: Scalars["Int"];
@@ -460,6 +467,7 @@ export type Viewer = {
   isAdmin?: Maybe<Scalars["Boolean"]>;
   userRoles: Array<Scalars["String"]>;
   user: User;
+  coinBalance?: Maybe<CoinBalance>;
 };
 export type DepartmentsForSelectorQueryVariables = {
   search?: Maybe<Scalars["String"]>;
@@ -511,6 +519,9 @@ export type AuthManagerQuery = { __typename?: "Query" } & {
           User,
           "id" | "firstName" | "lastName" | "email"
         >;
+        coinBalance: Maybe<
+          { __typename?: "CoinBalance" } & Pick<CoinBalance, "id" | "balance">
+        >;
       }
   >;
 };
@@ -522,6 +533,16 @@ export type LogoutUserMutation = { __typename?: "Mutation" } & {
     LogoutUserResponse,
     "isLoggedOut"
   >;
+};
+
+export type CreateApplaudMutationVariables = {
+  input: CreateApplaudInput;
+};
+
+export type CreateApplaudMutation = { __typename?: "Mutation" } & {
+  createApplaud: { __typename?: "CreateApplaudResponse" } & {
+    applaud: { __typename?: "Applaud" } & Pick<Applaud, "id">;
+  };
 };
 
 export type ApplaudQueryVariables = {
@@ -992,6 +1013,10 @@ export const AuthManagerDocument = gql`
         lastName
         email
       }
+      coinBalance {
+        id
+        balance
+      }
     }
   }
 `;
@@ -1135,6 +1160,82 @@ export type LogoutUserMutationResult = ApolloReactCommon.MutationResult<
 export type LogoutUserMutationOptions = ApolloReactCommon.BaseMutationOptions<
   LogoutUserMutation,
   LogoutUserMutationVariables
+>;
+export const CreateApplaudDocument = gql`
+  mutation CreateApplaud($input: CreateApplaudInput!) {
+    createApplaud(input: $input) {
+      applaud {
+        id
+      }
+    }
+  }
+`;
+export type CreateApplaudMutationFn = ApolloReactCommon.MutationFunction<
+  CreateApplaudMutation,
+  CreateApplaudMutationVariables
+>;
+export type CreateApplaudComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<
+    CreateApplaudMutation,
+    CreateApplaudMutationVariables
+  >,
+  "mutation"
+>;
+
+export const CreateApplaudComponent = (props: CreateApplaudComponentProps) => (
+  <ApolloReactComponents.Mutation<
+    CreateApplaudMutation,
+    CreateApplaudMutationVariables
+  >
+    mutation={CreateApplaudDocument}
+    {...props}
+  />
+);
+
+export type CreateApplaudProps<TChildProps = {}> = ApolloReactHoc.MutateProps<
+  CreateApplaudMutation,
+  CreateApplaudMutationVariables
+> &
+  TChildProps;
+export function withCreateApplaud<TProps, TChildProps = {}>(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    CreateApplaudMutation,
+    CreateApplaudMutationVariables,
+    CreateApplaudProps<TChildProps>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    CreateApplaudMutation,
+    CreateApplaudMutationVariables,
+    CreateApplaudProps<TChildProps>
+  >(CreateApplaudDocument, {
+    alias: "withCreateApplaud",
+    ...operationOptions
+  });
+}
+
+export function useCreateApplaudMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    CreateApplaudMutation,
+    CreateApplaudMutationVariables
+  >
+) {
+  return ApolloReactHooks.useMutation<
+    CreateApplaudMutation,
+    CreateApplaudMutationVariables
+  >(CreateApplaudDocument, baseOptions);
+}
+export type CreateApplaudMutationHookResult = ReturnType<
+  typeof useCreateApplaudMutation
+>;
+export type CreateApplaudMutationResult = ApolloReactCommon.MutationResult<
+  CreateApplaudMutation
+>;
+export type CreateApplaudMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  CreateApplaudMutation,
+  CreateApplaudMutationVariables
 >;
 export const ApplaudDocument = gql`
   query Applaud(

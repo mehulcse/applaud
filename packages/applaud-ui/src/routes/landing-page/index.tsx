@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core";
 import AppLink from "../../components/app-link";
 import Section from "./home-section";
+import logo from '../../logo.svg';
 
 const content = [
   {
@@ -102,6 +103,12 @@ const useStyles = makeStyles(() =>
       bottom: "-7%",
       width: '22%',
       left: "-5%",
+    },
+    toolbar: {
+      justifyContent: 'space-between'
+    },
+    logo: {
+      maxWidth: 200
     }
   })
 );
@@ -112,12 +119,10 @@ function LandingPage() {
   return (
     <div id="home" className={classes.container}>
       <CssBaseline />
-      {patches.map((patch, index) => <img src={patch.image} style={{position:'absolute'}} className={classes[patch.class as keyof typeof classes]} key={index} />)}
-      <AppBar position="fixed" color="transparent" className={classes.bar}>
+        {patches.map((patch, index) => <img src={patch.image} style={{position:'absolute'}} className={classes[patch.class as keyof typeof classes]} key={index} />)}
+      <AppBar color="transparent" className={classes.bar}>
         <Toolbar>
-          <Typography variant="h3" className={classes.title}>
-            Applaud
-          </Typography>
+            <img src={logo} alt="logo" className={classes.logo} />
           <AppLink to="/login">
             <Button className={classes.button}>Login</Button>
           </AppLink>
