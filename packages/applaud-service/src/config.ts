@@ -67,7 +67,9 @@ export default class Config {
       "localhost",
       "https://localhost",
       "http://localhost.com",
-      "http://localhost.com:3000"
+      "http://localhost.com:3000",
+      "https://thegeekstribe.com",
+      "http://thegeekstribe.com"
     ];
   };
   static getAwsProfileName = () => Config.getParameter("AWS_PROFILE");

@@ -3,11 +3,14 @@ query Applaud($limit: Int, $offset: Int, $allocatedToUserId: Int, $allocatedByUs
     totalCount
     nodes {
       id
-      allocatedByUserId
       allocatedToUserId
       message
       type
       createdAt
+      allocatedToUser {
+        id
+        fullName
+      }
     }
   }
 }

@@ -23,10 +23,10 @@ export type Applaud = {
   id: Scalars["Int"];
   balance: Scalars["Int"];
   allocatedToUserId: Scalars["Int"];
-  allocatedByUserId: Scalars["Int"];
   message?: Maybe<Scalars["String"]>;
   type: Scalars["String"];
   createdAt: Scalars["DateTime"];
+  allocatedToUser?: Maybe<User>;
 };
 
 export type ApplaudBalance = {
@@ -344,6 +344,7 @@ export type Team = {
   id: Scalars["Int"];
   name: Scalars["String"];
   description: Scalars["String"];
+  departments?: Maybe<Array<Department>>;
 };
 
 export type TeamsConnection = {
@@ -409,6 +410,7 @@ export type User = {
   email: Scalars["String"];
   userRoles: Array<UserRole>;
   fullName: Scalars["String"];
+  teams?: Maybe<Array<Team>>;
 };
 
 export type UserConnection = {
@@ -539,13 +541,12 @@ export type ApplaudQuery = { __typename?: "Query" } & {
           Array<
             { __typename?: "Applaud" } & Pick<
               Applaud,
-              | "id"
-              | "allocatedByUserId"
-              | "allocatedToUserId"
-              | "message"
-              | "type"
-              | "createdAt"
-            >
+              "id" | "allocatedToUserId" | "message" | "type" | "createdAt"
+            > & {
+                allocatedToUser: Maybe<
+                  { __typename?: "User" } & Pick<User, "id" | "fullName">
+                >;
+              }
           >
         >;
       }
@@ -653,7 +654,18 @@ export type TeamsQuery = { __typename?: "Query" } & {
   teams: Maybe<
     { __typename?: "TeamsConnection" } & Pick<TeamsConnection, "totalCount"> & {
         nodes: Maybe<
-          Array<{ __typename?: "Team" } & Pick<Team, "id" | "name">>
+          Array<
+            { __typename?: "Team" } & Pick<Team, "id" | "name"> & {
+                departments: Maybe<
+                  Array<
+                    { __typename?: "Department" } & Pick<
+                      Department,
+                      "id" | "name"
+                    >
+                  >
+                >;
+              }
+          >
         >;
       }
   >;
@@ -705,7 +717,11 @@ export type UsersQuery = { __typename?: "Query" } & {
   users: Maybe<
     { __typename?: "UserConnection" } & Pick<UserConnection, "totalCount"> & {
         nodes: Array<
-          { __typename?: "User" } & Pick<User, "id" | "email" | "fullName">
+          { __typename?: "User" } & Pick<User, "id" | "email" | "fullName"> & {
+              teams: Maybe<
+                Array<{ __typename?: "Team" } & Pick<Team, "id" | "name">>
+              >;
+            }
         >;
       }
   >;
@@ -1136,11 +1152,14 @@ export const ApplaudDocument = gql`
       totalCount
       nodes {
         id
-        allocatedByUserId
         allocatedToUserId
         message
         type
         createdAt
+        allocatedToUser {
+          id
+          fullName
+        }
       }
     }
   }
@@ -1827,6 +1846,10 @@ export const TeamsDocument = gql`
       nodes {
         id
         name
+        departments {
+          id
+          name
+        }
       }
     }
   }
@@ -2129,6 +2152,10 @@ export const UsersDocument = gql`
         id
         email
         fullName
+        teams {
+          id
+          name
+        }
       }
     }
   }

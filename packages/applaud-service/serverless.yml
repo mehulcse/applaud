@@ -68,6 +68,8 @@ functions:
             origins:
               - http://localhost:3000
               - http://localhost.com:3000
+              - http://thegeekstribe.com
+              - https://thegeekstribe.com
             headers:
               - Content-Type
               - X-Amz-Date
@@ -86,6 +88,8 @@ functions:
             origins:
               - http://localhost:3000
               - http://localhost.com:3000
+              - http://thegeekstribe.com
+              - https://thegeekstribe.com
             headers:
               - Content-Type
               - X-Amz-Date

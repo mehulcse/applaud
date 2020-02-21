@@ -10,10 +10,12 @@ import {
 import { ensureAdmin, ensureUser } from "../../auth/helpers";
 import Team from "../db/models/teams";
 import { AppContext } from "../../auth/app-context";
+import { UserTeamService } from "./user-team-service";
 
 export interface TeamsOptions extends PaginationArgs {
   search?: string;
   ids?: number[];
+  userId?: number;
 }
 
 export interface CreateTeamInput {
@@ -71,6 +73,17 @@ export class TeamService {
 
     if (options.ids && options.ids.length > 0) {
       query.whereIn("id", options.ids);
+    }
+
+    if (options.userId) {
+      query.whereIn(
+        "id",
+        new UserTeamService(this.context)
+          .getAllQuery({
+            userId: options.userId
+          })
+          .select("teamId")
+      );
     }
 
     switch (options.sort) {

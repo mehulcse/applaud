@@ -18,6 +18,7 @@ import { AppContext } from "../../auth/app-context";
 export interface DepartmentTeamsOptions extends PaginationArgs {
   departmentId?: number;
   teamsIds?: number[];
+  teamId?: number;
 }
 
 export interface CreateDepartmentTeamInput {
@@ -60,6 +61,11 @@ export class DepartmentTeamService {
     if (options.departmentId) {
       query.where({ departmentId: options.departmentId });
     }
+
+    if (options.teamId) {
+      query.where({ teamId: options.teamId });
+    }
+
     if (options.teamsIds && options.teamsIds.length > 0) {
       query.whereIn("teamId", options.teamsIds);
     }
@@ -129,7 +135,10 @@ export class DepartmentTeamService {
     }
 
     const existingDepartmentTeam = await DepartmentTeam.query()
-      .where({ departmentId: validatedInput.departmentId, teamId: validatedInput.teamId })
+      .where({
+        departmentId: validatedInput.departmentId,
+        teamId: validatedInput.teamId
+      })
       .first();
     if (existingDepartmentTeam) {
       return {

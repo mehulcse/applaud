@@ -30,8 +30,7 @@ function App() {
           <Router>
             <AuthManager>
               <Switch>
-                <Route path="/" exact render={() => <Redirect to="/home" />} />
-                <Route path="/home" exact component={LandingPage} />
+                <Route path="/" exact component={LandingPage} />
                 <Route path="/login" exact component={LoginContainer} />
                 <Route path="/dashboard" exact component={Dashboard} />
                 <Route path="/applaud" exact component={Applaud} />
