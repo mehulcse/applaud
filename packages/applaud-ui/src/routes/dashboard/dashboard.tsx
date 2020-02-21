@@ -2,8 +2,12 @@ import React, {useContext} from "react";
 import PageLayout from "../../components/page-layout";
 import {AuthContext} from "../../core/auth-manager";
 import {useApplaudQuery, ApplaudQueryHookResult} from "../../generated/graphql";
-import {Typography, Paper, Box, Grid} from "@material-ui/core";
-import {applaudCardData} from "../../helper/getApplaudCard";
+import {Typography, Box, Grid} from "@material-ui/core";
+import PaperBox from "../../components/paper-box";
+import Loader from "../../components/loader";
+import {LOADER_TYPE} from "../../constants/constants";
+import ApplaudCard from "./applaud-card";
+import "./dashboard.css"
 
 const Dashboard = () => {
   const authContext = useContext(AuthContext);
@@ -38,37 +42,41 @@ const Dashboard = () => {
   const renderApplauds = (applaudQueryResult: ApplaudQueryHookResult) => {
     if (applaudQueryResult.data &&
       applaudQueryResult.data.applaud &&
-      applaudQueryResult.data.applaud.nodes) {
-      return applaudQueryResult.data.applaud.nodes.map((data: any, index: number) => {
-        const cardType = applaudCardData.find(card => card.id === data.type);
-        return (
-          <Box mb={2} key={index}>
-            <Paper elevation={2}>
-              {cardType ? cardType.header : ''}
-              {data.message}
-              {data.createdAt}
-            </Paper>
-          </Box>
-        )
-      })
+      applaudQueryResult.data.applaud.nodes &&
+      applaudQueryResult.data.applaud.nodes.length > 0) {
+      return applaudQueryResult.data.applaud.nodes.map((data: any, index: number) => (
+        <ApplaudCard data={data} key={index}/>
+      ))
     }
-    return null
+    return (
+      <Box mb={2}>
+        <PaperBox elevation={2}>
+          <Typography align="center">No Data Available</Typography>
+        </PaperBox>
+      </Box>
+    )
   };
 
   return (
     <PageLayout pageTitle="Dashboard">
-      <Grid container xs={12} spacing={6} item>
+      <Grid container xs={12} spacing={3} item>
         <Grid xs={4} item>
           <Typography align="center">Applaud Received</Typography>
-          {renderApplauds(applaudReceivedQuery)}
+          <Box paddingY={2} paddingX={1} className="scrollable-section">
+            {applaudReceivedQuery.loading ? <Loader type={LOADER_TYPE.card}/> : renderApplauds(applaudReceivedQuery)}
+          </Box>
         </Grid>
         <Grid xs={4} item>
           <Typography align="center">Applaud Given</Typography>
-          {renderApplauds(applaudGivenQuery)}
+          <Box paddingY={2} paddingX={1} className="scrollable-section">
+            {applaudGivenQuery.loading ? <Loader type={LOADER_TYPE.card}/> : renderApplauds(applaudGivenQuery)}
+          </Box>
         </Grid>
         <Grid xs={4} item>
           <Typography align="center">Applaud Stream</Typography>
-          {renderApplauds(applaudStreamQuery)}
+          <Box paddingY={2} paddingX={1} className="scrollable-section">
+            {applaudStreamQuery.loading ? <Loader type={LOADER_TYPE.card}/> : renderApplauds(applaudStreamQuery)}
+          </Box>
         </Grid>
       </Grid>
     </PageLayout>

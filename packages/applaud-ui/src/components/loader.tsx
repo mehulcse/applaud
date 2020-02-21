@@ -80,6 +80,20 @@ const CardContentLoader = () => (
   </ContentLoader>
 );
 
+const CardLoader = () => (
+  <ContentLoader
+    height={80}
+    width={400}
+    speed={2}
+    primaryColor="#d9d9d9"
+    secondaryColor="#ecebeb"
+  >
+    <rect x="0" y="0" rx="3" ry="3" width="100%" height="50" />
+    <rect x="0" y="80" rx="3" ry="3" width="100%" height="50" />
+    <rect x="0" y="150" rx="3" ry="3" width="100%" height="50" />
+  </ContentLoader>
+);
+
 const StyledDialog = styled(Dialog)({
   justifyContent: "center",
   alignItems: "center"
@@ -130,6 +144,9 @@ class Loader extends Component<Props, State> {
     }
     if (type === LOADER_TYPE.content) {
       return <CardContentLoader />;
+    }
+    if (type === LOADER_TYPE.card) {
+      return <CardLoader />;
     }
     if (type === LOADER_TYPE.fullView) {
       return <FullViewLoader message={message} />;
