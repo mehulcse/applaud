@@ -149,6 +149,31 @@ export type CreateUserTeamResponse = {
   userTeam: UserTeam;
 };
 
+export type Deleted = {
+  __typename?: "Deleted";
+  isDeleted?: Maybe<Scalars["Boolean"]>;
+};
+
+export type DeleteDepartmentTeamInput = {
+  teamId: Scalars["Int"];
+  departmentId: Scalars["Int"];
+};
+
+export type DeleteDepartmentTeamResponse = {
+  __typename?: "DeleteDepartmentTeamResponse";
+  deleted: Deleted;
+};
+
+export type DeleteUserTeamInput = {
+  teamId: Scalars["Int"];
+  userId: Scalars["Int"];
+};
+
+export type DeleteUserTeamResponse = {
+  __typename?: "DeleteUserTeamResponse";
+  deleted: Deleted;
+};
+
 export type Department = {
   __typename?: "Department";
   id: Scalars["Int"];
@@ -220,6 +245,8 @@ export type Mutation = {
   updateDepartment: UpdateDepartmentResponse;
   updateApplaudBalance: UpdateApplaudBalanceResponse;
   updateConstants: UpdateConstantResponse;
+  deleteUserTeam: DeleteUserTeamResponse;
+  deleteDepartmentTeam: DeleteDepartmentTeamResponse;
 };
 
 export type MutationCreateApplaudArgs = {
@@ -268,6 +295,14 @@ export type MutationUpdateApplaudBalanceArgs = {
 
 export type MutationUpdateConstantsArgs = {
   input: UpdateConstantInput;
+};
+
+export type MutationDeleteUserTeamArgs = {
+  input: DeleteUserTeamInput;
+};
+
+export type MutationDeleteDepartmentTeamArgs = {
+  input: DeleteDepartmentTeamInput;
 };
 
 export type PageInfo = {
@@ -692,16 +727,37 @@ export type TeamsQuery = { __typename?: "Query" } & {
   >;
 };
 
+export type CreateUserTeamMutationVariables = {
+  input: CreateUserTeamInput;
+};
+
+export type CreateUserTeamMutation = { __typename?: "Mutation" } & {
+  createUserTeam: { __typename?: "CreateUserTeamResponse" } & {
+    userTeam: { __typename?: "UserTeam" } & Pick<UserTeam, "id">;
+  };
+};
+
+export type DeleteUserTeamMutationVariables = {
+  input: DeleteUserTeamInput;
+};
+
+export type DeleteUserTeamMutation = { __typename?: "Mutation" } & {
+  deleteUserTeam: { __typename?: "DeleteUserTeamResponse" } & {
+    deleted: { __typename?: "Deleted" } & Pick<Deleted, "isDeleted">;
+  };
+};
+
 export type UserDetailQueryVariables = {
   id: Scalars["Int"];
 };
 
 export type UserDetailQuery = { __typename?: "Query" } & {
   user: Maybe<
-    { __typename?: "User" } & Pick<
-      User,
-      "id" | "firstName" | "lastName" | "email"
-    >
+    { __typename?: "User" } & Pick<User, "id" | "fullName" | "email"> & {
+        teams: Maybe<
+          Array<{ __typename?: "Team" } & Pick<Team, "id" | "name">>
+        >;
+      }
   >;
 };
 
@@ -2019,13 +2075,172 @@ export type TeamsQueryResult = ApolloReactCommon.QueryResult<
   TeamsQuery,
   TeamsQueryVariables
 >;
+export const CreateUserTeamDocument = gql`
+  mutation CreateUserTeam($input: CreateUserTeamInput!) {
+    createUserTeam(input: $input) {
+      userTeam {
+        id
+      }
+    }
+  }
+`;
+export type CreateUserTeamMutationFn = ApolloReactCommon.MutationFunction<
+  CreateUserTeamMutation,
+  CreateUserTeamMutationVariables
+>;
+export type CreateUserTeamComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<
+    CreateUserTeamMutation,
+    CreateUserTeamMutationVariables
+  >,
+  "mutation"
+>;
+
+export const CreateUserTeamComponent = (
+  props: CreateUserTeamComponentProps
+) => (
+  <ApolloReactComponents.Mutation<
+    CreateUserTeamMutation,
+    CreateUserTeamMutationVariables
+  >
+    mutation={CreateUserTeamDocument}
+    {...props}
+  />
+);
+
+export type CreateUserTeamProps<TChildProps = {}> = ApolloReactHoc.MutateProps<
+  CreateUserTeamMutation,
+  CreateUserTeamMutationVariables
+> &
+  TChildProps;
+export function withCreateUserTeam<TProps, TChildProps = {}>(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    CreateUserTeamMutation,
+    CreateUserTeamMutationVariables,
+    CreateUserTeamProps<TChildProps>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    CreateUserTeamMutation,
+    CreateUserTeamMutationVariables,
+    CreateUserTeamProps<TChildProps>
+  >(CreateUserTeamDocument, {
+    alias: "withCreateUserTeam",
+    ...operationOptions
+  });
+}
+
+export function useCreateUserTeamMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    CreateUserTeamMutation,
+    CreateUserTeamMutationVariables
+  >
+) {
+  return ApolloReactHooks.useMutation<
+    CreateUserTeamMutation,
+    CreateUserTeamMutationVariables
+  >(CreateUserTeamDocument, baseOptions);
+}
+export type CreateUserTeamMutationHookResult = ReturnType<
+  typeof useCreateUserTeamMutation
+>;
+export type CreateUserTeamMutationResult = ApolloReactCommon.MutationResult<
+  CreateUserTeamMutation
+>;
+export type CreateUserTeamMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  CreateUserTeamMutation,
+  CreateUserTeamMutationVariables
+>;
+export const DeleteUserTeamDocument = gql`
+  mutation DeleteUserTeam($input: DeleteUserTeamInput!) {
+    deleteUserTeam(input: $input) {
+      deleted {
+        isDeleted
+      }
+    }
+  }
+`;
+export type DeleteUserTeamMutationFn = ApolloReactCommon.MutationFunction<
+  DeleteUserTeamMutation,
+  DeleteUserTeamMutationVariables
+>;
+export type DeleteUserTeamComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<
+    DeleteUserTeamMutation,
+    DeleteUserTeamMutationVariables
+  >,
+  "mutation"
+>;
+
+export const DeleteUserTeamComponent = (
+  props: DeleteUserTeamComponentProps
+) => (
+  <ApolloReactComponents.Mutation<
+    DeleteUserTeamMutation,
+    DeleteUserTeamMutationVariables
+  >
+    mutation={DeleteUserTeamDocument}
+    {...props}
+  />
+);
+
+export type DeleteUserTeamProps<TChildProps = {}> = ApolloReactHoc.MutateProps<
+  DeleteUserTeamMutation,
+  DeleteUserTeamMutationVariables
+> &
+  TChildProps;
+export function withDeleteUserTeam<TProps, TChildProps = {}>(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    DeleteUserTeamMutation,
+    DeleteUserTeamMutationVariables,
+    DeleteUserTeamProps<TChildProps>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    DeleteUserTeamMutation,
+    DeleteUserTeamMutationVariables,
+    DeleteUserTeamProps<TChildProps>
+  >(DeleteUserTeamDocument, {
+    alias: "withDeleteUserTeam",
+    ...operationOptions
+  });
+}
+
+export function useDeleteUserTeamMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    DeleteUserTeamMutation,
+    DeleteUserTeamMutationVariables
+  >
+) {
+  return ApolloReactHooks.useMutation<
+    DeleteUserTeamMutation,
+    DeleteUserTeamMutationVariables
+  >(DeleteUserTeamDocument, baseOptions);
+}
+export type DeleteUserTeamMutationHookResult = ReturnType<
+  typeof useDeleteUserTeamMutation
+>;
+export type DeleteUserTeamMutationResult = ApolloReactCommon.MutationResult<
+  DeleteUserTeamMutation
+>;
+export type DeleteUserTeamMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  DeleteUserTeamMutation,
+  DeleteUserTeamMutationVariables
+>;
 export const UserDetailDocument = gql`
   query UserDetail($id: Int!) {
     user(id: $id) {
       id
-      firstName
-      lastName
+      fullName
       email
+      teams {
+        id
+        name
+      }
     }
   }
 `;

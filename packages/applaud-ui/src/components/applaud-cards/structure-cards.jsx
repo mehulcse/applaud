@@ -17,7 +17,6 @@ const StructureCards = ({ data, onClick, selected }) => {
 
   function onMouseEnter() {
     setPaused(false);
-    console.log("Enter");
   }
 
   function onMouseLeave() {

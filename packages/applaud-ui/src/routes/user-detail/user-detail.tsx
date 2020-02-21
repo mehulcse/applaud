@@ -47,7 +47,7 @@ export default function UserDetail() {
               </Avatar>
             </ListItemAvatar>
             <ListItemText secondary="Name">
-              {`${queryResult?.data?.user?.firstName} ${queryResult?.data?.user?.lastName}`}
+              {queryResult?.data?.user?.fullName}
             </ListItemText>
           </ListItem>
           <ListItem>
@@ -66,12 +66,17 @@ export default function UserDetail() {
   }
 
   function renderTeams() {
-    return <UserTeams teams={queryResult?.data ?? []} />;
+    return (
+      <UserTeams queryResult={queryResult} userId={parseInt(id ?? "0", 10)} />
+    );
   }
 
   return (
     <PageLayout pageTitle="User Details">
-      <PaperBox></PaperBox>
+      <PaperBox>
+        {renderUserDetail()}
+        {renderTeams()}
+      </PaperBox>
     </PageLayout>
   );
 }
