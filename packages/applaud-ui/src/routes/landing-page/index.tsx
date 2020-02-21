@@ -1,8 +1,8 @@
 import React from "react";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { createStyles, makeStyles } from "@material-ui/core/styles";
 import {
   Grid,
-  Typography,
+  Box,
   CssBaseline,
   Button,
   Toolbar,
@@ -119,12 +119,19 @@ function LandingPage() {
   return (
     <div id="home" className={classes.container}>
       <CssBaseline />
-        {patches.map((patch, index) => <img src={patch.image} style={{position:'absolute'}} className={classes[patch.class as keyof typeof classes]} key={index} />)}
+      <Box display={{ xs: 'none', lg: 'block' }}>
+          {patches.map((patch, index) => <img src={patch.image} style={{position:'absolute'}} className={classes[patch.class as keyof typeof classes]} key={index} />)}
+      </Box>
       <AppBar color="transparent" className={classes.bar}>
         <Toolbar className={classes.toolbar}>
             <img src={logo} alt="logo" className={classes.logo} />
           <AppLink to="/login">
-            <Button className={classes.button}>Login</Button>
+            <Button
+                variant="contained"
+                color="secondary"
+            >
+                Login
+            </Button>
           </AppLink>
         </Toolbar>
       </AppBar>
