@@ -102,7 +102,7 @@ class AuthManager extends Component<Props> {
     if (!isLoggedIn && !pathname.startsWith("/login")) {
       return <Redirect to="/" />;
     }
-    console.log(pathname)
+
     if (isLoggedIn && (pathname.startsWith("/login") || pathname === "/")) {
       return <Redirect to="/dashboard" />;
     }
