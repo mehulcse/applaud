@@ -19,7 +19,7 @@ const content = [
     title: "When a simple thank you is not enough, Applaud them ",
     byline: "Make recognition fun. Love your work.",
     image: "homepage-images/coworkers.svg",
-    imageLeft: false
+    imageLeft: true
   },
   {
     title: "Invigorate your team with acts of kindness",
@@ -126,7 +126,7 @@ function LandingPage() {
   const classes = useStyles();
 
   function ColorChangeScroll(props: Props) {
-    const { children } = props;
+    const {children} = props;
     const trigger = useScrollTrigger({
       disableHysteresis: true,
       threshold: 0
@@ -139,44 +139,46 @@ function LandingPage() {
 
   return (
     <div id="home" className={classes.container}>
-      <CssBaseline />
-      <Box display={{ xs: "none", lg: "block" }}>
+      <CssBaseline/>
+      <Box display={{xs: "none", lg: "block"}}>
         {patches.map((patch, index) => (
           <img
             alt="patch"
             src={patch.image}
-            style={{ position: "absolute" }}
+            style={{position: "absolute"}}
             className={classes[patch.class as keyof typeof classes]}
             key={index}
           />
         ))}
       </Box>
       <ColorChangeScroll>
-          <AppBar color="transparent" className={classes.bar}>
-              <Toolbar className={classes.toolbar}>
-                  <img src={logo} alt="logo" className={classes.logo} />
-                  <AppLink to="/login">
-                      <Button
-                          variant="contained"
-                          color="secondary"
-                      >
-                          Login
-                      </Button>
-                  </AppLink>
-              </Toolbar>
-          </AppBar>
+        <AppBar color="transparent" className={classes.bar}>
+          <Toolbar className={classes.toolbar}>
+            <img src={logo} alt="logo" className={classes.logo}/>
+            <AppLink to="/login">
+              <Button
+                variant="contained"
+                color="secondary"
+              >
+                Login
+              </Button>
+            </AppLink>
+          </Toolbar>
+        </AppBar>
       </ColorChangeScroll>
-      <Grid container justify="center">
-        {content.map((section, index) => (
-          <Section
-            key={index}
-            title={section.title}
-            byline={section.byline}
-            image={section.image}
-            imageLeft={section.imageLeft}
-          />
-        ))}
-      </Grid>
+      <Box pt={5}>
+        <Grid container justify="center">
+          {content.map((section, index) => (
+            <Section
+              key={index}
+              title={section.title}
+              byline={section.byline}
+              image={section.image}
+              imageLeft={section.imageLeft}
+            />
+          ))}
+        </Grid>
+      </Box>
       <Box mt={5}>
         <Typography align="center">
           Handcrafted with <span>&#9829;</span> by theGeeksTribe
