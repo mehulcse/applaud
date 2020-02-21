@@ -22,6 +22,12 @@ type LogoutUserResponse {
     isLoggedOut: Boolean!
 }
 
+type CoinBalance {
+    id: Int!
+    balance: Int!
+    userId: Int!
+}
+
 type User {
     id: Int!
     firstName: String!
@@ -290,6 +296,7 @@ type Viewer {
 
     # relationships
     user: User!
+    coinBalance: CoinBalance
 }
 
 input CreateUserRoleInput {

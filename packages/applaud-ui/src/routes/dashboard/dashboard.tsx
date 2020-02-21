@@ -3,7 +3,7 @@ import PageLayout from "../../components/page-layout";
 import {AuthContext} from "../../core/auth-manager";
 import {useApplaudQuery, ApplaudQueryHookResult} from "../../generated/graphql";
 import {Typography, Paper, Box, Grid} from "@material-ui/core";
-import {CARD_TYPES} from "../../constants/constants";
+import {applaudCardData} from "../applaud/applaud-form";
 
 function Dashboard() {
   const authContext = useContext(AuthContext);
@@ -40,11 +40,11 @@ function Dashboard() {
       applaudQueryResult.data.applaud &&
       applaudQueryResult.data.applaud.nodes) {
       return applaudQueryResult.data.applaud.nodes.map((data: any, index: number) => {
-        const cardType = Object.values(CARD_TYPES).find(card => card.id === data.type);
+        const cardType = applaudCardData.find(card => card.id === data.type);
         return (
           <Box mb={2} key={index}>
             <Paper elevation={2}>
-              {cardType ? cardType.name : ''}
+              {cardType ? cardType.header : ''}
               {data.message}
               {data.createdAt}
             </Paper>

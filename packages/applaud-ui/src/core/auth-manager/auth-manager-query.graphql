@@ -8,5 +8,9 @@ query AuthManager {
             lastName
             email
         }
+        coinBalance {
+            id
+            balance
+        }
     }
 }

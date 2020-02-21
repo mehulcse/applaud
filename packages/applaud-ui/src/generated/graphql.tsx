@@ -49,6 +49,13 @@ export enum ApplaudSort {
   IdDesc = "ID_DESC"
 }
 
+export type CoinBalance = {
+  __typename?: "CoinBalance";
+  id: Scalars["Int"];
+  balance: Scalars["Int"];
+  userId: Scalars["Int"];
+};
+
 export type Constant = {
   __typename?: "Constant";
   id: Scalars["Int"];
@@ -460,6 +467,7 @@ export type Viewer = {
   isAdmin?: Maybe<Scalars["Boolean"]>;
   userRoles: Array<Scalars["String"]>;
   user: User;
+  coinBalance?: Maybe<CoinBalance>;
 };
 export type DepartmentsForSelectorQueryVariables = {
   search?: Maybe<Scalars["String"]>;
@@ -510,6 +518,9 @@ export type AuthManagerQuery = { __typename?: "Query" } & {
         user: { __typename?: "User" } & Pick<
           User,
           "id" | "firstName" | "lastName" | "email"
+        >;
+        coinBalance: Maybe<
+          { __typename?: "CoinBalance" } & Pick<CoinBalance, "id" | "balance">
         >;
       }
   >;
@@ -991,6 +1002,10 @@ export const AuthManagerDocument = gql`
         firstName
         lastName
         email
+      }
+      coinBalance {
+        id
+        balance
       }
     }
   }

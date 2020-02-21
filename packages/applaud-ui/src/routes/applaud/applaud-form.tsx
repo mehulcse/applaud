@@ -14,7 +14,7 @@ import gladiator from "../../lotties/15634-orange-super-hero.json";
 import MessageEditor from "../../components/messageBox/MessageEditor";
 import { openSnackbar } from "../../components/notifier";
 
-const applaudCardData = [
+export const applaudCardData = [
   {
     header: "Above and Beyond",
     animation: aboveBeyond,
