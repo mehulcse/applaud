@@ -1,9 +1,9 @@
 .card-tiles {
-  height: 150px;
-  width: 150px;
+  height: 200px;
+  width: 180px;
   padding: 10px 10px 40px;
   text-align: center;
-  margin: 5px;
+  margin: 5px 10px 5px 0;
   position: relative;
 }
 

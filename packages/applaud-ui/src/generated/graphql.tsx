@@ -524,6 +524,16 @@ export type LogoutUserMutation = { __typename?: "Mutation" } & {
   >;
 };
 
+export type CreateApplaudMutationVariables = {
+  input: CreateApplaudInput;
+};
+
+export type CreateApplaudMutation = { __typename?: "Mutation" } & {
+  createApplaud: { __typename?: "CreateApplaudResponse" } & {
+    applaud: { __typename?: "Applaud" } & Pick<Applaud, "id">;
+  };
+};
+
 export type ApplaudQueryVariables = {
   limit?: Maybe<Scalars["Int"]>;
   offset?: Maybe<Scalars["Int"]>;
@@ -1135,6 +1145,82 @@ export type LogoutUserMutationResult = ApolloReactCommon.MutationResult<
 export type LogoutUserMutationOptions = ApolloReactCommon.BaseMutationOptions<
   LogoutUserMutation,
   LogoutUserMutationVariables
+>;
+export const CreateApplaudDocument = gql`
+  mutation CreateApplaud($input: CreateApplaudInput!) {
+    createApplaud(input: $input) {
+      applaud {
+        id
+      }
+    }
+  }
+`;
+export type CreateApplaudMutationFn = ApolloReactCommon.MutationFunction<
+  CreateApplaudMutation,
+  CreateApplaudMutationVariables
+>;
+export type CreateApplaudComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<
+    CreateApplaudMutation,
+    CreateApplaudMutationVariables
+  >,
+  "mutation"
+>;
+
+export const CreateApplaudComponent = (props: CreateApplaudComponentProps) => (
+  <ApolloReactComponents.Mutation<
+    CreateApplaudMutation,
+    CreateApplaudMutationVariables
+  >
+    mutation={CreateApplaudDocument}
+    {...props}
+  />
+);
+
+export type CreateApplaudProps<TChildProps = {}> = ApolloReactHoc.MutateProps<
+  CreateApplaudMutation,
+  CreateApplaudMutationVariables
+> &
+  TChildProps;
+export function withCreateApplaud<TProps, TChildProps = {}>(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    CreateApplaudMutation,
+    CreateApplaudMutationVariables,
+    CreateApplaudProps<TChildProps>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    CreateApplaudMutation,
+    CreateApplaudMutationVariables,
+    CreateApplaudProps<TChildProps>
+  >(CreateApplaudDocument, {
+    alias: "withCreateApplaud",
+    ...operationOptions
+  });
+}
+
+export function useCreateApplaudMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    CreateApplaudMutation,
+    CreateApplaudMutationVariables
+  >
+) {
+  return ApolloReactHooks.useMutation<
+    CreateApplaudMutation,
+    CreateApplaudMutationVariables
+  >(CreateApplaudDocument, baseOptions);
+}
+export type CreateApplaudMutationHookResult = ReturnType<
+  typeof useCreateApplaudMutation
+>;
+export type CreateApplaudMutationResult = ApolloReactCommon.MutationResult<
+  CreateApplaudMutation
+>;
+export type CreateApplaudMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  CreateApplaudMutation,
+  CreateApplaudMutationVariables
 >;
 export const ApplaudDocument = gql`
   query Applaud(
