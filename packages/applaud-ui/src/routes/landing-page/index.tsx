@@ -1,13 +1,14 @@
 import React from "react";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { createStyles, makeStyles } from "@material-ui/core/styles";
 import {
   Grid,
-  Typography,
+  Box,
   CssBaseline,
   Button,
   Toolbar,
   AppBar
 } from "@material-ui/core";
+import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import AppLink from "../../components/app-link";
 import Section from "./home-section";
 import logo from '../../logo.svg';
@@ -39,8 +40,35 @@ const content = [
   }
 ];
 
+const patches = [
+  {
+    image: "homepage-images/green.svg",
+    class: "green",
+  },
+  {
+    image: "homepage-images/maroon.svg",
+    class: "maroon",
+  },
+  {
+    image: "homepage-images/skyblue.svg",
+    class: "skyblue",
+  },
+  {
+    image: "homepage-images/rose.svg",
+    class: "rose",
+  },
+  {
+    image: "homepage-images/blue.svg",
+    class: "blue",
+  }
+];
+
 const useStyles = makeStyles(() =>
   createStyles({
+    container: {
+      position: "relative",
+      overflowX: "hidden"
+    },
     bar: {
       boxShadow: "none"
     },
@@ -52,6 +80,31 @@ const useStyles = makeStyles(() =>
       backgroundColor: "#E01E5A",
       color: "white"
     },
+    green: {
+      top: "-1%",
+      width: '50%',
+      right: "-2%",
+    },
+    maroon: {
+      top: "15%",
+      width: '7%',
+      left: "-3%",
+    },
+    skyblue: {
+      top: "27%",
+      width: '48%',
+      right: "-2%",
+    },
+    rose: {
+      top: "35%",
+      width: '7%',
+      left: "2%",
+    },
+    blue: {
+      bottom: "-7%",
+      width: '22%',
+      left: "-5%",
+    },
     toolbar: {
       justifyContent: 'space-between'
     },
@@ -61,20 +114,46 @@ const useStyles = makeStyles(() =>
   })
 );
 
+interface Props {
+    children: React.ReactElement;
+}
+
 function LandingPage() {
   const classes = useStyles();
 
+    function ColorChangeScroll(props: Props) {
+        const { children } = props;
+        const trigger = useScrollTrigger({
+            disableHysteresis: true,
+            threshold: 0,
+        });
+
+        return React.cloneElement(children, {
+            color: trigger ? "" : "transparent",
+        });
+    }
+
   return (
-    <div id="home">
+    <div id="home" className={classes.container}>
       <CssBaseline />
-      <AppBar position="sticky" color="transparent" className={classes.bar}>
-        <Toolbar className={classes.toolbar}>
-          <img src={logo} alt="logo" className={classes.logo} />
-          <AppLink to="/login">
-            <Button className={classes.button}>Login</Button>
-          </AppLink>
-        </Toolbar>
-      </AppBar>
+      <Box display={{ xs: 'none', lg: 'block' }}>
+          {patches.map((patch, index) => <img src={patch.image} style={{position:'absolute'}} className={classes[patch.class as keyof typeof classes]} key={index} />)}
+      </Box>
+      <ColorChangeScroll>
+          <AppBar color="transparent" className={classes.bar}>
+              <Toolbar className={classes.toolbar}>
+                  <img src={logo} alt="logo" className={classes.logo} />
+                  <AppLink to="/login">
+                      <Button
+                          variant="contained"
+                          color="secondary"
+                      >
+                          Login
+                      </Button>
+                  </AppLink>
+              </Toolbar>
+          </AppBar>
+      </ColorChangeScroll>
       <Grid container justify="center">
         {content.map((section, index) => (
           <Section
