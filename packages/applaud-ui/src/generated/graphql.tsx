@@ -449,6 +449,21 @@ export enum UserTeamsSort {
   IdAsc = "ID_ASC",
   IdDesc = "ID_DESC"
 }
+export type DepartmentsForSelectorQueryVariables = {
+  search?: Maybe<Scalars["String"]>;
+  ids?: Maybe<Array<Scalars["Int"]>>;
+};
+
+export type DepartmentsForSelectorQuery = { __typename?: "Query" } & {
+  departments: Maybe<
+    { __typename?: "DepartmentsConnection" } & {
+      nodes: Maybe<
+        Array<{ __typename?: "Department" } & Pick<Department, "id" | "name">>
+      >;
+    }
+  >;
+};
+
 export type TeamsForSelectorQueryVariables = {
   search?: Maybe<Scalars["String"]>;
   ids?: Maybe<Array<Scalars["Int"]>>;
@@ -682,6 +697,92 @@ export type UsersQuery = { __typename?: "Query" } & {
   >;
 };
 
+export const DepartmentsForSelectorDocument = gql`
+  query DepartmentsForSelector($search: String, $ids: [Int!]) {
+    departments(search: $search) {
+      nodes {
+        id
+        name
+      }
+    }
+  }
+`;
+export type DepartmentsForSelectorComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<
+    DepartmentsForSelectorQuery,
+    DepartmentsForSelectorQueryVariables
+  >,
+  "query"
+>;
+
+export const DepartmentsForSelectorComponent = (
+  props: DepartmentsForSelectorComponentProps
+) => (
+  <ApolloReactComponents.Query<
+    DepartmentsForSelectorQuery,
+    DepartmentsForSelectorQueryVariables
+  >
+    query={DepartmentsForSelectorDocument}
+    {...props}
+  />
+);
+
+export type DepartmentsForSelectorProps<
+  TChildProps = {}
+> = ApolloReactHoc.DataProps<
+  DepartmentsForSelectorQuery,
+  DepartmentsForSelectorQueryVariables
+> &
+  TChildProps;
+export function withDepartmentsForSelector<TProps, TChildProps = {}>(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    DepartmentsForSelectorQuery,
+    DepartmentsForSelectorQueryVariables,
+    DepartmentsForSelectorProps<TChildProps>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    DepartmentsForSelectorQuery,
+    DepartmentsForSelectorQueryVariables,
+    DepartmentsForSelectorProps<TChildProps>
+  >(DepartmentsForSelectorDocument, {
+    alias: "withDepartmentsForSelector",
+    ...operationOptions
+  });
+}
+
+export function useDepartmentsForSelectorQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    DepartmentsForSelectorQuery,
+    DepartmentsForSelectorQueryVariables
+  >
+) {
+  return ApolloReactHooks.useQuery<
+    DepartmentsForSelectorQuery,
+    DepartmentsForSelectorQueryVariables
+  >(DepartmentsForSelectorDocument, baseOptions);
+}
+export function useDepartmentsForSelectorLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    DepartmentsForSelectorQuery,
+    DepartmentsForSelectorQueryVariables
+  >
+) {
+  return ApolloReactHooks.useLazyQuery<
+    DepartmentsForSelectorQuery,
+    DepartmentsForSelectorQueryVariables
+  >(DepartmentsForSelectorDocument, baseOptions);
+}
+
+export type DepartmentsForSelectorQueryHookResult = ReturnType<
+  typeof useDepartmentsForSelectorQuery
+>;
+export type DepartmentsForSelectorQueryResult = ApolloReactCommon.QueryResult<
+  DepartmentsForSelectorQuery,
+  DepartmentsForSelectorQueryVariables
+>;
 export const TeamsForSelectorDocument = gql`
   query TeamsForSelector($search: String, $ids: [Int!]) {
     teams(search: $search) {
