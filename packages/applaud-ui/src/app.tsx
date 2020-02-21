@@ -27,17 +27,18 @@ function App() {
           <Router>
             <AuthManager>
               <Switch>
-                <Route
-                  path="/"
-                  exact
-                  render={() => <Redirect to="/dashboard" />}
-                />
-                <Route path="/login" exact component={LoginContainer} />
-                <Route path="/dashboard" exact component={Dashboard} />
-                <Route path="/applaud" exact component={Applaud} />
-                <Route path="/users" exact component={Users} />
-                <Route path="/users/:id" exact component={UserDetail} />
-                <Route path="*" component={NotFoundRouteHandler} />
+                  <Route
+                      path="/"
+                      exact
+                      render={() => <Redirect to="/home" />}
+                  />
+                  <Route path="/home" exact component={LandingPage} />
+                  <Route path="/login" exact component={LoginContainer} />
+                  <Route path="/dashboard" exact component={Dashboard} />
+                  <Route path="/applaud" exact component={Applaud} />
+                  <Route path="/users" exact component={Users} />
+                  <Route path="/users/:id" exact component={UserDetail} />
+                  <Route path="*" component={NotFoundRouteHandler} />
               </Switch>
             </AuthManager>
             <Notifier />
