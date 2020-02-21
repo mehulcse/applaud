@@ -19,6 +19,7 @@ import Teams from "./routes/teams/teams";
 import Departments from "./routes/departments/departments";
 import Applaud from "./routes/applaud/applaud";
 import NotFoundRouteHandler from "./routes/not-found";
+import LandingPage from "./routes/landing-page";
 
 function App() {
   return (
@@ -31,8 +32,9 @@ function App() {
                 <Route
                   path="/"
                   exact
-                  render={() => <Redirect to="/dashboard" />}
+                  render={() => <Redirect to="/home" />}
                 />
+                <Route path="/home" exact component={LandingPage} />
                 <Route path="/login" exact component={LoginContainer} />
                 <Route path="/dashboard" exact component={Dashboard} />
                 <Route path="/applaud" exact component={Applaud} />

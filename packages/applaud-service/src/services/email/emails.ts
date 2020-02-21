@@ -17,7 +17,7 @@ export const sendEmailTemporaryLoginCode = async (
     region: Config.getAwsRegion()
   });
 
-  let params = {
+  const params = {
     Destination: {
       /* required */
       CcAddresses: [
@@ -53,7 +53,7 @@ export const sendEmailTemporaryLoginCode = async (
     ]
   };
 
-  let sendPromise = await new AWS.SES({ apiVersion: "2010-12-01" })
+  const sendPromise = await new AWS.SES({ apiVersion: "2010-12-01" })
     .sendEmail(params)
     .promise();
 
