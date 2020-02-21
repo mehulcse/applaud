@@ -60,6 +60,8 @@ export class UserService {
     //   );
     // }
 
+    query.whereNot("id", 1);
+
     return {
       query
     };

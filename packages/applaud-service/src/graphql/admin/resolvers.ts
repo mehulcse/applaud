@@ -26,6 +26,8 @@ import rolesQuery from "./queries/roles";
 import userType from "./types/user";
 import applaudReceivedType from "./types/applaud-received";
 import teamType from "./types/team";
+import deleteUserTeamMutation from "./mutations/delete-user-team";
+import deleteDepartmentTeamMutation from "./mutations/delete-department-team";
 
 export default merge(
   { Date: GraphQLDate, DateTime: GraphQLDateTime, Time: GraphQLTime },
@@ -53,5 +55,7 @@ export default merge(
   updateDepartmentMutation,
   userType,
   applaudReceivedType,
-  teamType
+  teamType,
+  deleteUserTeamMutation,
+  deleteDepartmentTeamMutation
 );

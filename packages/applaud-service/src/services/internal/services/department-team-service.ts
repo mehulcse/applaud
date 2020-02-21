@@ -154,4 +154,20 @@ export class DepartmentTeamService {
 
     return departmentTeam;
   }
+
+  async delete(id: number) {
+    ensureAdmin(this.context.viewer);
+
+    const departmentTeam = await this.getById(id);
+
+    if (!departmentTeam) {
+      throw new Error("Invalid Department Team ID specified.");
+    }
+
+    await DepartmentTeam.query().deleteById(id);
+
+    return {
+      isDeleted: true
+    };
+  }
 }

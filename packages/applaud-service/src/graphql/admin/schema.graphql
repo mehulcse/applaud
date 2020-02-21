@@ -60,6 +60,18 @@ type CreateUserTeamResponse {
     userTeam: UserTeam!
 }
 
+input DeleteUserTeamInput {
+    id: Int!
+}
+
+type Deleted {
+    isDeleted: Boolean
+}
+
+type DeleteUserTeamResponse {
+    deleted: Deleted!
+}
+
 type UserTeam {
     id: Int!
     userId: Int!
@@ -124,6 +136,14 @@ input CreateDepartmentTeamInput {
 
 type CreateDepartmentTeamResponse {
     departmentTeam: DepartmentTeam!
+}
+
+input DeleteDepartmentTeamInput {
+    id: Int!
+}
+
+type DeleteDepartmentTeamResponse {
+    deleted: Deleted!
 }
 
 type DepartmentTeam {
@@ -322,6 +342,8 @@ type Mutation {
     updateDepartment(input: UpdateDepartmentInput!): UpdateDepartmentResponse!
     updateApplaudBalance(input: UpdateApplaudBalanceInput!): UpdateApplaudBalanceResponse!
     updateConstants(input: UpdateConstantInput!): UpdateConstantResponse!
+    deleteUserTeam(input: DeleteUserTeamInput!): DeleteUserTeamResponse!
+    deleteDepartmentTeam(input: DeleteDepartmentTeamInput!): DeleteDepartmentTeamResponse!
 }
 
 type Query {

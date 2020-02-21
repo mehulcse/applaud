@@ -145,4 +145,20 @@ export class UserTeamService {
 
     return userTeam;
   }
+
+  async delete(id: number) {
+    ensureAdmin(this.context.viewer);
+
+    const userTeam = await this.getById(id);
+
+    if (!userTeam) {
+      throw new Error("Invalid User Team ID specified.");
+    }
+
+    await UserTeam.query().deleteById(id);
+
+    return {
+      isDeleted: true
+    };
+  }
 }
