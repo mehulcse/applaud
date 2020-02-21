@@ -495,7 +495,7 @@ export type UsersForSelectorQueryVariables = {
 export type UsersForSelectorQuery = { __typename?: "Query" } & {
   users: Maybe<
     { __typename?: "UserConnection" } & {
-      nodes: Array<{ __typename?: "User" } & Pick<User, "id">>;
+      nodes: Array<{ __typename?: "User" } & Pick<User, "id" | "fullName">>;
     }
   >;
 };
@@ -704,7 +704,9 @@ export type UsersQueryVariables = {
 export type UsersQuery = { __typename?: "Query" } & {
   users: Maybe<
     { __typename?: "UserConnection" } & Pick<UserConnection, "totalCount"> & {
-        nodes: Array<{ __typename?: "User" } & Pick<User, "id" | "email">>;
+        nodes: Array<
+          { __typename?: "User" } & Pick<User, "id" | "email" | "fullName">
+        >;
       }
   >;
 };
@@ -884,6 +886,7 @@ export const UsersForSelectorDocument = gql`
     users(search: $search, ids: $ids) {
       nodes {
         id
+        fullName
       }
     }
   }
@@ -2125,6 +2128,7 @@ export const UsersDocument = gql`
       nodes {
         id
         email
+        fullName
       }
     }
   }

@@ -28,16 +28,14 @@ function UserSelectorContainer({
     skip: !userIds.length
   });
 
-  const selectedUsers: ValueType<OptionType> = [];
+  let selectedUsers: ValueType<OptionType> = [];
 
-  // if (selectedUsersResult?.data?.users?.nodes) {
-  //   selectedUsers = selectedUsersResult.data.users.nodes.map(
-  //     user => ({
-  //       label: user.name,
-  //       value: `${user.id}`
-  //     })
-  //   );
-  // }
+  if (selectedUsersResult?.data?.users?.nodes) {
+    selectedUsers = selectedUsersResult.data.users.nodes.map(user => ({
+      label: user.fullName,
+      value: `${user.id}`
+    }));
+  }
 
   const usersResult = useUsersForSelectorQuery({
     variables: {
@@ -46,14 +44,14 @@ function UserSelectorContainer({
     fetchPolicy: "network-only"
   });
 
-  const users: OptionType[] = [];
+  let users: OptionType[] = [];
 
-  // if (usersResult?.data?.users?.nodes) {
-  //   users = usersResult.data.users.nodes.map(user => ({
-  //     label: user.name,
-  //     value: `${user.id}`
-  //   }));
-  // }
+  if (usersResult?.data?.users?.nodes) {
+    users = usersResult.data.users.nodes.map(user => ({
+      label: user.fullName,
+      value: `${user.id}`
+    }));
+  }
 
   const onInputChange = (value: string) => {
     setUserSearch(value);
@@ -78,7 +76,7 @@ function UserSelectorContainer({
       placeholder={placeholder || "Select User"}
       id="user-select"
       label={label}
-      isLoading={false} // TODO: set loading bool
+      isLoading={selectedUsersResult.loading || usersResult.loading}
       onInputChange={onInputChange}
       onValueChange={onValueChange}
     />
