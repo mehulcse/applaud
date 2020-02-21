@@ -1,5 +1,5 @@
 query TeamsForSelector($search: String, $ids: [Int!]) {
-  teams(search: $search) {
+  teams(search: $search, ids: $ids) {
     nodes {
       id
       name

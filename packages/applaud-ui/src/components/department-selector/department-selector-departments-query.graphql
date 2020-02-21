@@ -1,5 +1,5 @@
 query DepartmentsForSelector($search: String, $ids: [Int!]) {
-  departments(search: $search) {
+  departments(search: $search, ids: $ids) {
     nodes {
       id
       name

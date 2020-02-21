@@ -711,7 +711,7 @@ export type UsersQuery = { __typename?: "Query" } & {
 
 export const DepartmentsForSelectorDocument = gql`
   query DepartmentsForSelector($search: String, $ids: [Int!]) {
-    departments(search: $search) {
+    departments(search: $search, ids: $ids) {
       nodes {
         id
         name
@@ -797,7 +797,7 @@ export type DepartmentsForSelectorQueryResult = ApolloReactCommon.QueryResult<
 >;
 export const TeamsForSelectorDocument = gql`
   query TeamsForSelector($search: String, $ids: [Int!]) {
-    teams(search: $search) {
+    teams(search: $search, ids: $ids) {
       nodes {
         id
         name
@@ -881,7 +881,7 @@ export type TeamsForSelectorQueryResult = ApolloReactCommon.QueryResult<
 >;
 export const UsersForSelectorDocument = gql`
   query UsersForSelector($search: String, $ids: [Int!]) {
-    users(search: $search) {
+    users(search: $search, ids: $ids) {
       nodes {
         id
       }
