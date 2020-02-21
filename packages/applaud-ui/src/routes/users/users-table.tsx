@@ -70,12 +70,6 @@ function UsersTable(props: Props) {
     }
   }
 
-  let count = 0;
-
-  if (data?.users?.totalCount) {
-    count = data.users.totalCount;
-  }
-
   function renderTableBody() {
     if (data?.users?.nodes.length) {
       return data.users.nodes.map((user: any, index: number) => (

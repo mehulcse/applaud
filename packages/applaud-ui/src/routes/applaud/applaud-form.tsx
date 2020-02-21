@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useHistory } from "react-router";
-import { Grid, TextField, Button, Box, Typography } from "@material-ui/core";
+import { Grid, TextField, Button, Typography } from "@material-ui/core";
 import StarRatingComponent from "react-star-rating-component";
 import PaperBox from "../../components/paper-box";
 import { useCreateApplaudMutation } from "../../generated/graphql";

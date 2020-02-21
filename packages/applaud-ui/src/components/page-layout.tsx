@@ -20,8 +20,6 @@ import { MenuProps } from "@material-ui/core/Menu";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 import theme from "../core/mui-theme";
-import { Link } from "react-router-dom";
-import AppLink from "./app-link";
 import AppIcon from "../components/app-icon";
 import { AuthContext } from "../core/auth-manager";
 import { AuthContextValue } from "../core/auth-manager/auth-manager";
@@ -101,7 +99,7 @@ class PageLayout extends Component<Props, State> {
 
   renderProfile() {
     const user = (this.context as AuthContextValue).user;
-    // const userName = user ? `${user.firstName} ${user.lastName}` : "-";
+    const userName = user ? `${user.firstName} ${user.lastName}` : "-";
 
     return (
       <List>
@@ -118,7 +116,7 @@ class PageLayout extends Component<Props, State> {
             onClick={this.handleClick}
             secondary="Current User"
           >
-            {/*<span title={userName}>{userName}</span>*/}
+            <span title={userName}>{userName}</span>
           </ListItemText>
           <StyledMenu
             id="user-menu"

@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { CustomApolloProvider } from "./core/apollo-provider";
 import { ConnectivityMonitor } from "./core/connectivity-monitor";
 import theme from "./core/mui-theme";

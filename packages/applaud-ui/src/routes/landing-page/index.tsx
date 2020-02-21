@@ -9,10 +9,10 @@ import {
   AppBar,
   Typography
 } from "@material-ui/core";
-import useScrollTrigger from '@material-ui/core/useScrollTrigger';
+import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import AppLink from "../../components/app-link";
 import Section from "./home-section";
-import logo from '../../logo.svg';
+import logo from "../../logo.svg";
 
 const content = [
   {
@@ -44,23 +44,23 @@ const content = [
 const patches = [
   {
     image: "homepage-images/green.svg",
-    class: "green",
+    class: "green"
   },
   {
     image: "homepage-images/maroon.svg",
-    class: "maroon",
+    class: "maroon"
   },
   {
     image: "homepage-images/skyblue.svg",
-    class: "skyblue",
+    class: "skyblue"
   },
   {
     image: "homepage-images/rose.svg",
-    class: "rose",
+    class: "rose"
   },
   {
     image: "homepage-images/blue.svg",
-    class: "blue",
+    class: "blue"
   }
 ];
 
@@ -86,31 +86,31 @@ const useStyles = makeStyles(() =>
     },
     green: {
       top: "-1%",
-      width: '50%',
-      right: "-2%",
+      width: "50%",
+      right: "-2%"
     },
     maroon: {
       top: "15%",
-      width: '7%',
-      left: "-3%",
+      width: "7%",
+      left: "-3%"
     },
     skyblue: {
       top: "27%",
-      width: '48%',
-      right: "-2%",
+      width: "48%",
+      right: "-2%"
     },
     rose: {
       top: "35%",
-      width: '7%',
-      left: "2%",
+      width: "7%",
+      left: "2%"
     },
     blue: {
       bottom: "-7%",
-      width: '22%',
-      left: "-5%",
+      width: "22%",
+      left: "-5%"
     },
     toolbar: {
-      justifyContent: 'space-between',
+      justifyContent: "space-between"
     },
     logo: {
       maxWidth: 200
@@ -126,10 +126,10 @@ function LandingPage() {
   const classes = useStyles();
 
   function ColorChangeScroll(props: Props) {
-    const {children} = props;
+    const { children } = props;
     const trigger = useScrollTrigger({
       disableHysteresis: true,
-      threshold: 0,
+      threshold: 0
     });
 
     return React.cloneElement(children, {
@@ -139,25 +139,32 @@ function LandingPage() {
 
   return (
     <div id="home" className={classes.container}>
-      <CssBaseline/>
-      <Box display={{xs: 'none', lg: 'block'}}>
-        {patches.map((patch, index) => <img src={patch.image} style={{position: 'absolute'}}
-                                            className={classes[patch.class as keyof typeof classes]} key={index}/>)}
+      <CssBaseline />
+      <Box display={{ xs: "none", lg: "block" }}>
+        {patches.map((patch, index) => (
+          <img
+            alt="patch"
+            src={patch.image}
+            style={{ position: "absolute" }}
+            className={classes[patch.class as keyof typeof classes]}
+            key={index}
+          />
+        ))}
       </Box>
       <ColorChangeScroll>
-        <AppBar color="transparent" className={classes.bar}>
-          <Toolbar className={classes.toolbar}>
-            <img src={logo} alt="logo" className={classes.logo}/>
-            <AppLink to="/login">
-              <Button
-                variant="contained"
-                color="secondary"
-              >
-                Login
-              </Button>
-            </AppLink>
-          </Toolbar>
-        </AppBar>
+          <AppBar color="transparent" className={classes.bar}>
+              <Toolbar className={classes.toolbar}>
+                  <img src={logo} alt="logo" className={classes.logo} />
+                  <AppLink to="/login">
+                      <Button
+                          variant="contained"
+                          color="secondary"
+                      >
+                          Login
+                      </Button>
+                  </AppLink>
+              </Toolbar>
+          </AppBar>
       </ColorChangeScroll>
       <Grid container justify="center">
         {content.map((section, index) => (
