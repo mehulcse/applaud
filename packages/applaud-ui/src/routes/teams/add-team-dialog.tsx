@@ -89,7 +89,7 @@ function AddTeamDialog(props: Props) {
             variant="contained"
             color="primary"
             onClick={handleCreate}
-            disabled={!loading}
+            disabled={loading}
           >
             <AppIcon icon={faCheck} standardRightMargin />
             Add Team

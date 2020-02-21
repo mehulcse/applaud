@@ -81,12 +81,6 @@ function DepartmentsTable(props: Props) {
     }
   }
 
-  let count = 0;
-
-  if (data?.departments?.totalCount) {
-    count = data.departments.totalCount;
-  }
-
   function renderTableBody() {
     if (data?.departments?.nodes?.length) {
       return data.departments.nodes.map((department: any, index: number) => (

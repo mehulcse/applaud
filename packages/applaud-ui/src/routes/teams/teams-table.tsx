@@ -74,12 +74,6 @@ function TeamsTable(props: Props) {
     }
   }
 
-  let count = 0;
-
-  if (data?.teams?.totalCount) {
-    count = data.teams.totalCount;
-  }
-
   function renderTableBody() {
     if (data?.teams?.nodes?.length) {
       return data.teams.nodes.map((team: any, index: number) => (

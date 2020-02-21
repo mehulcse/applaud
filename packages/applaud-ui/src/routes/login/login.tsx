@@ -164,7 +164,7 @@ export default function SignIn() {
                   }
 
                   const res = response as GoogleLoginResponse;
-                  const result = await loginUserMutation({
+                  await loginUserMutation({
                     variables: {
                       input: {
                         googleIdToken: res.getAuthResponse().id_token
@@ -172,7 +172,6 @@ export default function SignIn() {
                     }
                   });
                   await authContext.refresh();
-                  // console.log("Success", { response, result });
                 }}
                 onFailure={err => {
                   console.error("Error", { err });

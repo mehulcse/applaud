@@ -22,17 +22,16 @@ interface Props {
 function AddUserDialog(props: Props) {
   const { open, onClose } = props;
 
-  // TODO: generate graphql
-  const [createUser, {loading}] = useCreateUserMutation();
+  const [createUser, { loading }] = useCreateUserMutation();
 
-  const [
-    { email, firstName, lastName },
-    setUser
-  ] = useReducer((state: any, newState: any) => ({ ...state, ...newState }), {
-    firstName: "",
-    lastName: "",
-    email: ""
-  });
+  const [{ email, firstName, lastName }, setUser] = useReducer(
+    (state: any, newState: any) => ({ ...state, ...newState }),
+    {
+      firstName: "",
+      lastName: "",
+      email: ""
+    }
+  );
 
   async function handleCreate() {
     const response = await createUser({
@@ -102,7 +101,12 @@ function AddUserDialog(props: Props) {
       <DialogActions>
         <ButtonList>
           <Button onClick={onClose}>Cancel</Button>
-          <Button variant="contained" color="primary" onClick={handleCreate}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleCreate}
+            disabled={loading}
+          >
             <AppIcon icon={faCheck} standardRightMargin />
             Add User
           </Button>

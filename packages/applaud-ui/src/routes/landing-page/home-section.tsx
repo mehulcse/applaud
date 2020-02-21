@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, createStyles, Grid, Theme, Typography } from "@material-ui/core";
+import { createStyles, Grid, Theme, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 interface Props {
@@ -39,7 +39,7 @@ function Section(props: Props) {
         {byline && <Typography variant="subtitle1">{byline}</Typography>}
       </Grid>
       <Grid item xs={12} md={4}>
-        <img src={image} className={classes.image} />
+        <img alt="landing" src={image} className={classes.image} />
       </Grid>
     </Grid>
   );
