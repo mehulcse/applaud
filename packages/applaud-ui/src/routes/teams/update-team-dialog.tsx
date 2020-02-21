@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useEffect, useReducer } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -13,6 +13,8 @@ import { useTeamQuery, useUpdateTeamMutation } from "../../generated/graphql";
 import { ButtonList } from "../../components/button-list";
 import AppIcon from "../../components/app-icon";
 import { openSnackbar } from "../../components/notifier";
+import Loader from "../../components/loader";
+import { LOADER_TYPE } from "../../constants/constants";
 
 interface Props {
   teamId: number;
@@ -27,6 +29,7 @@ function UpdateTeamDialog(props: Props) {
     variables: {
       id: teamId
     },
+    skip: !teamId,
     fetchPolicy: "network-only"
   });
   const [updateTeam, { loading: updateLoading }] = useUpdateTeamMutation();
@@ -34,10 +37,19 @@ function UpdateTeamDialog(props: Props) {
   const [{ name, description }, setTeam] = useReducer(
     (state: any, newState: any) => ({ ...state, ...newState }),
     {
-      name: "",
-      description: ""
+      name: data?.team?.name ?? "",
+      description: data?.team?.description ?? ""
     }
   );
+
+  useEffect(() => {
+    if (data?.team?.name) {
+      setTeam({ name: data.team.name });
+    }
+    if (data?.team?.description) {
+      setTeam({ description: data.team.description });
+    }
+  }, [data]);
 
   async function handleUpdate() {
     const response = await updateTeam({
@@ -66,28 +78,31 @@ function UpdateTeamDialog(props: Props) {
     <Dialog open={open} maxWidth="md">
       <DialogTitle>Update Team</DialogTitle>
       <DialogContent>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <TextField
-              label="Name"
-              id="name"
-              name="name"
-              fullWidth
-              value={name}
-              onChange={handleChange}
-            />
+        {loading && <Loader type={LOADER_TYPE.content} />}
+        {!loading && (
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <TextField
+                label="Name"
+                id="name"
+                name="name"
+                fullWidth
+                value={name}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                label="Description"
+                id="description"
+                name="description"
+                fullWidth
+                value={description}
+                onChange={handleChange}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <TextField
-              label="Description"
-              id="description"
-              name="description"
-              fullWidth
-              value={description}
-              onChange={handleChange}
-            />
-          </Grid>
-        </Grid>
+        )}
       </DialogContent>
       <DialogActions>
         <ButtonList>

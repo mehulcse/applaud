@@ -2,5 +2,6 @@ query Team($id: Int!) {
   team(id: $id) {
     id
     name
+    description
   }
 }
