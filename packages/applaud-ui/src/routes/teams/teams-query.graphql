@@ -1,0 +1,9 @@
+query Teams($search: String, $limit: Int, $offset: Int) {
+  teams(search: $search, limit: $limit, offset: $offset) {
+    totalCount
+    nodes {
+      id
+      name
+    }
+  }
+}
