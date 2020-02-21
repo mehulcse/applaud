@@ -1,21 +1,22 @@
 import React, { useState } from "react";
 import { Box, Grid, Button } from "@material-ui/core";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { useUsersQuery } from "../../generated/graphql";
-import UsersTable from "./users-table";
+import { useTeamsQuery } from "../../generated/graphql";
+import TeamsTable from "./teams-table";
 import { SearchInput } from "../../components/search-input";
-import {useUsersQuery} from "../../generated/graphql";
 import AppIcon from "../../components/app-icon";
-import { PAGE_LIMIT } from "../../constants/constants";
 import PaperBox from "../../components/paper-box";
 import PageLayout from "../../components/page-layout";
-import AddUserDialog from "./add-user-dialog";
+import AddTeamDialog from "./add-team-dialog";
+import UpdateTeamDialog from "./update-team-dialog";
+import { PAGE_LIMIT } from "../../constants/constants";
 
-export default function Users() {
+export default function Teams() {
   const [search, setSearch] = useState("");
-  const [showAddUser, setShowAddUser] = useState(false);
+  const [showAddTeam, setShowAddTeam] = useState(false);
+  const [editTeamId, setEditTeamId] = useState(0);
 
-  const queryResult = useUsersQuery({
+  const queryResult = useTeamsQuery({
     variables: {
       search,
       limit: PAGE_LIMIT,
@@ -28,24 +29,35 @@ export default function Users() {
     setSearch(value);
   }
 
-  function handleAddUser() {
-    setShowAddUser(true);
+  function handleAddTeam() {
+    setShowAddTeam(true);
   }
 
   function closeDialog(id?: number) {
-    setShowAddUser(false);
+    setShowAddTeam(false);
+    if (id) {
+      queryResult.refetch();
+    }
+  }
+
+  function onEdit(teamId: number) {
+    setEditTeamId(teamId);
+  }
+
+  function updateCloseDialog(id?: number) {
+    setEditTeamId(0);
     if (id) {
       queryResult.refetch();
     }
   }
 
   return (
-    <PageLayout pageTitle="Users">
+    <PageLayout pageTitle="Teams">
       <PaperBox>
         <Box marginY={2}>
-          <Button color="primary" onClick={handleAddUser} variant="outlined">
+          <Button color="primary" onClick={handleAddTeam} variant="outlined">
             <AppIcon icon={faPlus} standardRightMargin />
-            Add User
+            Add Team
           </Button>
         </Box>
         <Box marginY={2}>
@@ -53,16 +65,21 @@ export default function Users() {
             <Grid container xs={6} item>
               <SearchInput
                 inputValue={search}
-                placeholder="Search User"
+                placeholder="Search Team"
                 onChange={onChange}
               />
             </Grid>
           </Grid>
         </Box>
         <Box marginY={2}>
-          <UsersTable queryResult={queryResult} />
+          <TeamsTable queryResult={queryResult} onEditClick={onEdit} />
         </Box>
-        <AddUserDialog open={showAddUser} onClose={closeDialog} />
+        <AddTeamDialog open={showAddTeam} onClose={closeDialog} />
+        <UpdateTeamDialog
+          teamId={editTeamId}
+          open={Boolean(editTeamId)}
+          onClose={updateCloseDialog}
+        />
       </PaperBox>
     </PageLayout>
   );

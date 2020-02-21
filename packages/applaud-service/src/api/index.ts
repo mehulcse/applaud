@@ -36,7 +36,7 @@ export async function getExpressApp() {
     res.send({ ok: true }).status(200);
   });
 
-  app.use(cors(corsOptions));
+  // app.use(cors(corsOptions));
   app.use(bodyParser.json());
   app.use(cookieParser());
   app.use(authMiddleware);

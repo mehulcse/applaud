@@ -4,11 +4,15 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  TableHead
+  TableHead,
+  IconButton,
+  Tooltip,
+  Button
 } from "@material-ui/core";
-import { UsersQueryResult } from "../../generated/graphql";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { DepartmentsQueryResult } from "../../generated/graphql";
 import NoDataAvailable from "../../components/no-data-available";
-import AppLink from "../../components/app-link";
+import AppIcon from "../../components/app-icon";
 import Loader from "../../components/loader";
 import ErrorCard from "../../components/error-card";
 import {
@@ -18,11 +22,12 @@ import {
 } from "../../constants/constants";
 
 interface Props {
-  queryResult: UsersQueryResult;
+  queryResult: DepartmentsQueryResult;
+  onEditClick: (departmentId: number) => void;
 }
 
-function UsersTable(props: Props) {
-  const { queryResult } = props;
+function DepartmentsTable(props: Props) {
+  const { queryResult, onEditClick } = props;
   const { loading, data, error } = queryResult;
 
   const scrollableRef = useRef<Element>(null);
@@ -35,15 +40,15 @@ function UsersTable(props: Props) {
   function handleScroll() {
     if (
       !loading &&
-      data?.users?.nodes &&
-      data.users.nodes.length < data.users.totalCount &&
+      data?.departments?.nodes &&
+      data.departments.nodes.length < data.departments.totalCount &&
       scrollableRef?.current &&
       scrollableRef.current.scrollTop + scrollableRef.current.clientHeight >=
         scrollableRef.current.scrollHeight * SCROLL_THRESHOLD
     ) {
       queryResult.fetchMore({
         variables: {
-          offset: data.users.nodes.length,
+          offset: data.departments.nodes.length,
           limit: PAGE_LIMIT
         },
         updateQuery: (
@@ -53,12 +58,19 @@ function UsersTable(props: Props) {
           if (!fetchMoreResult) {
             return prev;
           }
-          if (prev?.users?.nodes && fetchMoreResult && fetchMoreResult.users) {
+          if (
+            prev?.departments?.nodes &&
+            fetchMoreResult &&
+            fetchMoreResult.departments
+          ) {
             return Object.assign({}, prev, {
               ...prev,
-              users: {
-                ...prev.users,
-                nodes: [...prev.users.nodes, ...fetchMoreResult.users.nodes]
+              departments: {
+                ...prev.departments,
+                nodes: [
+                  ...prev.departments.nodes,
+                  ...fetchMoreResult.departments.nodes
+                ]
               }
             });
           }
@@ -70,29 +82,35 @@ function UsersTable(props: Props) {
 
   let count = 0;
 
-  if (data?.users?.totalCount) {
-    count = data.users.totalCount;
+  if (data?.departments?.totalCount) {
+    count = data.departments.totalCount;
   }
 
   function renderTableBody() {
-    if (data?.users?.nodes.length) {
-      return data.users.nodes.map((user: any, index: number) => (
-        <TableRow key={user.id} hover id={user.id}>
-          <TableCell>
-            <AppLink to={`/users/${user.id}`}>{user.id}</AppLink>
+    if (data?.departments?.nodes?.length) {
+      return data.departments.nodes.map((department: any, index: number) => (
+        <TableRow key={department.id} hover id={department.id}>
+          <TableCell>{department.id}</TableCell>
+          <TableCell>{department.name}</TableCell>
+          <TableCell align="center">
+            <Tooltip title="Edit">
+              <IconButton
+                color="inherit"
+                component={Button}
+                id={`btn-edit_${department.id}`}
+                aria-label="Edit"
+                onClick={onEditClick.bind(null, department.id)}
+              >
+                <AppIcon icon={faEdit} size="lg" />
+              </IconButton>
+            </Tooltip>
           </TableCell>
-          <TableCell>
-            <AppLink to={`/users/${user.id}`}>{user.fullName}</AppLink>
-          </TableCell>
-          <TableCell>{user.email}</TableCell>
-          <TableCell>{user.team.name}</TableCell>
-          <TableCell>{user.department.name}</TableCell>
         </TableRow>
       ));
     } else if (error) {
       return (
         <TableRow>
-          <TableCell colSpan={5}>
+          <TableCell colSpan={3}>
             <ErrorCard error={error} />
           </TableCell>
         </TableRow>
@@ -100,7 +118,7 @@ function UsersTable(props: Props) {
     }
     return (
       <TableRow>
-        <TableCell colSpan={5}>
+        <TableCell colSpan={3}>
           <NoDataAvailable />
         </TableCell>
       </TableRow>
@@ -117,15 +135,6 @@ function UsersTable(props: Props) {
           <TableCell>
             <strong>Name</strong>
           </TableCell>
-          <TableCell>
-            <strong>Email</strong>
-          </TableCell>
-          <TableCell>
-            <strong>Team</strong>
-          </TableCell>
-          <TableCell>
-            <strong>Department</strong>
-          </TableCell>
           <TableCell align="center">
             <strong>Action</strong>
           </TableCell>
@@ -139,4 +148,4 @@ function UsersTable(props: Props) {
   );
 }
 
-export default UsersTable;
+export default DepartmentsTable;

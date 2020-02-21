@@ -93,11 +93,13 @@ export default class Config {
       "localhost:3000",
       "http://localhost",
       "localhost",
-      "https://localhost"
+      "https://localhost",
+      "http://localhost.com",
+      "http://localhost.com:3000"
       // Config.getAppPartnerUrl(),
       // Config.getAppWorkerUrl()
     ];
-    // return "*";
+    // return "http://localhost:3000";
   };
   static getAwsProfileName = () => Config.getParameter("AWS_PROFILE");
   static getAwsAccessKey = () =>

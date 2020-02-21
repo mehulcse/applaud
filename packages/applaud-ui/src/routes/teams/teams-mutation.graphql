@@ -1,0 +1,15 @@
+mutation CreateTeam($input: CreateTeamInput!){
+  createTeam(input: $input){
+    team {
+      id
+    }
+  }
+}
+
+mutation UpdateTeam($input: UpdateTeamInput!){
+  updateTeam(input: $input){
+    team {
+      id
+    }
+  }
+}
