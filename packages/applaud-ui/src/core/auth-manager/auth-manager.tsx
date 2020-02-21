@@ -18,7 +18,7 @@ export interface AuthContextValue {
   isLoggedIn: boolean;
   refresh: () => Promise<any>;
   logout: () => Promise<any>;
-  user: null;
+  user: ViewerUser | null;
 }
 
 interface Props extends RouteComponentProps {
@@ -53,7 +53,7 @@ class AuthManager extends Component<Props> {
       const { data, error } = queryResult;
       if (data) {
         contextValue.isLoggedIn = !error && !!data.viewer;
-        // contextValue.user = data.viewer; // TODO: uncomment it
+        contextValue.user = data.viewer;
       }
     }
 

@@ -3,6 +3,7 @@ import { Box, FormControlLabel, Grid, Switch, Button, Typography } from "@materi
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import UsersTable from "./users-table";
 import { SearchInput } from "../../components/search-input";
+import {useUsersQuery} from "../../generated/graphql";
 import AppIcon from "../../components/app-icon";
 // import AddUserDialog from "./add-user-dialog";
 import { PAGE_LIMIT } from "../../constants/constants";

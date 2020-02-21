@@ -404,6 +404,8 @@ export type User = {
   firstName: Scalars["String"];
   lastName: Scalars["String"];
   email: Scalars["String"];
+  userRoles: Array<UserRole>;
+  fullName: Scalars["String"];
 };
 
 export type UserConnection = {
@@ -490,6 +492,36 @@ export type LogoutUserMutation = { __typename?: "Mutation" } & {
   logoutUser: { __typename?: "LogoutUserResponse" } & Pick<
     LogoutUserResponse,
     "isLoggedOut"
+  >;
+};
+
+export type ApplaudQueryVariables = {
+  limit?: Maybe<Scalars["Int"]>;
+  offset?: Maybe<Scalars["Int"]>;
+  allocatedToUserId?: Maybe<Scalars["Int"]>;
+  allocatedByUserId?: Maybe<Scalars["Int"]>;
+};
+
+export type ApplaudQuery = { __typename?: "Query" } & {
+  applaud: Maybe<
+    { __typename?: "ApplaudConnection" } & Pick<
+      ApplaudConnection,
+      "totalCount"
+    > & {
+        nodes: Maybe<
+          Array<
+            { __typename?: "Applaud" } & Pick<
+              Applaud,
+              | "id"
+              | "allocatedByUserId"
+              | "allocatedToUserId"
+              | "message"
+              | "type"
+              | "createdAt"
+            >
+          >
+        >;
+      }
   >;
 };
 
@@ -871,6 +903,98 @@ export type LogoutUserMutationResult = ApolloReactCommon.MutationResult<
 export type LogoutUserMutationOptions = ApolloReactCommon.BaseMutationOptions<
   LogoutUserMutation,
   LogoutUserMutationVariables
+>;
+export const ApplaudDocument = gql`
+  query Applaud(
+    $limit: Int
+    $offset: Int
+    $allocatedToUserId: Int
+    $allocatedByUserId: Int
+  ) {
+    applaud(
+      limit: $limit
+      offset: $offset
+      allocatedToUserId: $allocatedToUserId
+      allocatedByUserId: $allocatedByUserId
+    ) {
+      totalCount
+      nodes {
+        id
+        allocatedByUserId
+        allocatedToUserId
+        message
+        type
+        createdAt
+      }
+    }
+  }
+`;
+export type ApplaudComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<
+    ApplaudQuery,
+    ApplaudQueryVariables
+  >,
+  "query"
+>;
+
+export const ApplaudComponent = (props: ApplaudComponentProps) => (
+  <ApolloReactComponents.Query<ApplaudQuery, ApplaudQueryVariables>
+    query={ApplaudDocument}
+    {...props}
+  />
+);
+
+export type ApplaudProps<TChildProps = {}> = ApolloReactHoc.DataProps<
+  ApplaudQuery,
+  ApplaudQueryVariables
+> &
+  TChildProps;
+export function withApplaud<TProps, TChildProps = {}>(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    ApplaudQuery,
+    ApplaudQueryVariables,
+    ApplaudProps<TChildProps>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    ApplaudQuery,
+    ApplaudQueryVariables,
+    ApplaudProps<TChildProps>
+  >(ApplaudDocument, {
+    alias: "withApplaud",
+    ...operationOptions
+  });
+}
+
+export function useApplaudQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    ApplaudQuery,
+    ApplaudQueryVariables
+  >
+) {
+  return ApolloReactHooks.useQuery<ApplaudQuery, ApplaudQueryVariables>(
+    ApplaudDocument,
+    baseOptions
+  );
+}
+export function useApplaudLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    ApplaudQuery,
+    ApplaudQueryVariables
+  >
+) {
+  return ApolloReactHooks.useLazyQuery<ApplaudQuery, ApplaudQueryVariables>(
+    ApplaudDocument,
+    baseOptions
+  );
+}
+
+export type ApplaudQueryHookResult = ReturnType<typeof useApplaudQuery>;
+export type ApplaudQueryResult = ApolloReactCommon.QueryResult<
+  ApplaudQuery,
+  ApplaudQueryVariables
 >;
 export const LoginUserDocument = gql`
   mutation loginUser($input: LoginUserInput!) {
