@@ -173,7 +173,7 @@ function ApplaudForm() {
             </Grid>
             <section className="cardsWrapper">
               <section className="card-tiles-details">
-                <Grid container>
+                <Grid container spacing={3}>
                   {applaudCardData.map(item => {
                     return (
                       <Grid item xs={4}>
