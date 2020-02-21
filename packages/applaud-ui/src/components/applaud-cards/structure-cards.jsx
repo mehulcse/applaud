@@ -1,12 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import Lottie from "react-lottie";
-import Typography from "@material-ui/core/Typography";
+import { Typography } from "@material-ui/core";
 import "./cards.css";
 
 const StructureCards = ({ data }) => {
-  // render() {
-
-  // }
   const defaultOptions = {
     loop: true,
     autoplay: true,

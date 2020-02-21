@@ -3,7 +3,7 @@ import PaperBox from "../../components/paper-box";
 import UserSelectorContainer from "../../components/user-selector/user-selector";
 import CoinCounter from "./coin-counter";
 import { Grid, TextField, Button, Box } from "@material-ui/core";
-import StructureCard from "../../components/ApplaudCards/StructureCards";
+import StructureCard from "../../components/applaud-cards/structure-cards";
 import "./applaud-form.css";
 import aboveBeyond from "../../lotties/4999-rocket.json";
 import ninjaAnimation from "../../lotties/6936-class-ninjas-floating-ninja.json";
@@ -12,7 +12,7 @@ import thumbsUp from "../../lotties/856-thumbs-up-grey-blue.json";
 import congrats from "../../lotties/11272-party-popper.json";
 import gladiator from "../../lotties/15634-orange-super-hero.json";
 import MessageEditor from "../../components/messageBox/MessageEditor";
-import CardPreview from "../../components/cardPreview/cardPreview";
+import CardPreview from "../../components/card-preview/card-preview";
 
 const applaudCardData = [
   {
@@ -65,7 +65,7 @@ function ApplaudForm() {
                 <UserSelectorContainer
                   label="To"
                   onUsersSelected={() => console.log("hello")}
-                  userIds={[1]}
+                  userIds={[]}
                 />
               </Grid>
               <Grid>

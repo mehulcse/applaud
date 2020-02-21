@@ -4,7 +4,6 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useUsersQuery } from "../../generated/graphql";
 import UsersTable from "./users-table";
 import { SearchInput } from "../../components/search-input";
-import { useUsersQuery } from "../../generated/graphql";
 import AppIcon from "../../components/app-icon";
 import { PAGE_LIMIT } from "../../constants/constants";
 import PaperBox from "../../components/paper-box";
