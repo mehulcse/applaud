@@ -99,6 +99,13 @@ function ApplaudForm() {
   }
 
   async function onSend() {
+    // TODO: uncomment after having coin balance
+    // if (context?.coinBalance) {
+    //   if (context.coinBalance < clap) {
+    //     openSnackbar({
+    //       message: "You can't allocate as you don't have sufficient balance"
+    //     }, "success");
+    //   }
     const response = await createApplaud({
       variables: {
         input: {
@@ -137,6 +144,7 @@ function ApplaudForm() {
       );
       history.push("/dashboard");
     }
+    // }
   }
 
   function onCancel() {
