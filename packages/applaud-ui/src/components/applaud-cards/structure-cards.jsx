@@ -28,7 +28,7 @@ const StructureCards = ({ data, onClick, selected }) => {
       className="card-tiles"
       id={data.id}
       onClick={onClick}
-      elevation={selected ? 20 : 5}
+      elevation={selected ? 24 : 5}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
