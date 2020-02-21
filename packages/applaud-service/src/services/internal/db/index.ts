@@ -4,7 +4,6 @@ import { Model } from "objection";
 import { getLogger } from "../../../logger";
 import Config from "../../../config";
 import "mysql";
-// import { bugsnagClient } from "../../bugsnag";
 
 const logger = getLogger();
 
@@ -57,7 +56,7 @@ export const canConnect = async () => {
 
 export const migrate = async () => {
   const knex = await getDb();
-  const migrationsDirectory = resolve(join(__dirname, 'migrations'));
+  const migrationsDirectory = resolve(join(__dirname, "migrations"));
   try {
     const migrationsConfig = {
       directory: migrationsDirectory,
@@ -67,10 +66,5 @@ export const migrate = async () => {
     logger.info("DB Migration finished.", { migrationsApplied: migrations });
   } catch (e) {
     logger.error("Unable to perform DB Migration", { e });
-    // if (Config.getIsLocal()) {
-    //   logger.error("Unable to perform DB Migration", { e });
-    // } else {
-    //   bugsnagClient.notify(e);
-    // }
   }
 };

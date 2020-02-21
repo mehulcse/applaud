@@ -1,6 +1,5 @@
 import React, {useContext} from "react";
 import PageLayout from "../../components/page-layout";
-import {AuthContextValue} from "../../core/auth-manager/auth-manager";
 import {AuthContext} from "../../core/auth-manager";
 import {useApplaudQuery} from "../../generated/graphql";
 import {Typography, Paper, Box, Grid} from "@material-ui/core";
@@ -29,11 +28,6 @@ function Dashboard() {
     notifyOnNetworkStatusChange: true
   })
 
-  // console.log(applaudStreamQuery.data)
-  // console.log(applaudReceivedQuery.data)
-  // console.log(applaudGivenQuery.data)
-  // console.log(authContext)
-  // const user = (authContext as AuthContextValue).user;
   return (
     <PageLayout pageTitle="Dashboard">
       <Grid container xs={12} spacing={6} item>

@@ -1,6 +1,5 @@
 import { QueryBuilder, Model } from "objection";
 import { ValidationError } from "yup";
-// import { UserInputError } from "apollo-server-express";
 import { GraphQLError, GraphQLFormattedError } from "graphql";
 import { formatApolloErrors, ApolloError } from "apollo-server-core";
 import { getLogger } from "../logger";
@@ -43,8 +42,6 @@ export function buildPageInfo(totalCount: number, args: PaginationArgs) {
 }
 
 export const transformError = (e: GraphQLError): GraphQLFormattedError => {
-  // const error = new ApolloError("This is a test.");
-  // return formatApolloErrors([error])[0];
   const logger = getLogger();
   logger.debug(e.name, { e });
   if (e.originalError && e.originalError.name === "ValidationError") {
@@ -57,13 +54,6 @@ export const transformError = (e: GraphQLError): GraphQLFormattedError => {
         test: "this is a test."
       }
     );
-    // return new UserInputError("Arguments invalid.", {
-    //   invalidArgs: validationError.inner.map((innerError: ValidationError) => ({
-    //     field: innerError.path,
-    //     type: innerError.type,
-    //     message: innerError.message
-    //   }))
-    // });
     return formatApolloErrors([newError], {})[0];
   }
   return formatApolloErrors([e])[0];

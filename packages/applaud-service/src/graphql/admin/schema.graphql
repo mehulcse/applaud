@@ -278,6 +278,14 @@ type UserRole {
   role: Role!
 }
 
+type Viewer {
+  isAdmin: Boolean
+  userRoles: [String!]!
+
+  # relationships
+  user: User!
+}
+
 input CreateUserRoleInput {
   userId: Int!
   roleId: String!
@@ -333,7 +341,7 @@ type Query {
     sort: UsersSort
     search: String
   ): UserConnection
-  viewer: User
+  viewer: Viewer
 }
 
 schema {

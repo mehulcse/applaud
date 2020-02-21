@@ -9,7 +9,11 @@ export default {
       if (!context.context.viewer) {
         return null;
       }
-      return context.context.viewer.user;
+      return {
+        isAdmin: context.context.viewer.isAdmin,
+        userRoles: context.context.viewer.userRoles,
+        user: context.context.viewer.user
+      };
     }
   }
 };
