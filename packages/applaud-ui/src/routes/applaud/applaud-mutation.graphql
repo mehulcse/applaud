@@ -1,0 +1,7 @@
+mutation CreateApplaud($input: CreateApplaudInput!) {
+  createApplaud(input: $input) {
+    applaud {
+      id
+    }
+  }
+}
