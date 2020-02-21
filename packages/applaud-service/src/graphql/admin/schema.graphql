@@ -3,351 +3,357 @@ scalar DateTime
 scalar Time
 
 type PageInfo {
-  hasNextPage: Boolean!
-  hasPreviousPage: Boolean!
+    hasNextPage: Boolean!
+    hasPreviousPage: Boolean!
 }
 
 input LoginUserInput {
-  googleIdToken: String
-  email: String
-  temporaryLoginCode: String
-  magicLink: String
+    googleIdToken: String
+    email: String
+    temporaryLoginCode: String
+    magicLink: String
 }
 
 type LoginUserResponse {
-  isLoggedIn: Boolean
+    isLoggedIn: Boolean
 }
 
 type LogoutUserResponse {
-  isLoggedOut: Boolean!
+    isLoggedOut: Boolean!
 }
 
 type User {
-  id: Int!
-  firstName: String!
-  lastName: String!
-  email: String!
+    id: Int!
+    firstName: String!
+    lastName: String!
+    email: String!
 
-  #Relations
-  userRoles: [UserRole!]!
-  fullName: String!
+    #Relations
+    userRoles: [UserRole!]!
+    fullName: String!
+    teams: [Team!]
 }
 
 enum UsersSort {
-  ID_ASC
-  ID_DESC
+    ID_ASC
+    ID_DESC
 }
 
 type UserConnection {
-  totalCount: Int!
-  pageInfo: PageInfo
-  nodes: [User!]!
+    totalCount: Int!
+    pageInfo: PageInfo
+    nodes: [User!]!
 }
 
 input CreateUserTeamInput {
-  userId: Int!
-  teamId: Int!
+    userId: Int!
+    teamId: Int!
 }
 
 type CreateUserTeamResponse {
-  userTeam: UserTeam!
+    userTeam: UserTeam!
 }
 
 type UserTeam {
-  id: Int!
-  userId: Int!
-  teamId: Int!
-  createdAt: DateTime!
+    id: Int!
+    userId: Int!
+    teamId: Int!
+    createdAt: DateTime!
 }
 
 enum UserTeamsSort {
-  ID_ASC
-  ID_DESC
+    ID_ASC
+    ID_DESC
 }
 
 type UserTeamsConnection {
-  totalCount: Int!
-  pageInfo: PageInfo
-  nodes: [UserTeam!]
+    totalCount: Int!
+    pageInfo: PageInfo
+    nodes: [UserTeam!]
 }
 
 input CreateTeamInput {
-  name: String!
-  description: String!
+    name: String!
+    description: String!
 }
 
 type CreateTeamResponse {
-  team: Team!
+    team: Team!
 }
 
 input UpdateTeamInput {
-  teamId: Int!
-  name: String
-  description: String
+    teamId: Int!
+    name: String
+    description: String
 }
 
 type UpdateTeamResponse {
-  team: Team!
+    team: Team!
 }
 
 type Team {
-  id: Int!
-  name: String!
-  description: String!
+    id: Int!
+    name: String!
+    description: String!
+
+    #Relation
+    departments: [Department!]
 }
 
 enum TeamsSort {
-  ID_ASC
-  ID_DESC
+    ID_ASC
+    ID_DESC
 }
 
 type TeamsConnection {
-  totalCount: Int!
-  pageInfo: PageInfo
-  nodes: [Team!]
+    totalCount: Int!
+    pageInfo: PageInfo
+    nodes: [Team!]
 }
 
 input CreateDepartmentTeamInput {
-  departmentId: Int!
-  teamId: Int!
+    departmentId: Int!
+    teamId: Int!
 }
 
 type CreateDepartmentTeamResponse {
-  departmentTeam: DepartmentTeam!
+    departmentTeam: DepartmentTeam!
 }
 
 type DepartmentTeam {
-  id: Int!
-  departmentId: Int!
-  teamId: Int!
-  createdAt: DateTime!
+    id: Int!
+    departmentId: Int!
+    teamId: Int!
+    createdAt: DateTime!
 }
 
 enum DepartmentTeamsSort {
-  ID_ASC
-  ID_DESC
+    ID_ASC
+    ID_DESC
 }
 
 type DepartmentTeamsConnection {
-  totalCount: Int!
-  pageInfo: PageInfo
-  nodes: [DepartmentTeam!]
+    totalCount: Int!
+    pageInfo: PageInfo
+    nodes: [DepartmentTeam!]
 }
 
 input CreateDepartmentInput {
-  name: String!
-  description: String!
+    name: String!
+    description: String!
 }
 
 type CreateDepartmentResponse {
-  department: Department!
+    department: Department!
 }
 
 input UpdateDepartmentInput {
-  departmentId: Int!
-  name: String
-  description: String
+    departmentId: Int!
+    name: String
+    description: String
 }
 
 type UpdateDepartmentResponse {
-  department: Department!
+    department: Department!
 }
 
 type Department {
-  id: Int!
-  name: String!
-  description: String!
+    id: Int!
+    name: String!
+    description: String!
 }
 
 enum DepartmentsSort {
-  ID_ASC
-  ID_DESC
+    ID_ASC
+    ID_DESC
 }
 
 type DepartmentsConnection {
-  totalCount: Int!
-  pageInfo: PageInfo
-  nodes: [Department!]
+    totalCount: Int!
+    pageInfo: PageInfo
+    nodes: [Department!]
 }
 
 input CreateApplaudInput {
-  balance: Int!
-  allocatedToUserId: Int!
-  allocatedByUserId: Int!
-  message: String
-  type: String!
+    balance: Int!
+    allocatedToUserId: Int!
+    allocatedByUserId: Int!
+    message: String
+    type: String!
 }
 
 type CreateApplaudResponse {
-  applaud: Applaud!
+    applaud: Applaud!
 }
 
 type Applaud {
-  id: Int!
-  balance: Int!
-  allocatedToUserId: Int!
-  allocatedByUserId: Int!
-  message: String
-  type: String!
-  createdAt: DateTime!
+    id: Int!
+    balance: Int!
+    allocatedToUserId: Int!
+    message: String
+    type: String!
+    createdAt: DateTime!
+
+    #Relation
+    allocatedToUser: User
 }
 
 enum ApplaudSort {
-  ID_ASC
-  ID_DESC
+    ID_ASC
+    ID_DESC
 }
 
 type ApplaudConnection {
-  totalCount: Int!
-  pageInfo: PageInfo
-  nodes: [Applaud!]
+    totalCount: Int!
+    pageInfo: PageInfo
+    nodes: [Applaud!]
 }
 
 type ApplaudBalance {
-  id: Int!
-  balance: Int!
-  userId: Int!
-  allocatedAt: DateTime!
+    id: Int!
+    balance: Int!
+    userId: Int!
+    allocatedAt: DateTime!
 }
 
 input UpdateApplaudBalanceInput {
-  coinBalanceId: Int!
-  balance: Int!
+    coinBalanceId: Int!
+    balance: Int!
 }
 
 type UpdateApplaudBalanceResponse {
-  applaudBalance: ApplaudBalance!
+    applaudBalance: ApplaudBalance!
 }
 
 type Constant {
-  id: Int!
-  name: String!
-  value: String!
+    id: Int!
+    name: String!
+    value: String!
 }
 
 enum ConstantSort {
-  ID_ASC
-  ID_DESC
+    ID_ASC
+    ID_DESC
 }
 
 type ConstantConnection {
-  totalCount: Int!
-  pageInfo: PageInfo
-  nodes: [Constant!]
+    totalCount: Int!
+    pageInfo: PageInfo
+    nodes: [Constant!]
 }
 
 input UpdateConstantInput {
-  constantId: Int!
-  name: String
-  value: String
+    constantId: Int!
+    name: String
+    value: String
 }
 
 type UpdateConstantResponse {
-  constant: Constant!
+    constant: Constant!
 }
 
 input CreateUserInput {
-  firstName: String!
-  lastName: String!
-  email: String!
+    firstName: String!
+    lastName: String!
+    email: String!
 }
 
 type CreateUserResponse {
-  user: User
+    user: User
 }
 
 type Role {
-  id: String!
-  name: String!
+    id: String!
+    name: String!
 }
 
 type RoleConnection {
-  totalCount: Int!
-  pageInfo: PageInfo
-  nodes: [Role!]!
+    totalCount: Int!
+    pageInfo: PageInfo
+    nodes: [Role!]!
 }
 
 type UserRole {
-  id: Int!
-  userId: Int!
-  roleId: String!
-  createdAt: DateTime!
+    id: Int!
+    userId: Int!
+    roleId: String!
+    createdAt: DateTime!
 
-  # relationships
-  user: User!
-  role: Role!
+    # relationships
+    user: User!
+    role: Role!
 }
 
 type Viewer {
-  isAdmin: Boolean
-  userRoles: [String!]!
+    isAdmin: Boolean
+    userRoles: [String!]!
 
-  # relationships
-  user: User!
+    # relationships
+    user: User!
 }
 
 input CreateUserRoleInput {
-  userId: Int!
-  roleId: String!
+    userId: Int!
+    roleId: String!
 }
 
 type CreateUserRoleResponse {
-  userRole: UserRole
+    userRole: UserRole
 }
 
 type Mutation {
-  createApplaud(input: CreateApplaudInput!): CreateApplaudResponse!
-  createTeam(input: CreateTeamInput!): CreateTeamResponse!
-  createDepartment(input: CreateDepartmentInput!): CreateDepartmentResponse!
-  createDepartmentTeam(input: CreateDepartmentTeamInput!): CreateDepartmentTeamResponse!
-  createUserTeam(input: CreateUserTeamInput!): CreateUserTeamResponse!
-  createUser(input: CreateUserInput!): CreateUserResponse!
-  createUserRole(input: CreateUserRoleInput!): CreateUserRoleResponse!
-  loginUser(input: LoginUserInput!): LoginUserResponse!
-  logoutUser: LogoutUserResponse!
-  updateTeam(input: UpdateTeamInput!): UpdateTeamResponse!
-  updateDepartment(input: UpdateDepartmentInput!): UpdateDepartmentResponse!
-  updateApplaudBalance(input: UpdateApplaudBalanceInput!): UpdateApplaudBalanceResponse!
-  updateConstants(input: UpdateConstantInput!): UpdateConstantResponse!
+    createApplaud(input: CreateApplaudInput!): CreateApplaudResponse!
+    createTeam(input: CreateTeamInput!): CreateTeamResponse!
+    createDepartment(input: CreateDepartmentInput!): CreateDepartmentResponse!
+    createDepartmentTeam(input: CreateDepartmentTeamInput!): CreateDepartmentTeamResponse!
+    createUserTeam(input: CreateUserTeamInput!): CreateUserTeamResponse!
+    createUser(input: CreateUserInput!): CreateUserResponse!
+    createUserRole(input: CreateUserRoleInput!): CreateUserRoleResponse!
+    loginUser(input: LoginUserInput!): LoginUserResponse!
+    logoutUser: LogoutUserResponse!
+    updateTeam(input: UpdateTeamInput!): UpdateTeamResponse!
+    updateDepartment(input: UpdateDepartmentInput!): UpdateDepartmentResponse!
+    updateApplaudBalance(input: UpdateApplaudBalanceInput!): UpdateApplaudBalanceResponse!
+    updateConstants(input: UpdateConstantInput!): UpdateConstantResponse!
 }
 
 type Query {
-  applaud(
-    limit: Int
-    offset: Int
-    sort: ApplaudSort
-    allocatedToUserId: Int
-    allocatedByUserId: Int
-  ): ApplaudConnection
-  department(id: Int!): Department
-  departments(
-    limit: Int
-    offset: Int
-    sort: DepartmentsSort
-    search: String
-    ids: [Int!]
-  ): DepartmentsConnection
-  roles: RoleConnection
-  team(id: Int!): Team
-  teams(
-    limit: Int
-    offset: Int
-    sort: TeamsSort
-    search: String
-    ids: [Int!]
-  ): TeamsConnection
-  user(id: Int!): User
-  users(
-    limit: Int
-    offset: Int
-    sort: UsersSort
-    search: String
-    ids: [Int!]
-  ): UserConnection
-  viewer: Viewer
+    applaud(
+        limit: Int
+        offset: Int
+        sort: ApplaudSort
+        allocatedToUserId: Int
+        allocatedByUserId: Int
+    ): ApplaudConnection
+    department(id: Int!): Department
+    departments(
+        limit: Int
+        offset: Int
+        sort: DepartmentsSort
+        search: String
+        ids: [Int!]
+    ): DepartmentsConnection
+    roles: RoleConnection
+    team(id: Int!): Team
+    teams(
+        limit: Int
+        offset: Int
+        sort: TeamsSort
+        search: String
+        ids: [Int!]
+    ): TeamsConnection
+    user(id: Int!): User
+    users(
+        limit: Int
+        offset: Int
+        sort: UsersSort
+        search: String
+        ids: [Int!]
+    ): UserConnection
+    viewer: Viewer
 }
 
 schema {
-  query: Query
-  mutation: Mutation
+    query: Query
+    mutation: Mutation
 }

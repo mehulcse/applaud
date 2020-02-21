@@ -71,8 +71,9 @@ function LandingPage() {
         </Toolbar>
       </AppBar>
       <Grid container justify="center">
-        {content.map(section => (
+        {content.map((section, index) => (
           <Section
+            key={index}
             title={section.title}
             byline={section.byline}
             image={section.image}

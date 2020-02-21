@@ -10,10 +10,12 @@ import {
 import { ensureAdmin, ensureUser } from "../../auth/helpers";
 import Department from "../db/models/department";
 import { AppContext } from "../../auth/app-context";
+import { DepartmentTeamService } from "./department-team-service";
 
 export interface DepartmentsOptions extends PaginationArgs {
   search?: string;
   ids?: number[];
+  teamId?: number;
 }
 
 export interface CreateDepartmentInput {
@@ -71,6 +73,17 @@ export class DepartmentService {
 
     if (options.ids && options.ids.length > 0) {
       query.whereIn("id", options.ids);
+    }
+
+    if (options.teamId) {
+      query.whereIn(
+        "id",
+        new DepartmentTeamService(this.context)
+          .getAllQuery({
+            teamId: options.teamId
+          })
+          .select("departmentId")
+      );
     }
 
     switch (options.sort) {

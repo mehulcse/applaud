@@ -24,6 +24,8 @@ import logoutUserMutation from "./mutations/logout-user";
 import viewerQuery from "./queries/viewer";
 import rolesQuery from "./queries/roles";
 import userType from "./types/user";
+import applaudReceivedType from "./types/applaud-received";
+import teamType from "./types/team";
 
 export default merge(
   { Date: GraphQLDate, DateTime: GraphQLDateTime, Time: GraphQLTime },
@@ -49,5 +51,7 @@ export default merge(
   updateUpdateConstantsMutation,
   updateTeamMutation,
   updateDepartmentMutation,
-  userType
+  userType,
+  applaudReceivedType,
+  teamType
 );
