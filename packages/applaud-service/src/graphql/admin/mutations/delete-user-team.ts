@@ -2,7 +2,8 @@ import { GraphQLContext } from "../../../types/graphql-context";
 import { UserTeamService } from "../../../services/internal/services/user-team-service";
 
 interface DeleteUserTeamInput {
-  id: number;
+  teamId: number;
+  userId: number;
 }
 
 interface DeleteUserTeamInputArgs {
@@ -16,8 +17,7 @@ export default {
       args: DeleteUserTeamInputArgs,
       { context }: GraphQLContext
     ) => {
-      const { id } = args.input;
-      const response = await new UserTeamService(context).delete(id);
+      const response = await new UserTeamService(context).delete(args.input);
       return response;
     }
   }

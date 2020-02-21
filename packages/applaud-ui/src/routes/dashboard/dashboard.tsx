@@ -3,9 +3,9 @@ import PageLayout from "../../components/page-layout";
 import {AuthContext} from "../../core/auth-manager";
 import {useApplaudQuery, ApplaudQueryHookResult} from "../../generated/graphql";
 import {Typography, Paper, Box, Grid} from "@material-ui/core";
-import {applaudCardData} from "../applaud/applaud-form";
+import {applaudCardData} from "../../helper/getApplaudCard";
 
-function Dashboard() {
+const Dashboard = () => {
   const authContext = useContext(AuthContext);
   const applaudStreamQuery = useApplaudQuery({
     variables: {},
@@ -73,6 +73,6 @@ function Dashboard() {
       </Grid>
     </PageLayout>
   );
-}
+};
 
 export default Dashboard;

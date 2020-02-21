@@ -61,7 +61,8 @@ type CreateUserTeamResponse {
 }
 
 input DeleteUserTeamInput {
-    id: Int!
+    teamId: Int!
+    userId: Int!
 }
 
 type Deleted {
@@ -139,7 +140,8 @@ type CreateDepartmentTeamResponse {
 }
 
 input DeleteDepartmentTeamInput {
-    id: Int!
+    teamId: Int!
+    departmentId: Int!
 }
 
 type DeleteDepartmentTeamResponse {
