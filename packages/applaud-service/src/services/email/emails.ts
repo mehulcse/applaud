@@ -12,8 +12,6 @@ export const sendEmailTemporaryLoginCode = async (
   logger.debug("Generating temporary code email");
   logger.debug(code);
   AWS.config.update({
-    accessKeyId: Config.getAwsAccessKey(),
-    secretAccessKey: Config.getAwsSecretKey(),
     region: Config.getAwsRegion()
   });
 
