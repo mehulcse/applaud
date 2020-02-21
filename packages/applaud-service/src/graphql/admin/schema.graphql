@@ -65,12 +65,8 @@ input DeleteUserTeamInput {
     userId: Int!
 }
 
-type Deleted {
-    isDeleted: Boolean
-}
-
 type DeleteUserTeamResponse {
-    deleted: Deleted!
+    isDeleted: Boolean
 }
 
 type UserTeam {
@@ -145,7 +141,7 @@ input DeleteDepartmentTeamInput {
 }
 
 type DeleteDepartmentTeamResponse {
-    deleted: Deleted!
+    isDeleted: Boolean
 }
 
 type DepartmentTeam {

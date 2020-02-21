@@ -149,11 +149,6 @@ export type CreateUserTeamResponse = {
   userTeam: UserTeam;
 };
 
-export type Deleted = {
-  __typename?: "Deleted";
-  isDeleted?: Maybe<Scalars["Boolean"]>;
-};
-
 export type DeleteDepartmentTeamInput = {
   teamId: Scalars["Int"];
   departmentId: Scalars["Int"];
@@ -161,7 +156,7 @@ export type DeleteDepartmentTeamInput = {
 
 export type DeleteDepartmentTeamResponse = {
   __typename?: "DeleteDepartmentTeamResponse";
-  deleted: Deleted;
+  isDeleted?: Maybe<Scalars["Boolean"]>;
 };
 
 export type DeleteUserTeamInput = {
@@ -171,7 +166,7 @@ export type DeleteUserTeamInput = {
 
 export type DeleteUserTeamResponse = {
   __typename?: "DeleteUserTeamResponse";
-  deleted: Deleted;
+  isDeleted?: Maybe<Scalars["Boolean"]>;
 };
 
 export type Department = {
@@ -742,9 +737,10 @@ export type DeleteUserTeamMutationVariables = {
 };
 
 export type DeleteUserTeamMutation = { __typename?: "Mutation" } & {
-  deleteUserTeam: { __typename?: "DeleteUserTeamResponse" } & {
-    deleted: { __typename?: "Deleted" } & Pick<Deleted, "isDeleted">;
-  };
+  deleteUserTeam: { __typename?: "DeleteUserTeamResponse" } & Pick<
+    DeleteUserTeamResponse,
+    "isDeleted"
+  >;
 };
 
 export type UserDetailQueryVariables = {
@@ -2156,9 +2152,7 @@ export type CreateUserTeamMutationOptions = ApolloReactCommon.BaseMutationOption
 export const DeleteUserTeamDocument = gql`
   mutation DeleteUserTeam($input: DeleteUserTeamInput!) {
     deleteUserTeam(input: $input) {
-      deleted {
-        isDeleted
-      }
+      isDeleted
     }
   }
 `;

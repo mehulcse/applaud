@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import Lottie from "react-lottie";
-import {Typography, Box, Grid} from "@material-ui/core";
+import {Typography, Box} from "@material-ui/core";
 import {applaudCardData} from "../../helper/getApplaudCard";
 import PaperBox from "../../components/paper-box";
 import {getDate} from "../../helper/getDate";

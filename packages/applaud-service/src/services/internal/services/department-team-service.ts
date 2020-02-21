@@ -186,7 +186,7 @@ export class DepartmentTeamService {
     });
 
     if (!departmentTeam) {
-      throw new Error("Invalid Department Team ID specified.");
+      throw new Error("Invalid Department ID or Team ID specified.");
     }
 
     await DepartmentTeam.query()

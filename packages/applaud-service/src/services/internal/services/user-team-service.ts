@@ -183,7 +183,7 @@ export class UserTeamService {
     });
 
     if (!userTeam) {
-      throw new Error("Invalid User Team ID specified.");
+      throw new Error("Invalid User ID or Team ID specified.");
     }
 
     await UserTeam.query()

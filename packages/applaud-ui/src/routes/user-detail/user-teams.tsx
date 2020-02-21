@@ -61,7 +61,7 @@ export default function UserTeams(props: Props) {
         return error;
       });
 
-      if (response?.data?.deleteUserTeam?.deleted?.isDeleted) {
+      if (response?.data?.deleteUserTeam?.isDeleted) {
         openSnackbar(
           {
             message: "Team deleted from user successfully"
