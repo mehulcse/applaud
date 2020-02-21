@@ -1,12 +1,13 @@
 import React from "react";
-import { createStyles, makeStyles } from "@material-ui/core/styles";
+import {createStyles, makeStyles} from "@material-ui/core/styles";
 import {
   Grid,
   Box,
   CssBaseline,
   Button,
   Toolbar,
-  AppBar
+  AppBar,
+  Typography
 } from "@material-ui/core";
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import AppLink from "../../components/app-link";
@@ -16,25 +17,25 @@ import logo from '../../logo.svg';
 const content = [
   {
     title: "When a simple thank you is not enough, Applaud them ",
-    byline: "",
+    byline: "Make recognition fun. Love your work.",
     image: "homepage-images/coworkers.svg",
     imageLeft: false
   },
   {
-    title: "Motivate team members and build stronger team ",
-    byline: "Motivate your team members in order to build stronger teams",
+    title: "Invigorate your team with acts of kindness",
+    byline: "Make recognition more impactful by connecting it to your company’s core values and giving visibility to everyone’s contributions.",
     image: "homepage-images/team_spirit.svg",
     imageLeft: false
   },
   {
     title: "Increase engagement and commitment with team members",
-    byline: "Motivate your team members in order to build stronger teams",
+    byline: "Build a scalable culture of recognition by empowering everyone to recognize their peers, direct reports, and managers.",
     image: "homepage-images/discussion.svg",
     imageLeft: true
   },
   {
-    title: "Employees will feel more connected to their company ",
-    byline: "Motivate your team members in order to build stronger teams ",
+    title: "Discover the greatness of your team",
+    byline: "Encourage frequent and timely recognition by integrating with the communication tools your employees use every day.",
     image: "homepage-images/connection.svg",
     imageLeft: false
   }
@@ -67,7 +68,10 @@ const useStyles = makeStyles(() =>
   createStyles({
     container: {
       position: "relative",
-      overflowX: "hidden"
+      '&::-webkit-scrollbar': {
+        width: 0,
+        background: 'transparent'
+      }
     },
     bar: {
       boxShadow: "none"
@@ -106,7 +110,7 @@ const useStyles = makeStyles(() =>
       left: "-5%",
     },
     toolbar: {
-      justifyContent: 'space-between'
+      justifyContent: 'space-between',
     },
     logo: {
       maxWidth: 200
@@ -115,44 +119,45 @@ const useStyles = makeStyles(() =>
 );
 
 interface Props {
-    children: React.ReactElement;
+  children: React.ReactElement;
 }
 
 function LandingPage() {
   const classes = useStyles();
 
-    function ColorChangeScroll(props: Props) {
-        const { children } = props;
-        const trigger = useScrollTrigger({
-            disableHysteresis: true,
-            threshold: 0,
-        });
+  function ColorChangeScroll(props: Props) {
+    const {children} = props;
+    const trigger = useScrollTrigger({
+      disableHysteresis: true,
+      threshold: 0,
+    });
 
-        return React.cloneElement(children, {
-            color: trigger ? "" : "transparent",
-        });
-    }
+    return React.cloneElement(children, {
+      color: trigger ? "rgba(255, 255, 255, 0.5)" : "transparent",
+    });
+  }
 
   return (
     <div id="home" className={classes.container}>
-      <CssBaseline />
-      <Box display={{ xs: 'none', lg: 'block' }}>
-          {patches.map((patch, index) => <img src={patch.image} style={{position:'absolute'}} className={classes[patch.class as keyof typeof classes]} key={index} />)}
+      <CssBaseline/>
+      <Box display={{xs: 'none', lg: 'block'}}>
+        {patches.map((patch, index) => <img src={patch.image} style={{position: 'absolute'}}
+                                            className={classes[patch.class as keyof typeof classes]} key={index}/>)}
       </Box>
       <ColorChangeScroll>
-          <AppBar color="transparent" className={classes.bar}>
-              <Toolbar className={classes.toolbar}>
-                  <img src={logo} alt="logo" className={classes.logo} />
-                  <AppLink to="/login">
-                      <Button
-                          variant="contained"
-                          color="secondary"
-                      >
-                          Login
-                      </Button>
-                  </AppLink>
-              </Toolbar>
-          </AppBar>
+        <AppBar color="transparent" className={classes.bar}>
+          <Toolbar className={classes.toolbar}>
+            <img src={logo} alt="logo" className={classes.logo}/>
+            <AppLink to="/login">
+              <Button
+                variant="contained"
+                color="secondary"
+              >
+                Login
+              </Button>
+            </AppLink>
+          </Toolbar>
+        </AppBar>
       </ColorChangeScroll>
       <Grid container justify="center">
         {content.map((section, index) => (
@@ -165,6 +170,11 @@ function LandingPage() {
           />
         ))}
       </Grid>
+      <Box mt={5}>
+        <Typography align="center">
+          Handcrafted with <span>&#9829;</span> by theGeeksTribe
+        </Typography>
+      </Box>
     </div>
   );
 }
