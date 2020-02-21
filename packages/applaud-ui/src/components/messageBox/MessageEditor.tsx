@@ -3,7 +3,6 @@ import MdEditor from "react-markdown-editor-lite";
 import MarkdownIt from "markdown-it";
 import "react-markdown-editor-lite/lib/index.css";
 import { Grid } from "@material-ui/core";
-export const CONTENT = "content";
 
 const mdParser = new MarkdownIt();
 
@@ -21,7 +20,7 @@ function MessageEditor(props: Props) {
   };
 
   const handleEditorChange = ({ html, text }: any) => {
-    onValueChange(CONTENT, text);
+    onValueChange(text);
   };
 
   return (

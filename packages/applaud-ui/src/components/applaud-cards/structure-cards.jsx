@@ -1,20 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import Lottie from "react-lottie";
-import { Typography } from "@material-ui/core";
+import { Typography, Paper } from "@material-ui/core";
 import "./cards.css";
 
-const StructureCards = ({ data }) => {
+const StructureCards = ({ data, onClick, selected }) => {
   const defaultOptions = {
     loop: true,
-    autoplay: true,
+    autoplay: false,
     animationData: data.animation,
     rendererSettings: {
       preserveAspectRatio: "xMidYMid slice"
     }
   };
 
+  const [paused, setPaused] = useState(true);
+
+  function onMouseEnter() {
+    setPaused(false);
+    console.log("Enter");
+  }
+
+  function onMouseLeave() {
+    setPaused(true);
+  }
+
   return (
-    <section className="card-tiles" id={data.id}>
+    <Paper
+      className="card-tiles"
+      id={data.id}
+      onClick={onClick}
+      elevation={selected ? 20 : 5}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
       <Typography
         className={data.header}
         color="textSecondary"
@@ -28,8 +46,8 @@ const StructureCards = ({ data }) => {
       >
         {data.header}
       </Typography>
-      <Lottie options={defaultOptions} className="lottieFiles" />
-    </section>
+      <Lottie options={defaultOptions} className="lottieFiles" isPaused={paused} />
+    </Paper>
   );
 };
 

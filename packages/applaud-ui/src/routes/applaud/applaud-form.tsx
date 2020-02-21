@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
+import { Grid, TextField, Button, Box } from "@material-ui/core";
 import PaperBox from "../../components/paper-box";
 import UserSelectorContainer from "../../components/user-selector/user-selector";
 import CoinCounter from "./coin-counter";
-import { Grid, TextField, Button, Box } from "@material-ui/core";
 import StructureCard from "../../components/applaud-cards/structure-cards";
 import "./applaud-form.css";
 import aboveBeyond from "../../lotties/4999-rocket.json";
@@ -12,7 +12,7 @@ import thumbsUp from "../../lotties/856-thumbs-up-grey-blue.json";
 import congrats from "../../lotties/11272-party-popper.json";
 import gladiator from "../../lotties/15634-orange-super-hero.json";
 import MessageEditor from "../../components/messageBox/MessageEditor";
-import CardPreview from "../../components/card-preview/card-preview";
+import { openSnackbar } from "../../components/notifier";
 
 const applaudCardData = [
   {
@@ -48,52 +48,84 @@ const applaudCardData = [
 ];
 
 function ApplaudForm() {
+  const [userId, setUserId] = useState(0);
+  const [cardId, setCardId] = useState("");
+  const [clap, setClap] = useState();
+  const [message, setMessage] = useState("");
+
+  function onCardClick(cardId: string) {
+    setCardId(cardId);
+  }
+
+  function onUserSelected(userIds: number[]) {
+    if (userIds.length) {
+      setUserId(userIds[0]);
+    } else {
+      setUserId(0);
+    }
+  }
+
+  function onMessageChange(text: string) {
+    if (text.trim().length > 250) {
+      openSnackbar(
+        {
+          message: "Message cannot be greater than 250"
+        },
+        "error"
+      );
+      return;
+    }
+    setMessage(text);
+  }
+
   return (
     <PaperBox>
-      <Grid container spacing={3}>
-        <Grid item xs={8}>
-          <section className="cardsWrapper">
-            <section className="card-tiles-details">
-              {applaudCardData.map(item => {
-                return <StructureCard key={item.id} data={item} />;
-              })}
+      <Grid
+        container
+        spacing={0}
+        justify="center"
+        style={{ minHeight: "70vh" }}
+      >
+        <Grid container item xs={10}>
+          <Grid item xs={12}>
+            <UserSelectorContainer
+              label="To"
+              onUsersSelected={onUserSelected}
+              userIds={userId ? [userId] : []}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <section className="cardsWrapper">
+              <section className="card-tiles-details">
+                {applaudCardData.map(item => {
+                  return (
+                    <StructureCard
+                      key={item.id}
+                      data={item}
+                      onClick={onCardClick.bind(null, item.id)}
+                      selected={cardId === item.id}
+                    />
+                  );
+                })}
+              </section>
             </section>
-          </section>
-          <form className="applaud-details" noValidate autoComplete="off">
-            <Grid>
-              <Grid>
-                <UserSelectorContainer
-                  label="To"
-                  onUsersSelected={() => console.log("hello")}
-                  userIds={[]}
-                />
-              </Grid>
-              <Grid>
-                <MessageEditor
-                  onValueChange={() => {
-                    console.log("hello");
-                  }}
-                  content={"1"}
-                />
-              </Grid>
-              <Grid container spacing={3} item xs={6}>
-                <Grid item xs={8}>
-                  <CoinCounter count={1} />
-                </Grid>
-              </Grid>
-              <Grid>
-                <Button variant="contained" color="primary">
-                  Send
-                </Button>
-                <Button variant="contained" color="secondary">
-                  Reset
-                </Button>
-              </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Grid item xs={8}>
+              <CoinCounter count={1} />
             </Grid>
-          </form>
-        </Grid>
-        <Grid item xs={3}>
-          <CardPreview />
+          </Grid>
+          <Grid item xs={12}>
+            <MessageEditor onValueChange={onMessageChange} content={message} />
+          </Grid>
+          <Grid item xs={12}>
+            <Button variant="contained" color="primary">
+              Send
+            </Button>
+            <Button variant="contained" color="secondary">
+              Reset
+            </Button>
+          </Grid>
         </Grid>
       </Grid>
     </PaperBox>
