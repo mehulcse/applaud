@@ -20,6 +20,7 @@ import {
   LOADER_TYPE,
   SCROLL_THRESHOLD
 } from "../../constants/constants";
+import { StyledTableWrapper } from "../../components/table-wrapper";
 
 interface Props {
   queryResult: DepartmentsQueryResult;
@@ -126,25 +127,27 @@ function DepartmentsTable(props: Props) {
   }
 
   return (
-    <Table>
-      <TableHead>
-        <TableRow>
-          <TableCell>
-            <strong>Id</strong>
-          </TableCell>
-          <TableCell>
-            <strong>Name</strong>
-          </TableCell>
-          <TableCell align="center">
-            <strong>Action</strong>
-          </TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody style={{ overflow: "auto" }} ref={scrollableRef}>
-        {!loading && renderTableBody()}
-        {loading && <Loader type={LOADER_TYPE.table} />}
-      </TableBody>
-    </Table>
+    <StyledTableWrapper>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>
+              <strong>Id</strong>
+            </TableCell>
+            <TableCell>
+              <strong>Name</strong>
+            </TableCell>
+            <TableCell align="center">
+              <strong>Action</strong>
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody style={{ overflow: "auto" }} ref={scrollableRef}>
+          {!loading && renderTableBody()}
+          {loading && <Loader type={LOADER_TYPE.table} />}
+        </TableBody>
+      </Table>
+    </StyledTableWrapper>
   );
 }
 

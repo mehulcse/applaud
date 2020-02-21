@@ -17,6 +17,7 @@ import {
   LOADER_TYPE,
   SCROLL_THRESHOLD
 } from "../../constants/constants";
+import { StyledTableWrapper } from "../../components/table-wrapper";
 
 interface Props {
   queryResult: UsersQueryResult;
@@ -86,7 +87,15 @@ function UsersTable(props: Props) {
             <AppLink to={`/users/${user.id}`}>{user.fullName}</AppLink>
           </TableCell>
           <TableCell>{user.email}</TableCell>
-          <TableCell>{user.teams && user.teams.length > 0 && user.teams.map((team: Team, index: number) => (<Typography variant="body2" key={index}>{team.name}</Typography>))}</TableCell>
+          <TableCell>
+            {user.teams &&
+              user.teams.length > 0 &&
+              user.teams.map((team: Team, index: number) => (
+                <Typography variant="body2" key={index}>
+                  {team.name}
+                </Typography>
+              ))}
+          </TableCell>
         </TableRow>
       ));
     } else if (error) {
@@ -108,28 +117,30 @@ function UsersTable(props: Props) {
   }
 
   return (
-    <Table>
-      <TableHead>
-        <TableRow>
-          <TableCell>
-            <strong>Id</strong>
-          </TableCell>
-          <TableCell>
-            <strong>Name</strong>
-          </TableCell>
-          <TableCell>
-            <strong>Email</strong>
-          </TableCell>
-          <TableCell>
-            <strong>Team</strong>
-          </TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody style={{ overflow: "auto" }} ref={scrollableRef}>
-        {!loading && renderTableBody()}
-        {loading && <Loader type={LOADER_TYPE.table} />}
-      </TableBody>
-    </Table>
+    <StyledTableWrapper>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>
+              <strong>Id</strong>
+            </TableCell>
+            <TableCell>
+              <strong>Name</strong>
+            </TableCell>
+            <TableCell>
+              <strong>Email</strong>
+            </TableCell>
+            <TableCell>
+              <strong>Team</strong>
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody style={{ overflow: "auto" }} ref={scrollableRef}>
+          {!loading && renderTableBody()}
+          {loading && <Loader type={LOADER_TYPE.table} />}
+        </TableBody>
+      </Table>
+    </StyledTableWrapper>
   );
 }
 
