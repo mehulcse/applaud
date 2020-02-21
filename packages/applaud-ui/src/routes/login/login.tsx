@@ -1,16 +1,16 @@
-import React, {useState, useContext, Fragment} from "react";
+import React, { useState, useContext, Fragment } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import {Typography, Box} from "@material-ui/core";
-import {makeStyles} from "@material-ui/core/styles";
+import { Typography, Box } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import GoogleLogin, {
   GoogleLoginResponse,
   GoogleLoginResponseOffline
 } from "react-google-login";
-import {faGoogle} from "@fortawesome/free-brands-svg-icons";
+import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 // TODO: generate graphql
-import {LoginUserComponent} from "../../generated/graphql";
-import {AuthContext} from "../../core/auth-manager";
+import { LoginUserComponent } from "../../generated/graphql";
+import { AuthContext } from "../../core/auth-manager";
 import AppIcon from "../../components/app-icon";
 import LoginContainer from "../../components/login-container";
 
@@ -152,7 +152,8 @@ export default function SignIn() {
                     variant="contained"
                     className={classes.submit}
                   >
-                    <AppIcon icon={faGoogle} wideRightMargin/> Login with Google
+                    <AppIcon icon={faGoogle} wideRightMargin /> Login with
+                    Google
                   </Button>
                 )}
                 onSuccess={async response => {
@@ -174,7 +175,7 @@ export default function SignIn() {
                   // console.log("Success", { response, result });
                 }}
                 onFailure={err => {
-                  console.error("Error", {err});
+                  console.error("Error", { err });
                 }}
               />
             </form>

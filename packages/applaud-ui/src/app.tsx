@@ -20,6 +20,7 @@ import Departments from "./routes/departments/departments";
 import Applaud from "./routes/applaud/applaud";
 import NotFoundRouteHandler from "./routes/not-found";
 import LandingPage from "./routes/landing-page";
+import "./app.css";
 
 function App() {
   return (
@@ -29,11 +30,7 @@ function App() {
           <Router>
             <AuthManager>
               <Switch>
-                <Route
-                  path="/"
-                  exact
-                  render={() => <Redirect to="/home" />}
-                />
+                <Route path="/" exact render={() => <Redirect to="/home" />} />
                 <Route path="/home" exact component={LandingPage} />
                 <Route path="/login" exact component={LoginContainer} />
                 <Route path="/dashboard" exact component={Dashboard} />

@@ -1,0 +1,20 @@
+.card-tiles {
+  background-color: rgba(63, 191, 237, 0.1);
+  border: 1px solid #000;
+  height: 150px;
+  width: 150px;
+  padding: 10px 10px 40px;
+  text-align: center;
+  margin: 5px;
+  position: relative;
+  -moz-box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.card-tiles:hover {
+  -moz-box-shadow: 1px 2px 4px rgb(63, 190, 237);
+  -webkit-box-shadow: 1px 2px 4px rgb(63, 190, 237);
+  box-shadow: 1px 2px 4px rgb(63, 190, 237);
+  cursor: pointer;
+}
