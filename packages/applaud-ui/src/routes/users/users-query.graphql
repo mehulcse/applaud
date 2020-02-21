@@ -4,6 +4,7 @@ query Users($search: String, $limit: Int, $offset: Int) {
         nodes {
             id
             email
+            fullName
             teams {
                 id
                 name

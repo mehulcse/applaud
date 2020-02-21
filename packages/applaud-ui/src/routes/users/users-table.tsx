@@ -85,8 +85,8 @@ function UsersTable(props: Props) {
             <AppLink to={`/users/${user.id}`}>{user.fullName}</AppLink>
           </TableCell>
           <TableCell>{user.email}</TableCell>
-          <TableCell>{user.team.name}</TableCell>
-          <TableCell>{user.department.name}</TableCell>
+          <TableCell>{/* TODO: uncomment user.team.name */}</TableCell>
+          <TableCell>{/* TODO: uncomment user.department.name */}</TableCell>
         </TableRow>
       ));
     } else if (error) {
@@ -125,9 +125,6 @@ function UsersTable(props: Props) {
           </TableCell>
           <TableCell>
             <strong>Department</strong>
-          </TableCell>
-          <TableCell align="center">
-            <strong>Action</strong>
           </TableCell>
         </TableRow>
       </TableHead>
