@@ -677,7 +677,9 @@ export type TeamQueryVariables = {
 };
 
 export type TeamQuery = { __typename?: "Query" } & {
-  team: Maybe<{ __typename?: "Team" } & Pick<Team, "id" | "name">>;
+  team: Maybe<
+    { __typename?: "Team" } & Pick<Team, "id" | "name" | "description">
+  >;
 };
 
 export type CreateTeamMutationVariables = {
@@ -1779,6 +1781,7 @@ export const TeamDocument = gql`
     team(id: $id) {
       id
       name
+      description
     }
   }
 `;

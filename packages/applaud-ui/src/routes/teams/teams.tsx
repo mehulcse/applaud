@@ -54,23 +54,29 @@ export default function Teams() {
   return (
     <PageLayout pageTitle="Teams">
       <PaperBox>
-        <Box marginY={2}>
-          <Button color="primary" onClick={handleAddTeam} variant="outlined">
-            <AppIcon icon={faPlus} standardRightMargin />
-            Add Team
-          </Button>
-        </Box>
-        <Box marginY={2}>
-          <Grid container>
-            <Grid container xs={6} item>
+        <Grid justify="space-between" container>
+          <Grid item xs={6}>
+            <Box marginY={2} display="flex">
               <SearchInput
                 inputValue={search}
                 placeholder="Search Team"
                 onChange={onChange}
               />
-            </Grid>
+            </Box>
           </Grid>
-        </Box>
+          <Grid item>
+            <Box marginY={2} display="flex">
+              <Button
+                color="primary"
+                onClick={handleAddTeam}
+                variant="outlined"
+              >
+                <AppIcon icon={faPlus} standardRightMargin />
+                Add Team
+              </Button>
+            </Box>
+          </Grid>
+        </Grid>
         <Box marginY={2}>
           <TeamsTable queryResult={queryResult} onEditClick={onEdit} />
         </Box>
