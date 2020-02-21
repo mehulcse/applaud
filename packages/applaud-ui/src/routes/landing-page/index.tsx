@@ -121,7 +121,7 @@ function LandingPage() {
       <CssBaseline />
         {patches.map((patch, index) => <img src={patch.image} style={{position:'absolute'}} className={classes[patch.class as keyof typeof classes]} key={index} />)}
       <AppBar color="transparent" className={classes.bar}>
-        <Toolbar>
+        <Toolbar className={classes.toolbar}>
             <img src={logo} alt="logo" className={classes.logo} />
           <AppLink to="/login">
             <Button className={classes.button}>Login</Button>
