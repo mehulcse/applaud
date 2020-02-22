@@ -14,6 +14,7 @@ export default class Config {
     return Config.getParameter("ENVIRONMENT");
   };
   static getDbHost = () => Config.getParameter("DB_HOST");
+  static getSlackEndpoint = () => Config.getParameter("SLACK_ENDPOINT");
   static getDbName = () => Config.getParameter("DB_NAME");
   static getDbPassword = () => Config.getParameter("DB_PASSWORD");
   static getDbPort = () => Config.getParameter("DB_PORT");

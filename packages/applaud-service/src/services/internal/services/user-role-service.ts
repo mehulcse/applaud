@@ -15,6 +15,9 @@ import { RoleService } from "./role-service";
 import { ROLES } from "../../../constants";
 import UserRole from "../db/models/user-role";
 import { AppContext } from "../../auth/app-context";
+import { getLogger } from "../../../logger";
+
+const logger = getLogger("User role service");
 
 export interface UserRolesOptions extends PaginationArgs {
   userId?: number;
@@ -95,9 +98,14 @@ export class UserRoleService {
     return await executeSelectAll(query);
   }
 
-  async create(input: CreateUserRoleInput, trx?: Objection.Transaction) {
+  async create(
+    input: CreateUserRoleInput,
+    skipValidation: boolean,
+    trx?: Objection.Transaction
+  ) {
     ensureAdmin(this.context.viewer);
 
+    logger.debug("In create");
     const schema = yup.object().shape({
       userId: yup
         .number()
@@ -110,36 +118,46 @@ export class UserRoleService {
         .required()
         .nullable(false)
     });
+
+    logger.debug("Post validation");
     const validatedInput = (await schema.validate(input, {
       abortEarly: false,
       stripUnknown: true
     })) as CreateUserRoleInput;
 
-    const user = await new UserService(this.context).getById(
-      validatedInput.userId
-    );
-    if (!user) {
-      throw new Error("User ID is not valid.");
-    }
+    if (!skipValidation) {
+      const user = await new UserService(this.context).getById(
+        validatedInput.userId
+      );
+      logger.debug(user);
+      if (!user) {
+        throw new Error("User ID is not valid.");
+      }
 
-    const role = await new RoleService(this.context).getById(
-      validatedInput.roleId
-    );
-    if (!role) {
-      throw new Error("Role ID is not valid.");
-    }
+      logger.debug(user);
 
-    if (validatedInput.roleId === ROLES.SUPER_ADMIN) {
-      ensureSuperAdmin(this.context.viewer);
-    }
+      const role = await new RoleService(this.context).getById(
+        validatedInput.roleId
+      );
+      if (!role) {
+        throw new Error("Role ID is not valid.");
+      }
 
-    const existingUserRole = await UserRole.query()
-      .where({ userId: validatedInput.userId, roleId: validatedInput.roleId })
-      .first();
-    if (existingUserRole) {
-      return {
-        userRole: existingUserRole
-      };
+      if (validatedInput.roleId === ROLES.SUPER_ADMIN) {
+        ensureSuperAdmin(this.context.viewer);
+      }
+
+      const existingUserRole = await UserRole.query()
+        .where({ userId: validatedInput.userId, roleId: validatedInput.roleId })
+        .first();
+
+      logger.debug(existingUserRole);
+
+      if (existingUserRole) {
+        return {
+          userRole: existingUserRole
+        };
+      }
     }
 
     const userRole = await UserRole.query(trx).insertAndFetch({
@@ -147,6 +165,8 @@ export class UserRoleService {
       roleId: validatedInput.roleId,
       createdAt: moment.utc().toDate()
     });
+
+    logger.debug(userRole);
 
     return userRole;
   }

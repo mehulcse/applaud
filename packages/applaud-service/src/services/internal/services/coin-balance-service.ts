@@ -96,7 +96,11 @@ export class CoinBalanceService {
     return await executeSelectAll(query);
   }
 
-  async create(input: CreateCoinBalanceInput, trx?: Objection.Transaction) {
+  async create(
+    input: CreateCoinBalanceInput,
+    skipValidation: boolean,
+    trx?: Objection.Transaction
+  ) {
     ensureAdmin(this.context.viewer);
     // Validation
     const schema = yup.object().shape({
@@ -116,16 +120,18 @@ export class CoinBalanceService {
       stripUnknown: true
     })) as CreateCoinBalanceInput;
 
-    const user = await new UserService(this.context).getById(
-      validatedInput.userId
-    );
+    if (!skipValidation) {
+      const user = await new UserService(this.context).getById(
+        validatedInput.userId
+      );
 
-    if (!user) {
-      throw new Error("Invalid User ID specified.");
+      if (!user) {
+        throw new Error("Invalid User ID specified.");
+      }
     }
 
     const coinBalance = await CoinBalance.query(trx).insertAndFetch({
-      userId: user.id,
+      userId: validatedInput.userId,
       balance: validatedInput.balance,
       allocatedAt: moment.utc().toDate()
     });
