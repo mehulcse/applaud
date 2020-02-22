@@ -8,7 +8,6 @@ import GoogleLogin, {
   GoogleLoginResponseOffline
 } from "react-google-login";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
-// TODO: generate graphql
 import { LoginUserComponent } from "../../generated/graphql";
 import { AuthContext } from "../../core/auth-manager";
 import AppIcon from "../../components/app-icon";

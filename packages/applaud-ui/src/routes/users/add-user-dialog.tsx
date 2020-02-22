@@ -90,12 +90,6 @@ function AddUserDialog(props: Props) {
               onChange={handleChange}
             />
           </Grid>
-          <Grid item xs={12}>
-            {/*  TODO: add department selection box */}
-          </Grid>
-          <Grid item xs={12}>
-            {/*  TODO: add team selection box */}
-          </Grid>
         </Grid>
       </DialogContent>
       <DialogActions>
@@ -105,7 +99,7 @@ function AddUserDialog(props: Props) {
             variant="contained"
             color="primary"
             onClick={handleCreate}
-            disabled={loading}
+            disabled={!email || !firstName || !lastName || loading}
           >
             <AppIcon icon={faCheck} standardRightMargin />
             Add User
