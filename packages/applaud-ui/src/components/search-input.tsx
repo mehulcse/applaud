@@ -3,13 +3,16 @@ import { InputBase, Paper, IconButton } from "@material-ui/core";
 import { createStyles, withStyles } from "@material-ui/core/styles";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import AppIcon from "./app-icon";
+import { COLORS } from "../core/mui-theme";
 
 const styles = createStyles({
   root: {
     padding: "2px 4px",
     display: "flex",
     alignItems: "center",
-    width: "100%"
+    width: "100%",
+    color: COLORS.white,
+    backgroundColor: COLORS.background
   },
   input: {
     marginLeft: 8,

@@ -15,7 +15,7 @@ import congrats from "../../lotties/11272-party-popper.json";
 import gladiator from "../../lotties/15634-orange-super-hero.json";
 import { openSnackbar } from "../../components/notifier";
 import { AuthContext } from "../../core/auth-manager";
-import theme from "../../core/mui-theme";
+import theme, { COLORS } from "../../core/mui-theme";
 
 export const applaudCardData = [
   {
@@ -213,6 +213,8 @@ function ApplaudForm() {
                 name="clap"
                 value={clap}
                 onStarClick={onStartClick}
+                starColor={COLORS.white}
+                emptyStarColor={COLORS.background}
               />
             </Grid>
           </Grid>
