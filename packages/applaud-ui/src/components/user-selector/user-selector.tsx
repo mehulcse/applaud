@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { useUsersForSelectorQuery } from "../../generated/graphql";
-import AutoComplete, { OptionType } from "../../components/autocomplete-input";
-import { ValueType } from "react-select/src/types";
+import React, {useState, useContext} from "react";
+import {useUsersForSelectorQuery} from "../../generated/graphql";
+import AutoComplete, {OptionType} from "../../components/autocomplete-input";
+import {AuthContext} from "../../core/auth-manager";
+import {ValueType} from "react-select/src/types";
 
 interface Props {
   label: string;
@@ -11,15 +12,21 @@ interface Props {
   isMulti?: boolean;
 }
 
-function UserSelectorContainer({
-  userIds,
-  label,
-  onUsersSelected,
-  placeholder,
-  isMulti = false
-}: Props) {
-  const [userSearch, setUserSearch] = useState("");
+interface LabelValuePair {
+  label: string;
+  value: string;
+}
 
+
+function UserSelectorContainer({
+                                 userIds,
+                                 label,
+                                 onUsersSelected,
+                                 placeholder,
+                                 isMulti = false
+                               }: Props) {
+  const [userSearch, setUserSearch] = useState("");
+  const context = useContext(AuthContext);
   const selectedUsersResult = useUsersForSelectorQuery({
     variables: {
       search: "",
@@ -32,9 +39,9 @@ function UserSelectorContainer({
 
   if (selectedUsersResult?.data?.users?.nodes) {
     selectedUsers = selectedUsersResult.data.users.nodes.map(user => ({
-      label: user.fullName,
-      value: `${user.id}`
-    }));
+        label: user.fullName,
+        value: `${user.id}`
+      }));
   }
 
   const usersResult = useUsersForSelectorQuery({
@@ -47,10 +54,14 @@ function UserSelectorContainer({
   let users: OptionType[] = [];
 
   if (usersResult?.data?.users?.nodes) {
-    users = usersResult.data.users.nodes.map(user => ({
-      label: user.fullName,
-      value: `${user.id}`
-    }));
+    users = usersResult.data.users.nodes.reduce((users: LabelValuePair[], user) => {
+      if(context?.user?.id && context.user.id !== user.id)
+        users.push({
+          label: user.fullName,
+          value: `${user.id}`
+        });
+      return users
+    }, []);
   }
 
   const onInputChange = (value: string) => {

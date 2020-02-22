@@ -12,5 +12,6 @@ query AuthManager {
             id
             balance
         }
+        coinsReceivedBalance
     }
 }

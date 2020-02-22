@@ -9,6 +9,8 @@ query Applaud($limit: Int, $offset: Int, $allocatedToUserId: Int, $allocatedByUs
       createdAt
       allocatedToUser {
         id
+        firstName
+        lastName
         fullName
       }
     }

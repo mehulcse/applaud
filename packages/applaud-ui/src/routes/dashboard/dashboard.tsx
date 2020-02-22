@@ -39,13 +39,13 @@ const Dashboard = () => {
     notifyOnNetworkStatusChange: true
   });
 
-  const renderApplauds = (applaudQueryResult: ApplaudQueryHookResult) => {
+  const renderApplauds = (applaudQueryResult: ApplaudQueryHookResult, showName: boolean) => {
     if (applaudQueryResult.data &&
       applaudQueryResult.data.applaud &&
       applaudQueryResult.data.applaud.nodes &&
       applaudQueryResult.data.applaud.nodes.length > 0) {
       return applaudQueryResult.data.applaud.nodes.map((data: any, index: number) => (
-        <ApplaudCard data={data} key={index}/>
+        <ApplaudCard data={data} key={index} showName={showName}/>
       ))
     }
     return (
@@ -63,19 +63,19 @@ const Dashboard = () => {
         <Grid xs={4} item>
           <Typography align="center">Applaud Received</Typography>
           <Box paddingY={2} paddingX={1} className="scrollable-section">
-            {applaudReceivedQuery.loading ? <Loader type={LOADER_TYPE.card}/> : renderApplauds(applaudReceivedQuery)}
+            {applaudReceivedQuery.loading ? <Loader type={LOADER_TYPE.card}/> : renderApplauds(applaudReceivedQuery, false)}
           </Box>
         </Grid>
         <Grid xs={4} item>
           <Typography align="center">Applaud Given</Typography>
           <Box paddingY={2} paddingX={1} className="scrollable-section">
-            {applaudGivenQuery.loading ? <Loader type={LOADER_TYPE.card}/> : renderApplauds(applaudGivenQuery)}
+            {applaudGivenQuery.loading ? <Loader type={LOADER_TYPE.card}/> : renderApplauds(applaudGivenQuery, true)}
           </Box>
         </Grid>
         <Grid xs={4} item>
           <Typography align="center">Applaud Stream</Typography>
           <Box paddingY={2} paddingX={1} className="scrollable-section">
-            {applaudStreamQuery.loading ? <Loader type={LOADER_TYPE.card}/> : renderApplauds(applaudStreamQuery)}
+            {applaudStreamQuery.loading ? <Loader type={LOADER_TYPE.card}/> : renderApplauds(applaudStreamQuery, true)}
           </Box>
         </Grid>
       </Grid>

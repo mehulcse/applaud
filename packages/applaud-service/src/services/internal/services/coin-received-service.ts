@@ -153,6 +153,7 @@ export class CoinReceivedService {
       userId: validatedInput.allocatedByUserId
     });
 
+    // check the available coins quantity
     if (!coinBalance || coinBalance.balance < validatedInput.balance) {
       throw new Error("Not enough claps available.");
     }
@@ -164,6 +165,13 @@ export class CoinReceivedService {
       message: validatedInput.message,
       type: validatedInput.type,
       createdAt: moment.utc().toDate()
+    });
+
+    const balanceCoins = coinBalance.balance - validatedInput.balance;
+
+    // Reduce the coins quantity
+    await new CoinBalanceService(this.context).update(coinBalance.id, {
+      balance: balanceCoins
     });
 
     // TODO: Slack trigger

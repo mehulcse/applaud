@@ -9,6 +9,8 @@ import { UserRoleService } from "../internal/services/user-role-service";
 import { AppContext } from "./app-context";
 import CoinBalance from "../internal/db/models/coin-balance";
 import { CoinBalanceService } from "../internal/services/coin-balance-service";
+import { CoinReceivedService } from "../internal/services/coin-received-service";
+import { getLogger } from "../../logger";
 
 export interface Viewer {
   userId: number;
@@ -19,12 +21,15 @@ export interface Viewer {
   isSystem: boolean;
   canViewAdmin: boolean;
   coinBalance: CoinBalance | null;
+  coinsReceivedBalance: number;
 }
 
 interface GetViewerOptions {
   jwtToken: string;
   requestId?: string;
 }
+
+const logger = getLogger("Viewer");
 
 export const getViewer = async (options: GetViewerOptions): Promise<Viewer> => {
   const jwtSecret = Config.getJwtSecret();
@@ -55,6 +60,21 @@ export const getViewer = async (options: GetViewerOptions): Promise<Viewer> => {
     userId: user.id
   });
 
+  const coinsReceived = await new CoinReceivedService(systemContext).getAll({
+    allocatedToUserId: user.id
+  });
+
+  logger.debug(coinsReceived);
+
+  let coinsReceivedBalance = 0;
+
+  if (coinsReceived && coinsReceived.length > 0) {
+    coinsReceivedBalance = coinsReceived.reduce(
+      (result, data) => result + data.balance,
+      coinsReceivedBalance
+    );
+  }
+
   const isAdmin = !!userRoles.find(x => x.roleId === ROLES.ADMIN);
   const isSuperAdmin = !!userRoles.find(x => x.roleId === ROLES.SUPER_ADMIN);
   const canViewAdmin = isAdmin || isSuperAdmin;
@@ -67,6 +87,7 @@ export const getViewer = async (options: GetViewerOptions): Promise<Viewer> => {
     isSuperAdmin,
     isSystem: false,
     canViewAdmin,
-    coinBalance
+    coinBalance,
+    coinsReceivedBalance
   };
 };

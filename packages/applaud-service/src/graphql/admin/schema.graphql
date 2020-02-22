@@ -311,6 +311,7 @@ type UserRole {
 type Viewer {
     isAdmin: Boolean
     userRoles: [String!]!
+    coinsReceivedBalance: Int!
 
     # relationships
     user: User!

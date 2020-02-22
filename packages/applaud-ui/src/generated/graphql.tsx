@@ -496,6 +496,7 @@ export type Viewer = {
   __typename?: "Viewer";
   isAdmin?: Maybe<Scalars["Boolean"]>;
   userRoles: Array<Scalars["String"]>;
+  coinsReceivedBalance: Scalars["Int"];
   user: User;
   coinBalance?: Maybe<CoinBalance>;
 };
@@ -544,7 +545,10 @@ export type AuthManagerQueryVariables = {};
 
 export type AuthManagerQuery = { __typename?: "Query" } & {
   viewer: Maybe<
-    { __typename?: "Viewer" } & Pick<Viewer, "userRoles" | "isAdmin"> & {
+    { __typename?: "Viewer" } & Pick<
+      Viewer,
+      "userRoles" | "isAdmin" | "coinsReceivedBalance"
+    > & {
         user: { __typename?: "User" } & Pick<
           User,
           "id" | "firstName" | "lastName" | "email"
@@ -595,7 +599,10 @@ export type ApplaudQuery = { __typename?: "Query" } & {
               "id" | "allocatedToUserId" | "message" | "type" | "createdAt"
             > & {
                 allocatedToUser: Maybe<
-                  { __typename?: "User" } & Pick<User, "id" | "fullName">
+                  { __typename?: "User" } & Pick<
+                    User,
+                    "id" | "firstName" | "lastName" | "fullName"
+                  >
                 >;
               }
           >
@@ -1071,6 +1078,7 @@ export const AuthManagerDocument = gql`
         id
         balance
       }
+      coinsReceivedBalance
     }
   }
 `;
@@ -1313,6 +1321,8 @@ export const ApplaudDocument = gql`
         createdAt
         allocatedToUser {
           id
+          firstName
+          lastName
           fullName
         }
       }

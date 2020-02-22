@@ -2,7 +2,8 @@ import React, {Component} from "react";
 import {Redirect, RouteComponentProps, withRouter} from "react-router-dom";
 import Loader from "../../components/loader";
 import {
-  AuthManagerQueryResult, CoinBalance,
+  AuthManagerQueryResult,
+  CoinBalance,
   LogoutUserMutationFn,
   User
 } from "../../generated/graphql";
@@ -23,6 +24,7 @@ export interface AuthContextValue {
   userRoles: string[];
   isAdmin: boolean;
   coinBalance: CoingBalanceViewer | null;
+  coinsReceivedBalance: number;
 }
 
 interface Props extends RouteComponentProps {
@@ -41,7 +43,8 @@ export const AuthContext = React.createContext<AuthContextValue>({
   user: null,
   userRoles: [],
   isAdmin: false,
-  coinBalance: null
+  coinBalance: null,
+  coinsReceivedBalance: 0
 });
 
 class AuthManager extends Component<Props> {
@@ -59,6 +62,7 @@ class AuthManager extends Component<Props> {
       userRoles: [],
       isAdmin: false,
       coinBalance: null,
+      coinsReceivedBalance: 0
     };
 
     if (!queryResult.loading) {
@@ -74,6 +78,7 @@ class AuthManager extends Component<Props> {
         contextValue.isAdmin =
           data && data.viewer ? !!data.viewer.isAdmin : false;
         contextValue.coinBalance = data && data.viewer && data.viewer.coinBalance ? data.viewer.coinBalance : null;
+        contextValue.coinsReceivedBalance = data && data.viewer && data.viewer.coinsReceivedBalance ? data.viewer.coinsReceivedBalance : 0;
       }
     }
 

@@ -7,10 +7,11 @@ import {getDate} from "../../helper/getDate";
 import "./dashboard.css"
 
 interface Props {
-  data: any
+  data: any;
+  showName: boolean;
 }
 
-const ApplaudCard = ({data}: Props) => {
+const ApplaudCard = ({data, showName}: Props) => {
   const defaultOptions = {
     loop: true,
     autoplay: false,
@@ -38,6 +39,12 @@ const ApplaudCard = ({data}: Props) => {
                 isPaused={paused}/>
         <Typography align="center" variant="h6">{cardType ? cardType.header : ''}</Typography>
         {data.message && <blockquote>
+          {showName &&
+          <Typography align="left" variant="subtitle2">
+            <strong>
+              {data && data.allocatedToUser ? `${data.allocatedToUser.firstName}, ` : ''}
+            </strong>
+          </Typography>}
           {data.message}
           <span className="author"><i>{getDate(data.createdAt)}</i></span>
         </blockquote>}
