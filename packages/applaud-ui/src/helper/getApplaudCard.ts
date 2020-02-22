@@ -1,7 +1,7 @@
 import aboveBeyond from "../lotties/4999-rocket.json";
 import ninjaAnimation from "../lotties/6936-class-ninjas-floating-ninja.json";
 import thankYou from "../lotties/11405-thank-you.json";
-import thumbsUp from "../lotties/856-thumbs-up-grey-blue.json";
+import thumbsUp from "../lotties/well_done.json";
 import congrats from "../lotties/11272-party-popper.json";
 import gladiator from "../lotties/15634-orange-super-hero.json";
 

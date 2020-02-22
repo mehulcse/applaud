@@ -69,7 +69,7 @@ export const getViewer = async (options: GetViewerOptions): Promise<Viewer> => {
     userId: user.id
   });
 
-  console.log(userTeams);
+  logger.debug(userTeams);
 
   logger.debug(coinsReceived);
 
