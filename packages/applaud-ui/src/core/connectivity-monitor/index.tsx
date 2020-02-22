@@ -32,7 +32,9 @@ export class ConnectivityMonitor extends React.Component<Props, State> {
 
   testApiConnectivity = () => {
     const apiBase = new URL(process.env.REACT_APP_GRAPHQL_URL || "").host;
-    fetch(`https://${apiBase}/local/health`)
+    fetch(`https://${apiBase}/health`, {
+      mode: "no-cors"
+    })
       .then(() => {
         this.handleConnected();
       })

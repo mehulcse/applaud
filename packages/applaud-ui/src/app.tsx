@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import ErrorBoundary from "./error-boundary";
 import { CustomApolloProvider } from "./core/apollo-provider";
 import { ConnectivityMonitor } from "./core/connectivity-monitor";
 import theme from "./core/mui-theme";
@@ -20,29 +21,31 @@ import "./app.css";
 
 function App() {
   return (
-    <MuiThemeProvider theme={theme}>
-      <ConnectivityMonitor>
-        <CustomApolloProvider>
-          <Router>
-            <AuthManager>
-              <Switch>
-                <Route path="/login" exact component={LoginContainer} />
-                <Route path="/dashboard" exact component={Dashboard} />
-                <Route path="/applaud" exact component={Applaud} />
-                <Route path="/users" exact component={Users} />
-                <Route path="/users/:id" exact component={UserDetail} />
-                <Route path="/teams" exact component={Teams} />
-                <Route path="/departments" exact component={Departments} />
-                <Route path="/manage" exact component={Manage} />
-                <Route path="/" exact component={LandingPage} />
-                <Route path="*" component={NotFoundRouteHandler} />
-              </Switch>
-            </AuthManager>
-            <Notifier />
-          </Router>
-        </CustomApolloProvider>
-      </ConnectivityMonitor>
-    </MuiThemeProvider>
+    <ErrorBoundary>
+      <MuiThemeProvider theme={theme}>
+        <ConnectivityMonitor>
+          <CustomApolloProvider>
+            <Router>
+              <AuthManager>
+                <Switch>
+                  <Route path="/login" exact component={LoginContainer} />
+                  <Route path="/dashboard" exact component={Dashboard} />
+                  <Route path="/applaud" exact component={Applaud} />
+                  <Route path="/users" exact component={Users} />
+                  <Route path="/users/:id" exact component={UserDetail} />
+                  <Route path="/teams" exact component={Teams} />
+                  <Route path="/departments" exact component={Departments} />
+                  <Route path="/manage" exact component={Manage} />
+                  <Route path="/" exact component={LandingPage} />
+                  <Route path="*" component={NotFoundRouteHandler} />
+                </Switch>
+              </AuthManager>
+              <Notifier />
+            </Router>
+          </CustomApolloProvider>
+        </ConnectivityMonitor>
+      </MuiThemeProvider>
+    </ErrorBoundary>
   );
 }
 

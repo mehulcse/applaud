@@ -111,7 +111,7 @@ function UpdateTeamDialog(props: Props) {
             variant="contained"
             color="primary"
             onClick={handleUpdate}
-            disabled={!updateLoading}
+            disabled={!name || !description || updateLoading}
           >
             <AppIcon icon={faCheck} standardRightMargin />
             Update Team
