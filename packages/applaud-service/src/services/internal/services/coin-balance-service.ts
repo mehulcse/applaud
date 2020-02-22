@@ -126,7 +126,7 @@ export class CoinBalanceService {
       throw new Error("Invalid User ID specified.");
     }
 
-    let coinBalance = await CoinBalance.query(trx).insertAndFetch({
+    const coinBalance = await CoinBalance.query(trx).insertAndFetch({
       userId: user.id,
       balance: validatedInput.balance,
       allocatedAt: moment.utc().toDate()
