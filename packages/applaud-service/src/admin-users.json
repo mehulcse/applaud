@@ -3,30 +3,7 @@
     "id": 1,
     "firstName": "System",
     "lastName": "User",
-    "email": "admin@tech9.com"
-  },
-  {
-    "id": 2,
-    "firstName": "Jordan",
-    "lastName": "Farrer",
-    "email": "jordan.farrer@tech9.com"
-  },
-  {
-    "id": 3,
-    "firstName": "Mehul",
-    "lastName": "Thakkar",
-    "email": "mehul.thakkar@tech9.com"
-  },
-  {
-    "id": 4,
-    "firstName": "Jitesh",
-    "lastName": "Manglani",
-    "email": "jitesh.manglani@tech9.com"
-  },
-  {
-    "id": 5,
-    "firstName": "Nick",
-    "lastName": "Stice",
-    "email": "nick.stice@tech9.com"
+    "email": "admin@thegeekstribe.com",
+    "role" : "super_admin"
   }
 ]
