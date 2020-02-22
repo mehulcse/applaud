@@ -1,9 +1,9 @@
-import React, {useContext, useState} from "react";
-import {useHistory} from "react-router";
-import {Grid, TextField, Button, Typography} from "@material-ui/core";
+import React, { useContext, useState } from "react";
+import { useHistory } from "react-router";
+import { Grid, TextField, Button, Typography } from "@material-ui/core";
 import StarRatingComponent from "react-star-rating-component";
 import PaperBox from "../../components/paper-box";
-import {useCreateApplaudMutation} from "../../generated/graphql";
+import { useCreateApplaudMutation } from "../../generated/graphql";
 import UserSelectorContainer from "../../components/user-selector/user-selector";
 import StructureCard from "../../components/applaud-cards/structure-cards";
 import "./applaud-form.css";
@@ -13,8 +13,8 @@ import thankYou from "../../lotties/11405-thank-you.json";
 import thumbsUp from "../../lotties/856-thumbs-up-grey-blue.json";
 import congrats from "../../lotties/11272-party-popper.json";
 import gladiator from "../../lotties/15634-orange-super-hero.json";
-import {openSnackbar} from "../../components/notifier";
-import {AuthContext} from "../../core/auth-manager";
+import { openSnackbar } from "../../components/notifier";
+import { AuthContext } from "../../core/auth-manager";
 import theme from "../../core/mui-theme";
 
 export const applaudCardData = [
@@ -58,7 +58,7 @@ function ApplaudForm() {
   const [clap, setClap] = useState();
   const [message, setMessage] = useState("");
 
-  const [createApplaud, {loading}] = useCreateApplaudMutation();
+  const [createApplaud, { loading }] = useCreateApplaudMutation();
 
   function onCardClick(cardId: string) {
     setCardId(cardId);
@@ -85,7 +85,7 @@ function ApplaudForm() {
   }
 
   function onMessageChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const value = event.target.value.trim();
+    const value = event.target.value;
     if (value.length > 250) {
       openSnackbar(
         {
@@ -99,11 +99,27 @@ function ApplaudForm() {
   }
 
   async function onSend() {
-    if (!context?.coinBalance?.balance || (context?.coinBalance?.balance && context.coinBalance.balance < clap)) {
-      openSnackbar({
-        message: "You can't send claps as you don't have sufficient balance"
-      }, "error");
+    if (
+      !context?.coinBalance?.balance ||
+      (context?.coinBalance?.balance && context.coinBalance.balance < clap)
+    ) {
+      openSnackbar(
+        {
+          message: "You can't send claps as you don't have sufficient balance"
+        },
+        "error"
+      );
       return;
+    }
+    if (context?.user?.id) {
+      if (context.user.id === userId) {
+        openSnackbar(
+          {
+            message: "Nice Try! You can't send yourself clap!!"
+          },
+          "error"
+        );
+      }
     }
     const response = await createApplaud({
       variables: {
@@ -157,7 +173,7 @@ function ApplaudForm() {
         container
         spacing={0}
         justify="center"
-        style={{minHeight: "70vh"}}
+        style={{ minHeight: "70vh" }}
       >
         <Grid container item xs={10} spacing={2}>
           <Grid item xs={12}>
@@ -168,7 +184,7 @@ function ApplaudForm() {
             />
           </Grid>
           <Grid item xs={12}>
-            <Grid style={{marginBottom: theme.spacing(1)}}>
+            <Grid style={{ marginBottom: theme.spacing(1) }}>
               <Typography variant="subtitle1">Card:</Typography>
             </Grid>
             <section className="cardsWrapper">
@@ -220,7 +236,7 @@ function ApplaudForm() {
             <Button
               variant="contained"
               color="primary"
-              style={{marginRight: theme.spacing(1)}}
+              style={{ marginRight: theme.spacing(1) }}
               onClick={onSend}
               disabled={!clap || !userId || !cardId || loading}
             >
