@@ -16,7 +16,7 @@ import { openSnackbar } from "../../components/notifier";
 
 interface Props {
   open: boolean;
-  onClose: () => void;
+  onClose: (id?: number) => void;
 }
 
 function AddUserDialog(props: Props) {
@@ -45,7 +45,7 @@ function AddUserDialog(props: Props) {
     });
     if (response?.data?.createUser?.user) {
       openSnackbar({ message: "User created successfully" }, "success");
-      onClose();
+      onClose(response.data.createUser.user.id);
     }
   }
 
@@ -94,7 +94,7 @@ function AddUserDialog(props: Props) {
       </DialogContent>
       <DialogActions>
         <ButtonList>
-          <Button onClick={onClose}>Cancel</Button>
+          <Button onClick={() => onClose()}>Cancel</Button>
           <Button
             variant="contained"
             color="primary"
