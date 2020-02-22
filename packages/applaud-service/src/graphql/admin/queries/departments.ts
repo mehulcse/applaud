@@ -10,7 +10,7 @@ interface Args extends PaginationArgs {
 
 export default {
   Query: {
-    department: async (
+    departments: async (
       _parent: any,
       args: Args,
       { context }: GraphQLContext
