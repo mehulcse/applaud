@@ -12,7 +12,6 @@
 }
 .applaud-quote blockquote span.author i {
   position: relative;
-  background: #fff;
   padding-left: 5px;
   font-style: italic;
   z-index: 5;
@@ -42,5 +41,5 @@
 
 .scrollable-section {
   overflow-y: scroll;
-  max-height: 80vh;
+  max-height: 85vh;
 }

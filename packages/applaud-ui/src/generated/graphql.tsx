@@ -70,6 +70,20 @@ export type ConstantConnection = {
   nodes?: Maybe<Array<Constant>>;
 };
 
+export type Constants = {
+  __typename?: "Constants";
+  id: Scalars["Int"];
+  name: Scalars["String"];
+  value: Scalars["String"];
+};
+
+export type ConstantsConnection = {
+  __typename?: "ConstantsConnection";
+  totalCount: Scalars["Int"];
+  pageInfo?: Maybe<PageInfo>;
+  nodes?: Maybe<Array<Constants>>;
+};
+
 export enum ConstantSort {
   IdAsc = "ID_ASC",
   IdDesc = "ID_DESC"
@@ -322,6 +336,7 @@ export type Query = {
   user?: Maybe<User>;
   users?: Maybe<UserConnection>;
   viewer?: Maybe<Viewer>;
+  constants?: Maybe<ConstantsConnection>;
 };
 
 export type QueryApplaudArgs = {
@@ -366,6 +381,13 @@ export type QueryUsersArgs = {
   sort?: Maybe<UsersSort>;
   search?: Maybe<Scalars["String"]>;
   ids?: Maybe<Array<Scalars["Int"]>>;
+};
+
+export type QueryConstantsArgs = {
+  limit?: Maybe<Scalars["Int"]>;
+  offset?: Maybe<Scalars["Int"]>;
+  sort?: Maybe<TeamsSort>;
+  search?: Maybe<Scalars["String"]>;
 };
 
 export type Role = {
@@ -696,6 +718,43 @@ export type UpdateCoinBalanceMutation = { __typename?: "Mutation" } & {
   updateCoinBalance: { __typename?: "UpdateCoinBalanceResponse" } & Pick<
     UpdateCoinBalanceResponse,
     "success"
+  >;
+};
+
+export type UpdateConstantsMutationVariables = {
+  input: UpdateConstantInput;
+};
+
+export type UpdateConstantsMutation = { __typename?: "Mutation" } & {
+  updateConstants: { __typename?: "UpdateConstantResponse" } & {
+    constant: { __typename?: "Constant" } & Pick<
+      Constant,
+      "id" | "name" | "value"
+    >;
+  };
+};
+
+export type ConstantsQueryVariables = {
+  search?: Maybe<Scalars["String"]>;
+  limit?: Maybe<Scalars["Int"]>;
+  offset?: Maybe<Scalars["Int"]>;
+};
+
+export type ConstantsQuery = { __typename?: "Query" } & {
+  constants: Maybe<
+    { __typename?: "ConstantsConnection" } & Pick<
+      ConstantsConnection,
+      "totalCount"
+    > & {
+        nodes: Maybe<
+          Array<
+            { __typename?: "Constants" } & Pick<
+              Constants,
+              "id" | "name" | "value"
+            >
+          >
+        >;
+      }
   >;
 };
 
@@ -1884,6 +1943,165 @@ export type UpdateCoinBalanceMutationResult = ApolloReactCommon.MutationResult<
 export type UpdateCoinBalanceMutationOptions = ApolloReactCommon.BaseMutationOptions<
   UpdateCoinBalanceMutation,
   UpdateCoinBalanceMutationVariables
+>;
+export const UpdateConstantsDocument = gql`
+  mutation UpdateConstants($input: UpdateConstantInput!) {
+    updateConstants(input: $input) {
+      constant {
+        id
+        name
+        value
+      }
+    }
+  }
+`;
+export type UpdateConstantsMutationFn = ApolloReactCommon.MutationFunction<
+  UpdateConstantsMutation,
+  UpdateConstantsMutationVariables
+>;
+export type UpdateConstantsComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<
+    UpdateConstantsMutation,
+    UpdateConstantsMutationVariables
+  >,
+  "mutation"
+>;
+
+export const UpdateConstantsComponent = (
+  props: UpdateConstantsComponentProps
+) => (
+  <ApolloReactComponents.Mutation<
+    UpdateConstantsMutation,
+    UpdateConstantsMutationVariables
+  >
+    mutation={UpdateConstantsDocument}
+    {...props}
+  />
+);
+
+export type UpdateConstantsProps<TChildProps = {}> = ApolloReactHoc.MutateProps<
+  UpdateConstantsMutation,
+  UpdateConstantsMutationVariables
+> &
+  TChildProps;
+export function withUpdateConstants<TProps, TChildProps = {}>(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    UpdateConstantsMutation,
+    UpdateConstantsMutationVariables,
+    UpdateConstantsProps<TChildProps>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    UpdateConstantsMutation,
+    UpdateConstantsMutationVariables,
+    UpdateConstantsProps<TChildProps>
+  >(UpdateConstantsDocument, {
+    alias: "withUpdateConstants",
+    ...operationOptions
+  });
+}
+
+export function useUpdateConstantsMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    UpdateConstantsMutation,
+    UpdateConstantsMutationVariables
+  >
+) {
+  return ApolloReactHooks.useMutation<
+    UpdateConstantsMutation,
+    UpdateConstantsMutationVariables
+  >(UpdateConstantsDocument, baseOptions);
+}
+export type UpdateConstantsMutationHookResult = ReturnType<
+  typeof useUpdateConstantsMutation
+>;
+export type UpdateConstantsMutationResult = ApolloReactCommon.MutationResult<
+  UpdateConstantsMutation
+>;
+export type UpdateConstantsMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  UpdateConstantsMutation,
+  UpdateConstantsMutationVariables
+>;
+export const ConstantsDocument = gql`
+  query Constants($search: String, $limit: Int, $offset: Int) {
+    constants(search: $search, limit: $limit, offset: $offset) {
+      totalCount
+      nodes {
+        id
+        name
+        value
+      }
+    }
+  }
+`;
+export type ConstantsComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<
+    ConstantsQuery,
+    ConstantsQueryVariables
+  >,
+  "query"
+>;
+
+export const ConstantsComponent = (props: ConstantsComponentProps) => (
+  <ApolloReactComponents.Query<ConstantsQuery, ConstantsQueryVariables>
+    query={ConstantsDocument}
+    {...props}
+  />
+);
+
+export type ConstantsProps<TChildProps = {}> = ApolloReactHoc.DataProps<
+  ConstantsQuery,
+  ConstantsQueryVariables
+> &
+  TChildProps;
+export function withConstants<TProps, TChildProps = {}>(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    ConstantsQuery,
+    ConstantsQueryVariables,
+    ConstantsProps<TChildProps>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    ConstantsQuery,
+    ConstantsQueryVariables,
+    ConstantsProps<TChildProps>
+  >(ConstantsDocument, {
+    alias: "withConstants",
+    ...operationOptions
+  });
+}
+
+export function useConstantsQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    ConstantsQuery,
+    ConstantsQueryVariables
+  >
+) {
+  return ApolloReactHooks.useQuery<ConstantsQuery, ConstantsQueryVariables>(
+    ConstantsDocument,
+    baseOptions
+  );
+}
+export function useConstantsLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    ConstantsQuery,
+    ConstantsQueryVariables
+  >
+) {
+  return ApolloReactHooks.useLazyQuery<ConstantsQuery, ConstantsQueryVariables>(
+    ConstantsDocument,
+    baseOptions
+  );
+}
+
+export type ConstantsQueryHookResult = ReturnType<typeof useConstantsQuery>;
+export type ConstantsQueryResult = ApolloReactCommon.QueryResult<
+  ConstantsQuery,
+  ConstantsQueryVariables
 >;
 export const TeamDocument = gql`
   query Team($id: Int!) {

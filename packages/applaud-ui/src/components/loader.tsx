@@ -5,6 +5,7 @@ import ContentLoader from "react-content-loader";
 import { Typography, Dialog } from "@material-ui/core";
 import { LOADER_TYPE } from "../constants/constants";
 import { styled } from "@material-ui/styles";
+import theme from "../core/mui-theme";
 
 interface Props {
   large?: boolean;
@@ -85,8 +86,8 @@ const CardLoader = () => (
     height={80}
     width={400}
     speed={2}
-    primaryColor="#d9d9d9"
-    secondaryColor="#ecebeb"
+    primaryColor={theme.palette.grey[800]}
+    secondaryColor={theme.palette.grey[900]}
   >
     <rect x="0" y="0" rx="3" ry="3" width="100%" height="150" />
     <rect x="0" y="80" rx="3" ry="3" width="100%" height="150" />

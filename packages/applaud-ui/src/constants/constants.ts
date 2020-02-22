@@ -7,3 +7,9 @@ export const LOADER_TYPE = {
 
 export const PAGE_LIMIT = 20;
 export const SCROLL_THRESHOLD = 0.7;
+
+
+export const CONSTANTS = {
+  TEAM_MULTIPLIER: 'TEAM_MULTIPLIER',
+  DEPARTMENT_MULTIPLIER: 'DEPARTMENT_MULTIPLIER'
+}

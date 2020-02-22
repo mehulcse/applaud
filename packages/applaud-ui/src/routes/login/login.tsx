@@ -17,11 +17,11 @@ import Loader from "../../components/loader";
 import {LOADER_TYPE} from "../../constants/constants";
 
 const useStyles = makeStyles(theme => ({
-  "@global": {
-    body: {
-      backgroundColor: theme.palette.common.white
-    }
-  },
+  // "@global": {
+  //   body: {
+  //     backgroundColor: theme.palette.common.white
+  //   }
+  // },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main
@@ -35,7 +35,7 @@ const useStyles = makeStyles(theme => ({
   },
   orSeparator: {
     padding: theme.spacing(0, 2),
-    background: theme.palette.common.white,
+    background: theme.palette.background.paper,
     position: "relative",
     top: "-11px"
   }
@@ -73,8 +73,8 @@ export default function SignIn() {
                     }}
                   />
                   <Button
-                    variant="contained"
                     color="primary"
+                    variant="outlined"
                     fullWidth
                     className={classes.submit}
                     onClick={async () => {
@@ -109,7 +109,7 @@ export default function SignIn() {
                     }}
                   />
                   <Button
-                    variant="contained"
+                    variant="outlined"
                     color="primary"
                     fullWidth
                     className={classes.submit}
@@ -156,7 +156,7 @@ export default function SignIn() {
                     disabled={renderProps.disabled}
                     fullWidth
                     color="primary"
-                    variant="contained"
+                    variant="outlined"
                     className={classes.submit}
                   >
                     <AppIcon icon={faGoogle} wideRightMargin/> Login with

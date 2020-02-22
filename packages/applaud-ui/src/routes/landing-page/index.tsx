@@ -158,7 +158,7 @@ function LandingPage() {
             <AppLink to="/login">
               <Button
                 variant="contained"
-                color="secondary"
+                color="primary"
               >
                 Login
               </Button>

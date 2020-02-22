@@ -22,6 +22,18 @@ type LogoutUserResponse {
     isLoggedOut: Boolean!
 }
 
+type Constants {
+    id: Int!
+    name: String!
+    value: String!
+}
+
+type ConstantsConnection {
+    totalCount: Int!
+    pageInfo: PageInfo
+    nodes: [Constants!]
+}
+
 type CoinBalance {
     id: Int!
     balance: Int!
@@ -388,6 +400,12 @@ type Query {
         ids: [Int!]
     ): UserConnection
     viewer: Viewer
+    constants(
+        limit: Int
+        offset: Int
+        sort: TeamsSort
+        search: String
+    ): ConstantsConnection
 }
 
 schema {

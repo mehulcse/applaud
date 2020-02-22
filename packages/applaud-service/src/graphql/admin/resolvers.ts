@@ -8,6 +8,7 @@ import teamQuery from "./queries/team";
 import teamsQuery from "./queries/teams";
 import userQuery from "./queries/user";
 import usersQuery from "./queries/users";
+import constantsQuery from "./queries/constants";
 import createTeamMutation from "./mutations/create-team";
 import createApplaudMutation from "./mutations/create-applaud";
 import createDepartmentTeamMutation from "./mutations/create-department-team";
@@ -39,6 +40,7 @@ export default merge(
   applaudReceivedQuery,
   departmentQuery,
   departmentsQuery,
+  constantsQuery,
   teamQuery,
   teamsQuery,
   userQuery,

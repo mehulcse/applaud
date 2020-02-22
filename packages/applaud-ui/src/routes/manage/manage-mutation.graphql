@@ -3,3 +3,13 @@ mutation UpdateCoinBalance($input: UpdateCoinBalanceInput!) {
     success
   }
 }
+
+mutation UpdateConstants($input: UpdateConstantInput!) {
+  updateConstants(input: $input) {
+    constant {
+      id
+      name
+      value
+    }
+  }
+}

@@ -44,8 +44,6 @@ export class CoinBalanceService {
     const query = CoinBalance.query();
     if (viewer.isAdmin) {
       // No restrictions
-    } else {
-      throw new Error("Unauthorized access.");
     }
 
     return {

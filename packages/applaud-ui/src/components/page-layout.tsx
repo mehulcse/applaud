@@ -168,7 +168,7 @@ class PageLayout extends Component<Props, State> {
           display="flex"
           flexDirection="column"
           borderRight="1px solid rgba(0, 0, 0, 0.12)"
-          bgcolor="#FFFFFF"
+          bgcolor={theme.palette.background.paper}
           justifyContent="space-between"
         >
           <Box width={drawerWidth}>
@@ -178,14 +178,14 @@ class PageLayout extends Component<Props, State> {
           {this.renderProfile()}
         </Box>
         <StyledMain component="main">
-          <StyledAppBar position="static">
-            <Toolbar>
-              <Typography variant="h6" color="inherit" noWrap>
-                {appBarContent || pageTitle}
-              </Typography>
-            </Toolbar>
-          </StyledAppBar>
-          <StyledToolbar component="div"/>
+          {/*<StyledAppBar position="static">*/}
+          {/*  <Toolbar>*/}
+          {/*    <Typography variant="h6" color="inherit" noWrap>*/}
+          {/*      {appBarContent || pageTitle}*/}
+          {/*    </Typography>*/}
+          {/*  </Toolbar>*/}
+          {/*</StyledAppBar>*/}
+          {/*<StyledToolbar component="div"/>*/}
           <Box padding={2}>{children}</Box>
         </StyledMain>
       </Box>

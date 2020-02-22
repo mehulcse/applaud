@@ -1,17 +1,25 @@
 import React, {useContext, useState} from "react";
 import {Grid, TextField, Button, Typography} from "@material-ui/core";
 import PaperBox from "../../components/paper-box";
-import {useUpdateCoinBalanceMutation} from "../../generated/graphql";
+import {useUpdateCoinBalanceMutation, useConstantsQuery} from "../../generated/graphql";
 import {openSnackbar} from "../../components/notifier";
 import {AuthContext} from "../../core/auth-manager";
 import theme from "../../core/mui-theme";
 import Loader from "../../components/loader";
-import {LOADER_TYPE} from "../../constants/constants";
+import {LOADER_TYPE, PAGE_LIMIT} from "../../constants/constants";
 
 function ManageForm() {
   const context = useContext(AuthContext);
   const [quantity, setQuantity] = useState();
   const [updateCoins, {loading}] = useUpdateCoinBalanceMutation();
+  const queryResult = useConstantsQuery({
+    variables: {
+      limit: PAGE_LIMIT,
+      offset: 0
+    },
+    fetchPolicy: "network-only"
+  });
+  console.log(queryResult.data)
   function onChange(event: React.ChangeEvent<HTMLInputElement>) {
     const value = event.target.value ? parseInt(event.target.value, 10) : null;
     setQuantity(value);
@@ -61,7 +69,6 @@ function ManageForm() {
         spacing={0}
         xs={12}
         justify="space-between"
-        style={{minHeight: "70vh"}}
       >
         <Grid xs={8} item>
           <TextField
@@ -75,6 +82,68 @@ function ManageForm() {
           />
           <Typography variant="caption">
             This will reset value of claps for all user.
+          </Typography>
+        </Grid>
+        <Grid xs={2} item>
+          <Button
+            variant="contained"
+            color="primary"
+            style={{marginRight: theme.spacing(1)}}
+            onClick={onSend}
+            disabled={!quantity}
+          >
+            Allocate
+          </Button>
+        </Grid>
+      </Grid>
+      <Grid
+        container
+        spacing={0}
+        xs={12}
+        justify="space-between"
+      >
+        <Grid xs={8} item>
+          <TextField
+            value={quantity}
+            onChange={onChange}
+            label="Inter Team Multiplier"
+            type="number"
+            fullWidth
+            variant="outlined"
+          />
+          <Typography variant="caption">
+            The Total claps received by an employee from other teams will be multiplied by this number
+          </Typography>
+        </Grid>
+        <Grid xs={2} item>
+          <Button
+            variant="contained"
+            color="primary"
+            style={{marginRight: theme.spacing(1)}}
+            onClick={onSend}
+            disabled={!quantity}
+          >
+            Allocate
+          </Button>
+        </Grid>
+      </Grid>
+      <Grid
+        container
+        spacing={0}
+        xs={12}
+        justify="space-between"
+      >
+        <Grid xs={8} item>
+          <TextField
+            value={quantity}
+            onChange={onChange}
+            label="Inter Team Multiplier"
+            type="number"
+            fullWidth
+            variant="outlined"
+          />
+          <Typography variant="caption">
+            The Total claps received by an employee from other teams will be multiplied by this number
           </Typography>
         </Grid>
         <Grid xs={2} item>
