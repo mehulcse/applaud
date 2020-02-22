@@ -168,7 +168,6 @@ class PageLayout extends Component<Props, State> {
           display="flex"
           flexDirection="column"
           borderRight="1px solid rgba(0, 0, 0, 0.12)"
-          bgcolor={theme.palette.background.paper}
           justifyContent="space-between"
         >
           <Box width={drawerWidth}>

@@ -15,6 +15,9 @@ import { CoinBalanceService } from "./coin-balance-service";
 import { AppContext } from "../../auth/app-context";
 import { ROLES } from "../../../constants";
 import { DEFAULT_BALANCE } from "../db/models/coin-balance";
+import { getLogger } from "../../../logger";
+
+const logger = getLogger("user service");
 
 export interface UsersOptions extends PaginationArgs {
   search?: string;
@@ -179,21 +182,29 @@ export class UserService {
         email: validatedInput.email
       });
 
-      await new UserRoleService(this.context).create(
+      logger.debug(user);
+
+      const userRole = await new UserRoleService(this.context).create(
         {
           userId: user.id,
           roleId: ROLES.EMPLOYEE
         },
+        true,
         trx
       );
 
-      await new CoinBalanceService(this.context).create(
+      logger.debug(userRole);
+
+      const coinBalance = await new CoinBalanceService(this.context).create(
         {
           userId: user.id,
           balance: DEFAULT_BALANCE
         },
+        true,
         trx
       );
+
+      logger.debug(coinBalance);
 
       return user;
     });
