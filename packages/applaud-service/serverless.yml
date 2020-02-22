@@ -77,6 +77,8 @@ functions:
               - X-Api-Key
               - X-Amz-Security-Token
               - X-Amz-User-Agent
+              - XSRF-TOKEN
+              - X-XSRF-TOKEN
             allowCredentials: true
   adminGraphQLPlayground:
     handler: src/handlers.adminGraphQL
@@ -97,6 +99,8 @@ functions:
               - X-Api-Key
               - X-Amz-Security-Token
               - X-Amz-User-Agent
+              - XSRF-TOKEN
+              - X-XSRF-TOKEN
             allowCredentials: true
   migrate:
     handler: migration.migrate

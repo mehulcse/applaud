@@ -1,6 +1,6 @@
 import moment from "moment";
 import * as yup from "yup";
-import axios from 'axios';
+import axios from "axios";
 import { QueryInitializationResult } from "../common";
 import { PaginationArgs } from "../common";
 import { getLogger } from "../../../logger";
@@ -16,6 +16,7 @@ import { ensureUser } from "../../auth/helpers";
 import { AppContext } from "../../auth/app-context";
 import { CARD_TYPES } from "../db/models/coin-received";
 import { CoinBalanceService } from "./coin-balance-service";
+import Config from "../../../config";
 
 export interface CoinReceivedOptions extends PaginationArgs {
   allocatedToUserId?: number;
@@ -179,34 +180,44 @@ export class CoinReceivedService {
     });
 
     // Slack trigger
-    const url = "";
+    const url = Config.getSlackEndpoint();
     const notificationMessage = {
-        unfurl_links: true,
-        text: "<@" + allocatedToUser.email.substring(0, allocatedToUser.email.indexOf("@")) + "> You have been applauded:tech9:",
-        mrkdwn: true,
-        blocks: [
-            {
-                type: "section",
-                text: {
-                    type: "mrkdwn",
-                    text: "<@" + allocatedToUser.email.substring(0, allocatedToUser.email.indexOf("@")) + "> You have been applauded:tech9:" +
-                        "\nLogin to <http://thegeekstribe.com/dashboard|Applaud> to checkout the details"
-                }
-            },
-            {
-                type: "section",
-                block_id: "descriptionSection",
-                text: {
-                    type: "mrkdwn",
-                    text: input.message
-                },
-                accessory: {
-                    type: "image",
-                    image_url: "https://s3-us-west-2.amazonaws.com/thegeekstribe.com/images/Applaud-logo.png",
-                    alt_text: "Kudos"
-                }
-            }
-        ]
+      unfurl_links: true,
+      text:
+        "<@" +
+        allocatedToUser.email.substring(0, allocatedToUser.email.indexOf("@")) +
+        "> You have been applauded:tech9:",
+      mrkdwn: true,
+      blocks: [
+        {
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text:
+              "<@" +
+              allocatedToUser.email.substring(
+                0,
+                allocatedToUser.email.indexOf("@")
+              ) +
+              "> You have been applauded:tech9:" +
+              "\nLogin to <http://thegeekstribe.com/dashboard|Applaud> to checkout the details"
+          }
+        },
+        {
+          type: "section",
+          block_id: "descriptionSection",
+          text: {
+            type: "mrkdwn",
+            text: input.message
+          },
+          accessory: {
+            type: "image",
+            image_url:
+              "https://s3-us-west-2.amazonaws.com/thegeekstribe.com/images/Applaud-logo.png",
+            alt_text: "Kudos"
+          }
+        }
+      ]
     };
 
     const res = await axios.post(url, JSON.stringify(notificationMessage));
