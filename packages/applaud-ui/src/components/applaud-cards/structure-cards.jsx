@@ -1,7 +1,21 @@
 import React, { useState } from "react";
 import Lottie from "react-lottie";
-import { Typography, Paper } from "@material-ui/core";
+import { Typography, Paper, withStyles } from "@material-ui/core";
 import "./cards.css";
+
+const StyledPaper = withStyles({
+  root: {
+    padding: "10px 10px 40px",
+    textAlign: "center",
+    margin: "5px 10px 5px 0",
+    position: "relative",
+    width: "100%",
+    height: "200px"
+  },
+  elevation24: {
+    boxShadow: "0 11px 15px -7px rgba(255, 255,255,0.2), 0 24px 38px 3px rgba(255,255,255,0.14), 0 9px 46px 8px rgba(255,255,255,0.12)"
+  }
+})(Paper);
 
 const StructureCards = ({ data, onClick, selected }) => {
   const defaultOptions = {
@@ -24,7 +38,7 @@ const StructureCards = ({ data, onClick, selected }) => {
   }
 
   return (
-    <Paper
+    <StyledPaper
       className="card-tiles"
       id={data.id}
       onClick={onClick}
@@ -46,7 +60,7 @@ const StructureCards = ({ data, onClick, selected }) => {
         {data.header}
       </Typography>
       <Lottie options={defaultOptions} className="lottieFiles" isPaused={paused} />
-    </Paper>
+    </StyledPaper>
   );
 };
 
