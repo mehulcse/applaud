@@ -181,7 +181,7 @@ function LandingPage() {
       </Box>
       <Box mt={5}>
         <Typography align="center">
-          Handcrafted with <span>&#9829;</span> by theGeeksTribe
+          Handcrafted with <span style={{color: '#ea4e4e'}}>&#9829;</span> by theGeeksTribe
         </Typography>
       </Box>
     </div>
