@@ -1,18 +1,20 @@
-import React, { useState, useContext, Fragment } from "react";
+import React, {useState, useContext, Fragment} from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import { Typography, Box } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import {Typography, Box} from "@material-ui/core";
+import {makeStyles} from "@material-ui/core/styles";
 import GoogleLogin, {
   GoogleLoginResponse,
   GoogleLoginResponseOffline
 } from "react-google-login";
-import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+import {faGoogle} from "@fortawesome/free-brands-svg-icons";
 // TODO: generate graphql
-import { LoginUserComponent } from "../../generated/graphql";
-import { AuthContext } from "../../core/auth-manager";
+import {LoginUserComponent} from "../../generated/graphql";
+import {AuthContext} from "../../core/auth-manager";
 import AppIcon from "../../components/app-icon";
 import LoginContainer from "../../components/login-container";
+import Loader from "../../components/loader";
+import {LOADER_TYPE} from "../../constants/constants";
 
 const useStyles = makeStyles(theme => ({
   "@global": {
@@ -45,6 +47,7 @@ export default function SignIn() {
   const [email, setEmail] = useState("");
   const [shouldShowCodeInput, setShouldShowCodeInput] = useState(false);
   const [code, setCode] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const authContext = useContext(AuthContext);
 
@@ -75,6 +78,7 @@ export default function SignIn() {
                     fullWidth
                     className={classes.submit}
                     onClick={async () => {
+                      setIsLoading(true);
                       const response = await loginUserMutation({
                         variables: {
                           input: {
@@ -85,6 +89,7 @@ export default function SignIn() {
                       if (response && response.data) {
                         setShouldShowCodeInput(true);
                       }
+                      setIsLoading(false);
                     }}
                   >
                     Continue with Email
@@ -109,6 +114,7 @@ export default function SignIn() {
                     fullWidth
                     className={classes.submit}
                     onClick={async () => {
+                      setIsLoading(true);
                       const response = await loginUserMutation({
                         variables: {
                           input: {
@@ -125,6 +131,7 @@ export default function SignIn() {
                       ) {
                         await authContext.refresh();
                       }
+                      setIsLoading(false);
                     }}
                   >
                     Continue with Temporary Login Code
@@ -152,11 +159,12 @@ export default function SignIn() {
                     variant="contained"
                     className={classes.submit}
                   >
-                    <AppIcon icon={faGoogle} wideRightMargin /> Login with
+                    <AppIcon icon={faGoogle} wideRightMargin/> Login with
                     Google
                   </Button>
                 )}
                 onSuccess={async response => {
+                  setIsLoading(true);
                   const offlineRes = response as GoogleLoginResponseOffline;
                   if (offlineRes.code) {
                     console.log("offline");
@@ -172,13 +180,15 @@ export default function SignIn() {
                     }
                   });
                   await authContext.refresh();
+                  setIsLoading(false);
                 }}
                 onFailure={err => {
-                  console.error("Error", { err });
+                  console.error("Error", {err});
                 }}
               />
             </form>
           </>
+          {isLoading && <Loader type={LOADER_TYPE.fullView} />}
         </LoginContainer>
       )}
     </LoginUserComponent>
