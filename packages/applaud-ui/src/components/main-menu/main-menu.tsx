@@ -14,7 +14,8 @@ import {
   faTachometerAlt,
   faUsers,
   faPeopleCarry,
-  faStore
+  faStore,
+  faCog
 } from "@fortawesome/free-solid-svg-icons";
 
 import AppLink from "../app-link";
@@ -100,6 +101,14 @@ function MainMenuContent({ location }: { location: any }) {
                 <StyledFontAwesomeIcon icon={faStore} fixedWidth />
               </ListItemIcon>
               <StyledListItemText primary="Departments" />
+            </ListItem>
+          </AppLink>
+          <AppLink to="/manage">
+            <ListItem button selected={basePath === "/manage"}>
+              <ListItemIcon>
+                <StyledFontAwesomeIcon icon={faCog} fixedWidth />
+              </ListItemIcon>
+              <StyledListItemText primary="Manage" />
             </ListItem>
           </AppLink>
         </>

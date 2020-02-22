@@ -11,10 +11,7 @@ import {
 } from "../helpers";
 import { UserService } from "./user-service";
 import CoinBalance from "../db/models/coin-balance";
-import {
-  ensureUser,
-  ensureAdmin
-} from "../../auth/helpers";
+import { ensureUser, ensureAdmin } from "../../auth/helpers";
 import { AppContext } from "../../auth/app-context";
 
 export interface CoinBalanceOptions extends PaginationArgs {
@@ -102,7 +99,7 @@ export class CoinBalanceService {
   }
 
   async create(input: CreateCoinBalanceInput, trx?: Objection.Transaction) {
-    ensureAdmin(this.context.viewer)
+    ensureAdmin(this.context.viewer);
     // Validation
     const schema = yup.object().shape({
       userId: yup
@@ -162,5 +159,15 @@ export class CoinBalanceService {
     );
 
     return coinBalance;
+  }
+
+  async bulkAllocation(quantity: number) {
+    ensureAdmin(this.context.viewer);
+
+    await CoinBalance.query().update({ balance: quantity });
+
+    return {
+      success: true
+    };
   }
 }

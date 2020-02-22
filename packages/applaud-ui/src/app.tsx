@@ -14,6 +14,7 @@ import Teams from "./routes/teams/teams";
 import Departments from "./routes/departments/departments";
 import Applaud from "./routes/applaud/applaud";
 import NotFoundRouteHandler from "./routes/not-found";
+import Manage from "./routes/manage/manage";
 import LandingPage from "./routes/landing-page";
 import "./app.css";
 
@@ -32,7 +33,8 @@ function App() {
                 <Route path="/users/:id" exact component={UserDetail} />
                 <Route path="/teams" exact component={Teams} />
                 <Route path="/departments" exact component={Departments} />
-                <Route path="/" component={LandingPage} />
+                <Route path="/manage" exact component={Manage} />
+                <Route path="/" exact component={LandingPage} />
                 <Route path="*" component={NotFoundRouteHandler} />
               </Switch>
             </AuthManager>

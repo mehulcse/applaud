@@ -28,6 +28,14 @@ type CoinBalance {
     userId: Int!
 }
 
+input UpdateCoinBalanceInput {
+    quantity: Int!
+}
+
+type UpdateCoinBalanceResponse {
+    success: Boolean!
+}
+
 type User {
     id: Int!
     firstName: String!
@@ -343,6 +351,7 @@ type Mutation {
     updateConstants(input: UpdateConstantInput!): UpdateConstantResponse!
     deleteUserTeam(input: DeleteUserTeamInput!): DeleteUserTeamResponse!
     deleteDepartmentTeam(input: DeleteDepartmentTeamInput!): DeleteDepartmentTeamResponse!
+    updateCoinBalance(input: UpdateCoinBalanceInput!): UpdateCoinBalanceResponse!
 }
 
 type Query {

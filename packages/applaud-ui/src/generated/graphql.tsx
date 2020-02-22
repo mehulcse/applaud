@@ -242,6 +242,7 @@ export type Mutation = {
   updateConstants: UpdateConstantResponse;
   deleteUserTeam: DeleteUserTeamResponse;
   deleteDepartmentTeam: DeleteDepartmentTeamResponse;
+  updateCoinBalance: UpdateCoinBalanceResponse;
 };
 
 export type MutationCreateApplaudArgs = {
@@ -298,6 +299,10 @@ export type MutationDeleteUserTeamArgs = {
 
 export type MutationDeleteDepartmentTeamArgs = {
   input: DeleteDepartmentTeamInput;
+};
+
+export type MutationUpdateCoinBalanceArgs = {
+  input: UpdateCoinBalanceInput;
 };
 
 export type PageInfo = {
@@ -404,6 +409,15 @@ export type UpdateApplaudBalanceInput = {
 export type UpdateApplaudBalanceResponse = {
   __typename?: "UpdateApplaudBalanceResponse";
   applaudBalance: ApplaudBalance;
+};
+
+export type UpdateCoinBalanceInput = {
+  quantity: Scalars["Int"];
+};
+
+export type UpdateCoinBalanceResponse = {
+  __typename?: "UpdateCoinBalanceResponse";
+  success: Scalars["Boolean"];
 };
 
 export type UpdateConstantInput = {
@@ -671,6 +685,17 @@ export type LoginUserMutation = { __typename?: "Mutation" } & {
   loginUser: { __typename?: "LoginUserResponse" } & Pick<
     LoginUserResponse,
     "isLoggedIn"
+  >;
+};
+
+export type UpdateCoinBalanceMutationVariables = {
+  input: UpdateCoinBalanceInput;
+};
+
+export type UpdateCoinBalanceMutation = { __typename?: "Mutation" } & {
+  updateCoinBalance: { __typename?: "UpdateCoinBalanceResponse" } & Pick<
+    UpdateCoinBalanceResponse,
+    "success"
   >;
 };
 
@@ -1781,6 +1806,84 @@ export type LoginUserMutationResult = ApolloReactCommon.MutationResult<
 export type LoginUserMutationOptions = ApolloReactCommon.BaseMutationOptions<
   LoginUserMutation,
   LoginUserMutationVariables
+>;
+export const UpdateCoinBalanceDocument = gql`
+  mutation UpdateCoinBalance($input: UpdateCoinBalanceInput!) {
+    updateCoinBalance(input: $input) {
+      success
+    }
+  }
+`;
+export type UpdateCoinBalanceMutationFn = ApolloReactCommon.MutationFunction<
+  UpdateCoinBalanceMutation,
+  UpdateCoinBalanceMutationVariables
+>;
+export type UpdateCoinBalanceComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<
+    UpdateCoinBalanceMutation,
+    UpdateCoinBalanceMutationVariables
+  >,
+  "mutation"
+>;
+
+export const UpdateCoinBalanceComponent = (
+  props: UpdateCoinBalanceComponentProps
+) => (
+  <ApolloReactComponents.Mutation<
+    UpdateCoinBalanceMutation,
+    UpdateCoinBalanceMutationVariables
+  >
+    mutation={UpdateCoinBalanceDocument}
+    {...props}
+  />
+);
+
+export type UpdateCoinBalanceProps<
+  TChildProps = {}
+> = ApolloReactHoc.MutateProps<
+  UpdateCoinBalanceMutation,
+  UpdateCoinBalanceMutationVariables
+> &
+  TChildProps;
+export function withUpdateCoinBalance<TProps, TChildProps = {}>(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    UpdateCoinBalanceMutation,
+    UpdateCoinBalanceMutationVariables,
+    UpdateCoinBalanceProps<TChildProps>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    UpdateCoinBalanceMutation,
+    UpdateCoinBalanceMutationVariables,
+    UpdateCoinBalanceProps<TChildProps>
+  >(UpdateCoinBalanceDocument, {
+    alias: "withUpdateCoinBalance",
+    ...operationOptions
+  });
+}
+
+export function useUpdateCoinBalanceMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    UpdateCoinBalanceMutation,
+    UpdateCoinBalanceMutationVariables
+  >
+) {
+  return ApolloReactHooks.useMutation<
+    UpdateCoinBalanceMutation,
+    UpdateCoinBalanceMutationVariables
+  >(UpdateCoinBalanceDocument, baseOptions);
+}
+export type UpdateCoinBalanceMutationHookResult = ReturnType<
+  typeof useUpdateCoinBalanceMutation
+>;
+export type UpdateCoinBalanceMutationResult = ApolloReactCommon.MutationResult<
+  UpdateCoinBalanceMutation
+>;
+export type UpdateCoinBalanceMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  UpdateCoinBalanceMutation,
+  UpdateCoinBalanceMutationVariables
 >;
 export const TeamDocument = gql`
   query Team($id: Int!) {

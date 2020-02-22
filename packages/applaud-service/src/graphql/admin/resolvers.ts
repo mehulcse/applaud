@@ -21,6 +21,7 @@ import createUserMutation from "./mutations/create-user";
 import createUserRoleMutation from "./mutations/create-user-role";
 import loginUserMutation from "./mutations/login-user";
 import logoutUserMutation from "./mutations/logout-user";
+import updateCoinBalanceMutation from "./mutations/update-coin-balance";
 import viewerQuery from "./queries/viewer";
 import rolesQuery from "./queries/roles";
 import userType from "./types/user";
@@ -57,5 +58,6 @@ export default merge(
   applaudReceivedType,
   teamType,
   deleteUserTeamMutation,
-  deleteDepartmentTeamMutation
+  deleteDepartmentTeamMutation,
+  updateCoinBalanceMutation
 );
