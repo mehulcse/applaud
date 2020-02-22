@@ -41,15 +41,15 @@ export class TeamService {
   }
 
   initializeAuthorizedQuery(): QueryInitializationResult<Team> {
-    const viewer = ensureUser(this.context.viewer);
+    ensureUser(this.context.viewer);
 
     const query = Team.query();
 
-    if (viewer.isAdmin) {
-      // No restrictions
-    } else {
-      throw new Error("Unauthorized access.");
-    }
+    // if (viewer.isAdmin) {
+    //   // No restrictions
+    // } else {
+    //   throw new Error("Unauthorized access.");
+    // }
 
     return {
       query

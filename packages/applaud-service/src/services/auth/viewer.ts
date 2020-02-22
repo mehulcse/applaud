@@ -11,6 +11,7 @@ import CoinBalance from "../internal/db/models/coin-balance";
 import { CoinBalanceService } from "../internal/services/coin-balance-service";
 import { CoinReceivedService } from "../internal/services/coin-received-service";
 import { getLogger } from "../../logger";
+import { TeamService } from "../internal/services/team-service";
 
 export interface Viewer {
   userId: number;
@@ -63,6 +64,12 @@ export const getViewer = async (options: GetViewerOptions): Promise<Viewer> => {
   const coinsReceived = await new CoinReceivedService(systemContext).getAll({
     allocatedToUserId: user.id
   });
+
+  const userTeams = await new TeamService(systemContext).getAll({
+    userId: user.id
+  });
+
+  console.log(userTeams);
 
   logger.debug(coinsReceived);
 

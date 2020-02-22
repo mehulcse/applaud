@@ -179,41 +179,36 @@ export class CoinReceivedService {
       balance: balanceCoins
     });
 
+    logger.debug(CoinBalanceService);
+
     // Slack trigger
     const url = Config.getSlackEndpoint();
+
+    logger.debug(url);
     const notificationMessage = {
       unfurl_links: true,
-      text:
-        "<@" +
-        allocatedToUser.email.substring(0, allocatedToUser.email.indexOf("@")) +
-        "> You have been applauded:tech9:",
+      text: `<@${allocatedToUser.email.substring(
+        0,
+        allocatedToUser.email.indexOf("@")
+      )}>, You have been applauded by a fellow :tech9:er \n\n`,
       mrkdwn: true,
       blocks: [
-        {
-          type: "section",
-          text: {
-            type: "mrkdwn",
-            text:
-              "<@" +
-              allocatedToUser.email.substring(
-                0,
-                allocatedToUser.email.indexOf("@")
-              ) +
-              "> You have been applauded:tech9:" +
-              "\nLogin to <http://thegeekstribe.com/dashboard|Applaud> to checkout the details"
-          }
-        },
         {
           type: "section",
           block_id: "descriptionSection",
           text: {
             type: "mrkdwn",
-            text: input.message
+            text: `<@${allocatedToUser.email.substring(
+              0,
+              allocatedToUser.email.indexOf("@")
+            )}>, You have been applauded by a fellow :tech9:er \n\n > ${
+              validatedInput.message
+            }\n\nLogin to <http://thegeekstribe.com/dashboard|Applaud> \n\n`
           },
           accessory: {
             type: "image",
             image_url:
-              "https://s3-us-west-2.amazonaws.com/thegeekstribe.com/images/Applaud-logo.png",
+              "https://s3-us-west-2.amazonaws.com/applaud.chat/Applaud-logo.png",
             alt_text: "Kudos"
           }
         }

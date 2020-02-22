@@ -16,6 +16,8 @@ import gladiator from "../../lotties/15634-orange-super-hero.json";
 import { openSnackbar } from "../../components/notifier";
 import { AuthContext } from "../../core/auth-manager";
 import theme, { COLORS } from "../../core/mui-theme";
+import Loader from "../../components/loader";
+import {LOADER_TYPE} from "../../constants/constants";
 
 export const applaudCardData = [
   {
@@ -153,7 +155,7 @@ function ApplaudForm() {
     if (response?.data?.createApplaud?.applaud?.id) {
       openSnackbar(
         {
-          message: "Your applaud received"
+          message: "Your applaud has been received."
         },
         "success"
       );
@@ -250,6 +252,7 @@ function ApplaudForm() {
           </Grid>
         </Grid>
       </Grid>
+      {loading && <Loader type={LOADER_TYPE.fullView} />}
     </PaperBox>
   );
 }
