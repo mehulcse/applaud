@@ -23,7 +23,8 @@ export default function UserDetail() {
     variables: {
       id: parseInt(id ?? "0", 10)
     },
-    fetchPolicy: "network-only"
+    fetchPolicy: "network-only",
+    notifyOnNetworkStatusChange: true
   });
 
   if (queryResult.error) {

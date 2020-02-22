@@ -84,8 +84,8 @@ function UpdateDepartmentDialog(props: Props) {
     <Dialog open={open} maxWidth="md">
       <DialogTitle>Update Department</DialogTitle>
       <DialogContent>
-        {loading && <Loader type={LOADER_TYPE.content} />}
-        {!loading && (
+        {(loading || updateLoading) && <Loader type={LOADER_TYPE.content} />}
+        {!(loading || updateLoading) && (
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <TextField
@@ -109,15 +109,18 @@ function UpdateDepartmentDialog(props: Props) {
             </Grid>
           </Grid>
         )}
+        )}
       </DialogContent>
       <DialogActions>
         <ButtonList>
-          <Button onClick={() => onClose()}>Cancel</Button>
+          <Button onClick={() => onClose()} disabled={loading || updateLoading}>
+            Cancel
+          </Button>
           <Button
             variant="contained"
             color="primary"
             onClick={handleUpdate}
-            disabled={!name || !description || updateLoading}
+            disabled={!name || !description || updateLoading || loading}
           >
             <AppIcon icon={faCheck} standardRightMargin />
             Update Department

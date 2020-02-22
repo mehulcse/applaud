@@ -13,6 +13,8 @@ import { useCreateUserMutation } from "../../generated/graphql";
 import { ButtonList } from "../../components/button-list";
 import AppIcon from "../../components/app-icon";
 import { openSnackbar } from "../../components/notifier";
+import Loader from "../../components/loader";
+import { LOADER_TYPE } from "../../constants/constants";
 
 interface Props {
   open: boolean;
@@ -59,42 +61,47 @@ function AddUserDialog(props: Props) {
     <Dialog open={open} maxWidth="md">
       <DialogTitle>New User</DialogTitle>
       <DialogContent>
-        <Grid container spacing={3}>
-          <Grid item xs={6}>
-            <TextField
-              label="First Name"
-              id="first-name"
-              name="firstName"
-              fullWidth
-              value={firstName}
-              onChange={handleChange}
-            />
+        {loading && <Loader type={LOADER_TYPE.content} />}
+        {!loading && (
+          <Grid container spacing={3}>
+            <Grid item xs={6}>
+              <TextField
+                label="First Name"
+                id="first-name"
+                name="firstName"
+                fullWidth
+                value={firstName}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                label="Last Name"
+                id="last-name"
+                name="lastName"
+                fullWidth
+                value={lastName}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                label="Email"
+                id="email"
+                name="email"
+                fullWidth
+                value={email}
+                onChange={handleChange}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={6}>
-            <TextField
-              label="Last Name"
-              id="last-name"
-              name="lastName"
-              fullWidth
-              value={lastName}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              label="Email"
-              id="email"
-              name="email"
-              fullWidth
-              value={email}
-              onChange={handleChange}
-            />
-          </Grid>
-        </Grid>
+        )}
       </DialogContent>
       <DialogActions>
         <ButtonList>
-          <Button onClick={() => onClose()}>Cancel</Button>
+          <Button onClick={() => onClose()} disabled={loading}>
+            Cancel
+          </Button>
           <Button
             variant="contained"
             color="primary"

@@ -3,6 +3,7 @@ import Lottie from "react-lottie";
 import { Typography, Paper, withStyles } from "@material-ui/core";
 import "./cards.css";
 
+// TODO: Change color for light theme
 const StyledPaper = withStyles({
   root: {
     padding: "10px 10px 40px",
