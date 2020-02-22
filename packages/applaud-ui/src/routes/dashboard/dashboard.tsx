@@ -1,8 +1,8 @@
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import PageLayout from "../../components/page-layout";
 import {AuthContext} from "../../core/auth-manager";
 import {useApplaudQuery, ApplaudQueryHookResult} from "../../generated/graphql";
-import {Typography, Box, Grid} from "@material-ui/core";
+import {Typography, Box, Grid, FormControlLabel, Switch} from "@material-ui/core";
 import PaperBox from "../../components/paper-box";
 import Loader from "../../components/loader";
 import {LOADER_TYPE} from "../../constants/constants";
@@ -11,6 +11,7 @@ import "./dashboard.css"
 
 const Dashboard = () => {
   const authContext = useContext(AuthContext);
+  const [hideGifs, setHideGifs] = useState(false);
   const applaudStreamQuery = useApplaudQuery({
     variables: {},
     fetchPolicy: "network-only",
@@ -45,7 +46,7 @@ const Dashboard = () => {
       applaudQueryResult.data.applaud.nodes &&
       applaudQueryResult.data.applaud.nodes.length > 0) {
       return applaudQueryResult.data.applaud.nodes.map((data: any, index: number) => (
-        <ApplaudCard data={data} key={index} showName={showName}/>
+        <ApplaudCard data={data} key={index} showName={showName} hideGifs={hideGifs}/>
       ))
     }
     return (
@@ -59,6 +60,18 @@ const Dashboard = () => {
 
   return (
     <PageLayout pageTitle="Dashboard">
+      <Grid container xs={12} justify="flex-end" item>
+      <Grid item>
+        <FormControlLabel
+          value="start"
+          control={
+            <Switch onChange={() => setHideGifs(!hideGifs)} checked={hideGifs} />
+          }
+          label="Hide Gif Images"
+          labelPlacement="start"
+        />
+      </Grid>
+      </Grid>
       <Grid container xs={12} spacing={3} item>
         <Grid xs={4} item>
           <Typography align="center">Applaud Received</Typography>

@@ -8,6 +8,7 @@ import {
   User
 } from "../../generated/graphql";
 import {ConnectivityContext} from "../connectivity-monitor";
+import {LOADER_TYPE} from "../../constants/constants";
 
 type ViewerUser = { __typename?: "User" } & Pick<User,
   "id" | "firstName" | "lastName" | "email">;
@@ -111,7 +112,7 @@ class AuthManager extends Component<Props> {
     const {isLoading, isLoggedIn} = contextValue;
 
     if (isLoading) {
-      return <Loader/>;
+      return <Loader type={LOADER_TYPE.fullView}/>;
     }
     if (!isLoggedIn && !pathname.startsWith("/login") && pathname !== "/") {
       return <Redirect to="/"/>;

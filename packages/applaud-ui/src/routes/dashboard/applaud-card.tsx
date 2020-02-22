@@ -9,9 +9,10 @@ import "./dashboard.css"
 interface Props {
   data: any;
   showName: boolean;
+  hideGifs: boolean;
 }
 
-const ApplaudCard = ({data, showName}: Props) => {
+const ApplaudCard = ({data, showName, hideGifs}: Props) => {
   const defaultOptions = {
     loop: true,
     autoplay: false,
@@ -35,8 +36,8 @@ const ApplaudCard = ({data, showName}: Props) => {
       <PaperBox elevation={2} className="applaud-quote"
                 onMouseEnter={onMouseEnter}
                 onMouseLeave={onMouseLeave}>
-        <Lottie options={{animationData: cardType && cardType.animation, ...defaultOptions}}
-                isPaused={paused}/>
+        {!hideGifs && <Lottie options={{animationData: cardType && cardType.animation, ...defaultOptions}}
+                isPaused={paused}/>}
         <Typography align="center" variant="h6">{cardType ? cardType.header : ''}</Typography>
         {data.message && <blockquote>
           {showName &&
