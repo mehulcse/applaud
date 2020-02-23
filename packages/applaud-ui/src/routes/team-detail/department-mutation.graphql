@@ -1,0 +1,13 @@
+mutation CreateDepartmentTeam($input: CreateDepartmentTeamInput!) {
+  createDepartmentTeam(input: $input) {
+    departmentTeam {
+      id
+    }
+  }
+}
+
+mutation DeleteDepartmentTeam($input: DeleteDepartmentTeamInput!) {
+  deleteDepartmentTeam(input: $input) {
+    isDeleted
+  }
+}

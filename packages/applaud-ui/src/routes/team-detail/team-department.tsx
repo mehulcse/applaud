@@ -1,78 +1,61 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Grid,
-  Typography,
   List,
   ListItem,
+  ListItemIcon,
   ListItemText,
-  ListItemIcon
+  Typography
 } from "@material-ui/core";
-import { faTimes, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
 import {
-  useCreateUserTeamMutation,
-  useDeleteUserTeamMutation,
-  UserDetailQueryResult
+  useCreateDepartmentTeamMutation,
+  useDeleteDepartmentTeamMutation,
+  TeamDetailQueryResult
 } from "../../generated/graphql";
 import AppIcon from "../../components/app-icon";
-import TeamSelectorContainer from "../../components/team-selector/team-selector";
+import DepartmentSelectorContainer from "../../components/department-selector/department-selector";
 import theme from "../../core/mui-theme";
 import { openSnackbar } from "../../components/notifier";
 import Loader from "../../components/loader";
 import { LOADER_TYPE } from "../../constants/constants";
 
 interface Props {
-  queryResult: UserDetailQueryResult;
-  userId: number;
+  queryResult: TeamDetailQueryResult;
+  teamId: number;
 }
 
-export default function UserTeams(props: Props) {
-  const { queryResult, userId } = props;
-  const teams = queryResult?.data?.user?.teams ?? [];
+export default function TeamDepartment(props: Props) {
+  const { queryResult, teamId } = props;
+  const departments = queryResult?.data?.team?.departments ?? [];
 
-  const [teamId, setTeamId] = useState<number>(0);
+  const [departmentId, setDepartmentId] = useState<number>(0);
 
   const [
-    deleteUserTeam,
+    deleteDepartmentTeam,
     { loading: deleteLoading }
-  ] = useDeleteUserTeamMutation();
+  ] = useDeleteDepartmentTeamMutation();
 
   const [
-    createUserTeam,
+    createDepartmentTeam,
     { loading: createLoading }
-  ] = useCreateUserTeamMutation();
+  ] = useCreateDepartmentTeamMutation();
 
-  async function onDelete(teamId: number) {
-    if (userId && teamId) {
-      const response = await deleteUserTeam({
+  async function onDelete(departmentId: number) {
+    if (departmentId && teamId) {
+      const response = await deleteDepartmentTeam({
         variables: {
           input: {
-            userId,
+            departmentId,
             teamId
           }
         }
-      }).catch(error => {
-        if (error?.message) {
-          openSnackbar(
-            {
-              message: error.message
-            },
-            "error"
-          );
-        } else {
-          openSnackbar(
-            {
-              message: "Error occurred while deleting team from user"
-            },
-            "error"
-          );
-        }
-        return error;
-      });
+      }).catch(error => error);
 
-      if (response?.data?.deleteUserTeam?.isDeleted) {
+      if (response?.data?.deleteDepartmentTeam?.isDeleted) {
         openSnackbar(
           {
-            message: "Team removed from user successfully"
+            message: "Department removed successfully"
           },
           "success"
         );
@@ -89,11 +72,11 @@ export default function UserTeams(props: Props) {
   }
 
   async function onAdd() {
-    if (userId && teamId) {
-      const response = await createUserTeam({
+    if (departmentId && teamId) {
+      const response = await createDepartmentTeam({
         variables: {
           input: {
-            userId,
+            departmentId,
             teamId
           }
         }
@@ -108,7 +91,7 @@ export default function UserTeams(props: Props) {
         } else {
           openSnackbar(
             {
-              message: "Error occurred while adding team to user"
+              message: "Error occurred while adding team to department"
             },
             "error"
           );
@@ -116,31 +99,31 @@ export default function UserTeams(props: Props) {
         return error;
       });
 
-      if (response?.data?.createUserTeam?.userTeam?.id) {
+      if (response?.data?.createDepartmentTeam?.departmentTeam?.id) {
         openSnackbar(
           {
-            message: "Team added to user successfully"
+            message: "Team added to department successfully"
           },
           "success"
         );
-        setTeamId(0);
+        setDepartmentId(0);
         queryResult.refetch();
       }
     } else {
       openSnackbar(
         {
-          message: "Please provide team"
+          message: "Please provide department"
         },
         "error"
       );
     }
   }
 
-  function onTeamsSelected(teamIds: number[]) {
-    if (teamIds.length) {
-      setTeamId(teamIds[0]);
+  function onDepartmentsSelected(departmentIds: number[]) {
+    if (departmentIds.length) {
+      setDepartmentId(departmentIds[0]);
     } else {
-      setTeamId(0);
+      setDepartmentId(0);
     }
   }
 
@@ -148,20 +131,20 @@ export default function UserTeams(props: Props) {
     <Grid container>
       <Grid item>
         <Typography variant="h4" gutterBottom>
-          Teams
+          Department
         </Typography>
       </Grid>
       <Grid container>
         <List component="ul" id="teams">
-          {teams.map((team: any) => (
+          {departments.map((department: any) => (
             <ListItem>
               <ListItemText style={{ marginRight: theme.spacing(1) }}>
-                {team.name}
+                {department.name}
               </ListItemText>
               <ListItemIcon style={{ cursor: "pointer" }}>
                 <AppIcon
                   icon={faTimes}
-                  onClick={onDelete.bind(null, team.id)}
+                  onClick={onDelete.bind(null, department.id)}
                 />
               </ListItemIcon>
             </ListItem>
@@ -170,17 +153,18 @@ export default function UserTeams(props: Props) {
       </Grid>
       <Grid container spacing={2}>
         <Grid item xs={5}>
-          <TeamSelectorContainer
-            label="Team"
-            teamIds={teamId ? [teamId] : []}
-            onTeamsSelected={onTeamsSelected}
-            placeholder="Select Team"
+          <DepartmentSelectorContainer
+            label="Department"
+            departmentIds={departmentId ? [departmentId] : []}
+            onDepartmentsSelected={onDepartmentsSelected}
+            placeholder="Select Department"
+            isDisabled={!!departments?.length}
           />
         </Grid>
         <Grid item style={{ padding: theme.spacing(4), cursor: "pointer" }}>
           <AppIcon
             icon={faPlus}
-            onClick={!!teamId ? onAdd : () => {}}
+            onClick={!departments?.length && !!departmentId ? onAdd : () => {}}
             size="lg"
           />
         </Grid>

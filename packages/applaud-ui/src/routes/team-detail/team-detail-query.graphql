@@ -1,0 +1,11 @@
+query TeamDetail($id: Int!) {
+  team(id: $id) {
+    id
+    name
+    description
+    departments {
+      id
+      name
+    }
+  }
+}

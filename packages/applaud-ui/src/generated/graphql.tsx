@@ -693,7 +693,12 @@ export type DepartmentsQuery = { __typename?: "Query" } & {
       "totalCount"
     > & {
         nodes: Maybe<
-          Array<{ __typename?: "Department" } & Pick<Department, "id" | "name">>
+          Array<
+            { __typename?: "Department" } & Pick<
+              Department,
+              "id" | "name" | "description"
+            >
+          >
         >;
       }
   >;
@@ -758,6 +763,44 @@ export type ConstantsQuery = { __typename?: "Query" } & {
   >;
 };
 
+export type CreateDepartmentTeamMutationVariables = {
+  input: CreateDepartmentTeamInput;
+};
+
+export type CreateDepartmentTeamMutation = { __typename?: "Mutation" } & {
+  createDepartmentTeam: { __typename?: "CreateDepartmentTeamResponse" } & {
+    departmentTeam: { __typename?: "DepartmentTeam" } & Pick<
+      DepartmentTeam,
+      "id"
+    >;
+  };
+};
+
+export type DeleteDepartmentTeamMutationVariables = {
+  input: DeleteDepartmentTeamInput;
+};
+
+export type DeleteDepartmentTeamMutation = { __typename?: "Mutation" } & {
+  deleteDepartmentTeam: { __typename?: "DeleteDepartmentTeamResponse" } & Pick<
+    DeleteDepartmentTeamResponse,
+    "isDeleted"
+  >;
+};
+
+export type TeamDetailQueryVariables = {
+  id: Scalars["Int"];
+};
+
+export type TeamDetailQuery = { __typename?: "Query" } & {
+  team: Maybe<
+    { __typename?: "Team" } & Pick<Team, "id" | "name" | "description"> & {
+        departments: Maybe<
+          Array<{ __typename?: "Department" } & Pick<Department, "id" | "name">>
+        >;
+      }
+  >;
+};
+
 export type TeamQueryVariables = {
   id: Scalars["Int"];
 };
@@ -799,16 +842,7 @@ export type TeamsQuery = { __typename?: "Query" } & {
     { __typename?: "TeamsConnection" } & Pick<TeamsConnection, "totalCount"> & {
         nodes: Maybe<
           Array<
-            { __typename?: "Team" } & Pick<Team, "id" | "name"> & {
-                departments: Maybe<
-                  Array<
-                    { __typename?: "Department" } & Pick<
-                      Department,
-                      "id" | "name"
-                    >
-                  >
-                >;
-              }
+            { __typename?: "Team" } & Pick<Team, "id" | "name" | "description">
           >
         >;
       }
@@ -1724,6 +1758,7 @@ export const DepartmentsDocument = gql`
       nodes {
         id
         name
+        description
       }
     }
   }
@@ -2103,6 +2138,245 @@ export type ConstantsQueryResult = ApolloReactCommon.QueryResult<
   ConstantsQuery,
   ConstantsQueryVariables
 >;
+export const CreateDepartmentTeamDocument = gql`
+  mutation CreateDepartmentTeam($input: CreateDepartmentTeamInput!) {
+    createDepartmentTeam(input: $input) {
+      departmentTeam {
+        id
+      }
+    }
+  }
+`;
+export type CreateDepartmentTeamMutationFn = ApolloReactCommon.MutationFunction<
+  CreateDepartmentTeamMutation,
+  CreateDepartmentTeamMutationVariables
+>;
+export type CreateDepartmentTeamComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<
+    CreateDepartmentTeamMutation,
+    CreateDepartmentTeamMutationVariables
+  >,
+  "mutation"
+>;
+
+export const CreateDepartmentTeamComponent = (
+  props: CreateDepartmentTeamComponentProps
+) => (
+  <ApolloReactComponents.Mutation<
+    CreateDepartmentTeamMutation,
+    CreateDepartmentTeamMutationVariables
+  >
+    mutation={CreateDepartmentTeamDocument}
+    {...props}
+  />
+);
+
+export type CreateDepartmentTeamProps<
+  TChildProps = {}
+> = ApolloReactHoc.MutateProps<
+  CreateDepartmentTeamMutation,
+  CreateDepartmentTeamMutationVariables
+> &
+  TChildProps;
+export function withCreateDepartmentTeam<TProps, TChildProps = {}>(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    CreateDepartmentTeamMutation,
+    CreateDepartmentTeamMutationVariables,
+    CreateDepartmentTeamProps<TChildProps>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    CreateDepartmentTeamMutation,
+    CreateDepartmentTeamMutationVariables,
+    CreateDepartmentTeamProps<TChildProps>
+  >(CreateDepartmentTeamDocument, {
+    alias: "withCreateDepartmentTeam",
+    ...operationOptions
+  });
+}
+
+export function useCreateDepartmentTeamMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    CreateDepartmentTeamMutation,
+    CreateDepartmentTeamMutationVariables
+  >
+) {
+  return ApolloReactHooks.useMutation<
+    CreateDepartmentTeamMutation,
+    CreateDepartmentTeamMutationVariables
+  >(CreateDepartmentTeamDocument, baseOptions);
+}
+export type CreateDepartmentTeamMutationHookResult = ReturnType<
+  typeof useCreateDepartmentTeamMutation
+>;
+export type CreateDepartmentTeamMutationResult = ApolloReactCommon.MutationResult<
+  CreateDepartmentTeamMutation
+>;
+export type CreateDepartmentTeamMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  CreateDepartmentTeamMutation,
+  CreateDepartmentTeamMutationVariables
+>;
+export const DeleteDepartmentTeamDocument = gql`
+  mutation DeleteDepartmentTeam($input: DeleteDepartmentTeamInput!) {
+    deleteDepartmentTeam(input: $input) {
+      isDeleted
+    }
+  }
+`;
+export type DeleteDepartmentTeamMutationFn = ApolloReactCommon.MutationFunction<
+  DeleteDepartmentTeamMutation,
+  DeleteDepartmentTeamMutationVariables
+>;
+export type DeleteDepartmentTeamComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<
+    DeleteDepartmentTeamMutation,
+    DeleteDepartmentTeamMutationVariables
+  >,
+  "mutation"
+>;
+
+export const DeleteDepartmentTeamComponent = (
+  props: DeleteDepartmentTeamComponentProps
+) => (
+  <ApolloReactComponents.Mutation<
+    DeleteDepartmentTeamMutation,
+    DeleteDepartmentTeamMutationVariables
+  >
+    mutation={DeleteDepartmentTeamDocument}
+    {...props}
+  />
+);
+
+export type DeleteDepartmentTeamProps<
+  TChildProps = {}
+> = ApolloReactHoc.MutateProps<
+  DeleteDepartmentTeamMutation,
+  DeleteDepartmentTeamMutationVariables
+> &
+  TChildProps;
+export function withDeleteDepartmentTeam<TProps, TChildProps = {}>(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    DeleteDepartmentTeamMutation,
+    DeleteDepartmentTeamMutationVariables,
+    DeleteDepartmentTeamProps<TChildProps>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    DeleteDepartmentTeamMutation,
+    DeleteDepartmentTeamMutationVariables,
+    DeleteDepartmentTeamProps<TChildProps>
+  >(DeleteDepartmentTeamDocument, {
+    alias: "withDeleteDepartmentTeam",
+    ...operationOptions
+  });
+}
+
+export function useDeleteDepartmentTeamMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    DeleteDepartmentTeamMutation,
+    DeleteDepartmentTeamMutationVariables
+  >
+) {
+  return ApolloReactHooks.useMutation<
+    DeleteDepartmentTeamMutation,
+    DeleteDepartmentTeamMutationVariables
+  >(DeleteDepartmentTeamDocument, baseOptions);
+}
+export type DeleteDepartmentTeamMutationHookResult = ReturnType<
+  typeof useDeleteDepartmentTeamMutation
+>;
+export type DeleteDepartmentTeamMutationResult = ApolloReactCommon.MutationResult<
+  DeleteDepartmentTeamMutation
+>;
+export type DeleteDepartmentTeamMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  DeleteDepartmentTeamMutation,
+  DeleteDepartmentTeamMutationVariables
+>;
+export const TeamDetailDocument = gql`
+  query TeamDetail($id: Int!) {
+    team(id: $id) {
+      id
+      name
+      description
+      departments {
+        id
+        name
+      }
+    }
+  }
+`;
+export type TeamDetailComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<
+    TeamDetailQuery,
+    TeamDetailQueryVariables
+  >,
+  "query"
+> &
+  ({ variables: TeamDetailQueryVariables; skip?: boolean } | { skip: boolean });
+
+export const TeamDetailComponent = (props: TeamDetailComponentProps) => (
+  <ApolloReactComponents.Query<TeamDetailQuery, TeamDetailQueryVariables>
+    query={TeamDetailDocument}
+    {...props}
+  />
+);
+
+export type TeamDetailProps<TChildProps = {}> = ApolloReactHoc.DataProps<
+  TeamDetailQuery,
+  TeamDetailQueryVariables
+> &
+  TChildProps;
+export function withTeamDetail<TProps, TChildProps = {}>(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    TeamDetailQuery,
+    TeamDetailQueryVariables,
+    TeamDetailProps<TChildProps>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    TeamDetailQuery,
+    TeamDetailQueryVariables,
+    TeamDetailProps<TChildProps>
+  >(TeamDetailDocument, {
+    alias: "withTeamDetail",
+    ...operationOptions
+  });
+}
+
+export function useTeamDetailQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    TeamDetailQuery,
+    TeamDetailQueryVariables
+  >
+) {
+  return ApolloReactHooks.useQuery<TeamDetailQuery, TeamDetailQueryVariables>(
+    TeamDetailDocument,
+    baseOptions
+  );
+}
+export function useTeamDetailLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    TeamDetailQuery,
+    TeamDetailQueryVariables
+  >
+) {
+  return ApolloReactHooks.useLazyQuery<
+    TeamDetailQuery,
+    TeamDetailQueryVariables
+  >(TeamDetailDocument, baseOptions);
+}
+
+export type TeamDetailQueryHookResult = ReturnType<typeof useTeamDetailQuery>;
+export type TeamDetailQueryResult = ApolloReactCommon.QueryResult<
+  TeamDetailQuery,
+  TeamDetailQueryVariables
+>;
 export const TeamDocument = gql`
   query Team($id: Int!) {
     team(id: $id) {
@@ -2333,10 +2607,7 @@ export const TeamsDocument = gql`
       nodes {
         id
         name
-        departments {
-          id
-          name
-        }
+        description
       }
     }
   }
