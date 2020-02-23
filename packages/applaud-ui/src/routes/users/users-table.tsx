@@ -54,7 +54,6 @@ class UsersTable extends React.Component<Props> {
           prev: any,
           { fetchMoreResult }: { fetchMoreResult?: any }
         ) => {
-          console.log("Merge data");
           if (!fetchMoreResult) {
             return prev;
           }
