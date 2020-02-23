@@ -14,6 +14,7 @@ import { TeamService } from "../internal/services/team-service";
 import { groupBy } from "../../helper/groupBy";
 import { ConstantService } from "../internal/services/constant-service";
 import { CONSTANTS } from "../internal/db/models/constant";
+import { getLogger } from "../../logger";
 
 export interface Viewer {
   userId: number;
@@ -31,6 +32,8 @@ interface GetViewerOptions {
   jwtToken: string;
   requestId?: string;
 }
+
+const logger = getLogger("viewer");
 
 export const getViewer = async (options: GetViewerOptions): Promise<Viewer> => {
   const jwtSecret = Config.getJwtSecret();
@@ -75,19 +78,37 @@ export const getViewer = async (options: GetViewerOptions): Promise<Viewer> => {
       search: CONSTANTS.TEAM_MULTIPLIER
     })
   ]);
+  let coinReceivedList = [];
+  if (coinsReceived && coinsReceived.length > 0) {
+    coinReceivedList = coinsReceived ? groupBy(coinsReceived, "id") : {};
+  } else {
+    let coinsWithoutTeam = await new CoinReceivedService(systemContext).getAll({
+      allocatedToUserId: user.id
+    });
+    coinReceivedList = coinsWithoutTeam ? groupBy(coinsWithoutTeam, "id") : {};
+  }
 
   const userTeamsList = userTeams ? userTeams.map(team => team.id) : [];
-  const coinReceivedList = coinsReceived ? groupBy(coinsReceived, "id") : {};
 
   let coinsReceivedBalance = 0;
 
+  logger.debug(coinsReceived);
+  logger.debug(coinReceivedList);
+
   coinsReceivedBalance = Object.values(coinReceivedList).reduce(
     (result: number, data: any) => {
+      logger.debug(data);
+      logger.debug(data.teamIds);
+      logger.debug(data.teamIds[0]);
       if (data) {
         const overlappingTeams = data.teamIds.filter((value: number) =>
           userTeamsList.includes(value)
         );
-        if (overlappingTeams && overlappingTeams.length > 0) {
+        logger.debug(overlappingTeams);
+        if (
+          (overlappingTeams && overlappingTeams.length > 0) ||
+          (data.teamIds && data.teamIds[0] === undefined)
+        ) {
           return result + data.balance;
         } else {
           return result + data.balance * parseInt(constant?.value ?? "1", 10);
@@ -97,6 +118,8 @@ export const getViewer = async (options: GetViewerOptions): Promise<Viewer> => {
     },
     coinsReceivedBalance
   );
+
+  logger.debug(coinsReceivedBalance);
 
   const isAdmin = !!(
     userRoles && userRoles.find(x => x.roleId === ROLES.ADMIN)
