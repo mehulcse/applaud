@@ -21,6 +21,7 @@ import {
   SCROLL_THRESHOLD
 } from "../../constants/constants";
 import { StyledTableWrapper } from "../../components/table-wrapper";
+import AppLink from "../../components/app-link";
 
 interface Props {
   queryResult: TeamsQueryResult;
@@ -78,8 +79,10 @@ function TeamsTable(props: Props) {
     if (data?.teams?.nodes?.length) {
       return data.teams.nodes.map((team: any, index: number) => (
         <TableRow key={team.id} hover id={team.id}>
-          <TableCell>{team.id}</TableCell>
-          <TableCell>{team.name}</TableCell>
+          <TableCell>
+            <AppLink to={`/teams/${team.id}`}>{team.name}</AppLink>
+          </TableCell>
+          <TableCell>{team.description}</TableCell>
           <TableCell align="center">
             <Tooltip title="Edit">
               <IconButton
@@ -119,10 +122,10 @@ function TeamsTable(props: Props) {
         <TableHead>
           <TableRow>
             <TableCell>
-              <strong>Id</strong>
+              <strong>Name</strong>
             </TableCell>
             <TableCell>
-              <strong>Name</strong>
+              <strong>Description</strong>
             </TableCell>
             <TableCell align="center">
               <strong>Action</strong>

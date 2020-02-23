@@ -9,6 +9,7 @@ interface Props {
   onDepartmentsSelected: (departmentIds: number[]) => void;
   placeholder?: string;
   isMulti?: boolean;
+  isDisabled?: boolean;
 }
 
 function DepartmentSelectorContainer({
@@ -16,7 +17,8 @@ function DepartmentSelectorContainer({
   label,
   onDepartmentsSelected,
   placeholder,
-  isMulti = false
+  isMulti = false,
+  isDisabled = false
 }: Props) {
   const [departmentSearch, setDepartmentSearch] = useState("");
 
@@ -76,9 +78,10 @@ function DepartmentSelectorContainer({
     <AutoComplete
       suggestions={departments}
       isMulti={isMulti}
+      isDisabled={isDisabled}
       value={selectedDepartments}
       placeholder={placeholder || "Select Department"}
-      id="user-select"
+      id="department-select"
       label={label}
       isLoading={selectedDepartmentsResult.loading || departmentsResult.loading}
       onInputChange={onInputChange}

@@ -75,9 +75,6 @@ function UsersTable(props: Props) {
       return data.users.nodes.map((user: any, index: number) => (
         <TableRow key={user.id} hover id={user.id}>
           <TableCell>
-            <AppLink to={`/users/${user.id}`}>{user.id}</AppLink>
-          </TableCell>
-          <TableCell>
             <AppLink to={`/users/${user.id}`}>{user.fullName}</AppLink>
           </TableCell>
           <TableCell>{user.email}</TableCell>
@@ -86,7 +83,7 @@ function UsersTable(props: Props) {
               user.teams.length > 0 &&
               user.teams.map((team: Team, index: number) => (
                 <Typography variant="body2" key={index}>
-                  {team.name}
+                  <AppLink to={`/teams/${team.id}`}>{team.name}</AppLink>
                 </Typography>
               ))}
           </TableCell>
@@ -95,7 +92,7 @@ function UsersTable(props: Props) {
     } else if (error) {
       return (
         <TableRow>
-          <TableCell colSpan={5}>
+          <TableCell colSpan={3}>
             <ErrorCard error={error} />
           </TableCell>
         </TableRow>
@@ -103,7 +100,7 @@ function UsersTable(props: Props) {
     }
     return (
       <TableRow>
-        <TableCell colSpan={5}>
+        <TableCell colSpan={3}>
           <NoDataAvailable />
         </TableCell>
       </TableRow>
@@ -115,9 +112,6 @@ function UsersTable(props: Props) {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>
-              <strong>Id</strong>
-            </TableCell>
             <TableCell>
               <strong>Name</strong>
             </TableCell>

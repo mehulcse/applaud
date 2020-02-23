@@ -85,8 +85,8 @@ function DepartmentsTable(props: Props) {
     if (data?.departments?.nodes?.length) {
       return data.departments.nodes.map((department: any, index: number) => (
         <TableRow key={department.id} hover id={department.id}>
-          <TableCell>{department.id}</TableCell>
           <TableCell>{department.name}</TableCell>
+          <TableCell>{department.description}</TableCell>
           <TableCell align="center">
             <Tooltip title="Edit">
               <IconButton
@@ -126,10 +126,10 @@ function DepartmentsTable(props: Props) {
         <TableHead>
           <TableRow>
             <TableCell>
-              <strong>Id</strong>
+              <strong>Name</strong>
             </TableCell>
             <TableCell>
-              <strong>Name</strong>
+              <strong>Description</strong>
             </TableCell>
             <TableCell align="center">
               <strong>Action</strong>
