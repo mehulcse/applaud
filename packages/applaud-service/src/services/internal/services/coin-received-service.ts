@@ -219,7 +219,7 @@ export class CoinReceivedService {
             text: `<@${allocatedToUser.email.substring(
               0,
               allocatedToUser.email.indexOf("@")
-            )}>, You have been applauded by a fellow :tech9:er \n\n > ${
+            )}>, You have been applauded by a fellow :tech9:er \n\n> ${
               validatedInput.message
             }\n\nLogin to <http://thegeekstribe.com/dashboard|Applaud> \n\n`
           },

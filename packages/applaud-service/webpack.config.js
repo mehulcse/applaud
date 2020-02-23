@@ -59,6 +59,10 @@ module.exports = {
       {
         from: 'src/migrations',
         to: 'migrations',
+      },
+      {
+        from: 'src/migrationsData',
+        to: 'migrationsData',
       }
     ])
   ]

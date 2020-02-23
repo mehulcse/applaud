@@ -71,7 +71,8 @@ const useStyles = makeStyles(() =>
       '&::-webkit-scrollbar': {
         width: 0,
         background: 'transparent'
-      }
+      },
+      maxWidth: '100%'
     },
     bar: {
       boxShadow: "none"

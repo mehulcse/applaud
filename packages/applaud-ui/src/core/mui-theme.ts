@@ -16,7 +16,7 @@ export const themeOptions: ThemeOptions = {
   typography: {
     // useNextVariants: true,
     fontFamily:
-      'Fira Mono, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
+      'Comfortaa, Fira Mono, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
     fontWeightRegular: 400,
     fontWeightMedium: 500,
     fontWeightBold: 700
@@ -28,10 +28,16 @@ export const themeOptions: ThemeOptions = {
       paper: COLORS.paperBackground
     },
     primary: {
-      main: COLORS.primary
+      main: COLORS.primary,
+      light: '#ffff5a',
+      dark: '#c7cc00',
+      // contrastText: '#000'
     },
     secondary: {
-      main: COLORS.secondary
+      main: COLORS.secondary,
+      light: '#ffffff',
+      dark: '#9b9b9b',
+      // contrastText: '#000'
     }
   }
   // palette: {
