@@ -162,7 +162,6 @@ class PageLayout extends Component<Props, State> {
           justifyContent="space-between"
         >
           <Box width={drawerWidth}>
-            <Divider />
             <MainMenu />
           </Box>
           {this.renderProfile()}

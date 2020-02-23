@@ -21,7 +21,7 @@ const up = async (knex) => {
     });
     await knex("userRoles").insert({
       userId: user.id,
-      roleId: "super_admin"
+      roleId: user.role
     });
     await knex("coinBalance").insert({
       userId: user.id,

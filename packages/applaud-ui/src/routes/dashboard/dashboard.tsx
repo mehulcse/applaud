@@ -9,17 +9,22 @@ import {LOADER_TYPE} from "../../constants/constants";
 import ApplaudCard from "./applaud-card";
 import "./dashboard.css"
 
+const CARDS_LIMIT = 1000;
+
 const Dashboard = () => {
   const authContext = useContext(AuthContext);
   const [hideGifs, setHideGifs] = useState(false);
   const applaudStreamQuery = useApplaudQuery({
-    variables: {},
+    variables: {
+      limit: CARDS_LIMIT
+    },
     fetchPolicy: "network-only",
     notifyOnNetworkStatusChange: true
   });
 
   const applaudReceivedQuery = useApplaudQuery({
     variables: {
+      limit: CARDS_LIMIT,
       allocatedToUserId:
         authContext && authContext.user && authContext.user.id
           ? authContext.user.id
@@ -31,6 +36,7 @@ const Dashboard = () => {
 
   const applaudGivenQuery = useApplaudQuery({
     variables: {
+      limit: CARDS_LIMIT,
       allocatedByUserId:
         authContext && authContext.user && authContext.user.id
           ? authContext.user.id

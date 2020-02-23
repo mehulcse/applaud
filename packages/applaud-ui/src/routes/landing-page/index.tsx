@@ -17,7 +17,7 @@ import logo from "../../logo.svg";
 const content = [
   {
     title: "When a simple thank you is not enough, Applaud them ",
-    byline: "Make recognition fun. Love your work.",
+    byline: "Make recognition fun. Love your work. #TechHappily",
     image: "homepage-images/coworkers.svg",
     imageLeft: true
   },
