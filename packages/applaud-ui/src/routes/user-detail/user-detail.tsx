@@ -15,6 +15,8 @@ import { useUserDetailQuery } from "../../generated/graphql";
 import NoDataDetailsCard from "../../components/no-data-details-card";
 import AppIcon from "../../components/app-icon";
 import UserTeams from "./user-teams";
+import Loader from "../../components/loader";
+import { LOADER_TYPE } from "../../constants/constants";
 
 export default function UserDetail() {
   const { id } = useParams();
@@ -27,13 +29,13 @@ export default function UserDetail() {
     notifyOnNetworkStatusChange: true
   });
 
-  if (queryResult.error) {
+  if (!queryResult.loading && queryResult.error) {
     return <NoDataDetailsCard isError error={queryResult.error} />;
   }
-  if (queryResult.loading) {
-    return <NoDataDetailsCard isLoading />;
-  }
-  if (!queryResult || !queryResult.data || !queryResult.data.user) {
+  if (
+    !queryResult ||
+    (!queryResult.loading && (!queryResult.data || !queryResult.data.user))
+  ) {
     return <NoDataDetailsCard />;
   }
 
@@ -77,6 +79,7 @@ export default function UserDetail() {
       <PaperBox>
         {renderUserDetail()}
         {renderTeams()}
+        {queryResult.loading && <Loader type={LOADER_TYPE.fullView} />}
       </PaperBox>
     </PageLayout>
   );
