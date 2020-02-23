@@ -29,7 +29,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0",
     "react-select": "^3.0.8",
-    "react-star-rating-component": "^1.4.1",
+    "react-star-ratings": "^2.3.0",
     "react-svg": "^11.0.10",
     "typescript": "^3.7.4"
   },
@@ -64,7 +64,6 @@
     "@svgr/webpack": "^5.1.0",
     "@types/graphql": "^14.5.0",
     "@types/react-select": "^3.0.10",
-    "@types/react-star-rating-component": "^1.4.0",
     "lint-staged": "^10.0.7",
     "prettier": "^1.19.1",
     "tslint": "^6.0.0"

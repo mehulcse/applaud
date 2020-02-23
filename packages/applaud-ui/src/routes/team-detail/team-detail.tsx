@@ -8,18 +8,18 @@ import {
   Avatar,
   ListItemText
 } from "@material-ui/core";
-import { faUser, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faPeopleCarry, faList } from "@fortawesome/free-solid-svg-icons";
 import PageLayout from "../../components/page-layout";
 import PaperBox from "../../components/paper-box";
-import { useUserDetailQuery } from "../../generated/graphql";
+import { useTeamDetailQuery } from "../../generated/graphql";
 import NoDataDetailsCard from "../../components/no-data-details-card";
 import AppIcon from "../../components/app-icon";
-import UserTeams from "./user-teams";
+import TeamDepartment from "./team-department";
 
-export default function UserDetail() {
+export default function TeamDetail() {
   const { id } = useParams();
 
-  const queryResult = useUserDetailQuery({
+  const queryResult = useTeamDetailQuery({
     variables: {
       id: parseInt(id ?? "0", 10)
     },
@@ -33,32 +33,32 @@ export default function UserDetail() {
   if (queryResult.loading) {
     return <NoDataDetailsCard isLoading />;
   }
-  if (!queryResult || !queryResult.data || !queryResult.data.user) {
+  if (!queryResult || !queryResult.data || !queryResult.data.team) {
     return <NoDataDetailsCard />;
   }
 
-  function renderUserDetail() {
+  function renderTeamDetail() {
     return (
       <Grid item xs={12} sm container>
         <List>
           <ListItem>
             <ListItemAvatar>
               <Avatar>
-                <AppIcon icon={faUser} />
+                <AppIcon icon={faPeopleCarry} />
               </Avatar>
             </ListItemAvatar>
             <ListItemText secondary="Name">
-              {queryResult?.data?.user?.fullName}
+              {queryResult?.data?.team?.name}
             </ListItemText>
           </ListItem>
           <ListItem>
             <ListItemAvatar>
               <Avatar>
-                <AppIcon icon={faEnvelope} />
+                <AppIcon icon={faList} />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText secondary="Email">
-              {queryResult?.data?.user?.email}
+            <ListItemText secondary="Description">
+              {queryResult?.data?.team?.description}
             </ListItemText>
           </ListItem>
         </List>
@@ -66,17 +66,20 @@ export default function UserDetail() {
     );
   }
 
-  function renderTeams() {
+  function renderDepartment() {
     return (
-      <UserTeams queryResult={queryResult} userId={parseInt(id ?? "0", 10)} />
+      <TeamDepartment
+        queryResult={queryResult}
+        teamId={parseInt(id ?? "0", 10)}
+      />
     );
   }
 
   return (
-    <PageLayout pageTitle="User Details">
+    <PageLayout pageTitle="Team Details">
       <PaperBox>
-        {renderUserDetail()}
-        {renderTeams()}
+        {renderTeamDetail()}
+        {renderDepartment()}
       </PaperBox>
     </PageLayout>
   );

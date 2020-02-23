@@ -4,10 +4,7 @@ query Teams($search: String, $limit: Int, $offset: Int) {
         nodes {
             id
             name
-            departments{
-                id
-                name
-            }
+            description
         }
     }
 }
