@@ -22,7 +22,8 @@ export default function Teams() {
       limit: PAGE_LIMIT,
       offset: 0
     },
-    fetchPolicy: "network-only"
+    fetchPolicy: "network-only",
+    notifyOnNetworkStatusChange: true
   });
 
   function onChange(value: string) {

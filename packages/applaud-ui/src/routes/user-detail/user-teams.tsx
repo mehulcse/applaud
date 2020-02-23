@@ -19,6 +19,7 @@ import theme from "../../core/mui-theme";
 import { openSnackbar } from "../../components/notifier";
 import Loader from "../../components/loader";
 import { LOADER_TYPE } from "../../constants/constants";
+import AppLink from "../../components/app-link";
 
 interface Props {
   queryResult: UserDetailQueryResult;
@@ -156,7 +157,7 @@ export default function UserTeams(props: Props) {
           {teams.map((team: any) => (
             <ListItem>
               <ListItemText style={{ marginRight: theme.spacing(1) }}>
-                {team.name}
+                <AppLink to={`/teams/${team.id}`}>{team.name}</AppLink>
               </ListItemText>
               <ListItemIcon style={{ cursor: "pointer" }}>
                 <AppIcon
