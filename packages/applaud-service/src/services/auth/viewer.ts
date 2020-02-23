@@ -82,7 +82,9 @@ export const getViewer = async (options: GetViewerOptions): Promise<Viewer> => {
   if (coinsReceived && coinsReceived.length > 0) {
     coinReceivedList = coinsReceived ? groupBy(coinsReceived, "id") : {};
   } else {
-    let coinsWithoutTeam = await new CoinReceivedService(systemContext).getAll({
+    const coinsWithoutTeam = await new CoinReceivedService(
+      systemContext
+    ).getAll({
       allocatedToUserId: user.id
     });
     coinReceivedList = coinsWithoutTeam ? groupBy(coinsWithoutTeam, "id") : {};
