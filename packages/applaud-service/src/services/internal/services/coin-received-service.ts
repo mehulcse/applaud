@@ -21,6 +21,7 @@ import Config from "../../../config";
 export interface CoinReceivedOptions extends PaginationArgs {
   allocatedToUserId?: number;
   allocatedByUserId?: number;
+  withTeam?: boolean;
 }
 
 export interface CreateCoinReceivedInput {
@@ -70,6 +71,23 @@ export class CoinReceivedService {
 
     if (options.allocatedByUserId) {
       query.where({ allocatedByUserId: options.allocatedByUserId });
+    }
+
+    if (options.withTeam) {
+      query
+        .join(
+          "userTeams",
+          "userTeams.userId",
+          "=",
+          "coinsReceived.allocatedByUserId"
+        )
+        .select(
+          "userTeams.teamId",
+          "coinsReceived.allocatedByUserId",
+          "coinsReceived.allocatedToUserId",
+          "coinsReceived.balance",
+          "coinsReceived.id"
+        );
     }
 
     switch (options.sort) {

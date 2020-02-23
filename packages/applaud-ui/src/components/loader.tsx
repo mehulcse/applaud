@@ -86,7 +86,7 @@ const CardLoader = () => (
     height={80}
     width={400}
     speed={2}
-    primaryColor={theme.palette.grey[800]}
+    primaryColor={theme.palette.background.paper}
     secondaryColor={theme.palette.grey[900]}
   >
     <rect x="0" y="0" rx="3" ry="3" width="100%" height="150" />
