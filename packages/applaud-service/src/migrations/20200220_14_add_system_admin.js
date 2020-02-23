@@ -1,6 +1,6 @@
-import adminUsers from "../admin-users";
-import appRoles from "../app-roles";
-import appConstants from "../app-constants";
+const adminUsers = require("../admin-users");
+const appRoles = require("../app-roles");
+const appConstants = require("../app-constants");
 
 const up = async (knex) => {
   // insert roles
