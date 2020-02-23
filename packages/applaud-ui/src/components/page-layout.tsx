@@ -1,9 +1,6 @@
-import React, {Component} from "react";
-import {styled, withStyles} from "@material-ui/core/styles";
+import React, { Component } from "react";
+import { styled, withStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import MainMenu from "./main-menu/main-menu";
 import {
@@ -16,28 +13,14 @@ import {
   MenuItem,
   Menu
 } from "@material-ui/core";
-import {MenuProps} from "@material-ui/core/Menu";
-import {faUser} from "@fortawesome/free-solid-svg-icons";
-import clap from '../clap.svg'
-import theme from "../core/mui-theme";
+import { MenuProps } from "@material-ui/core/Menu";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import clap from "../clap.svg";
 import AppIcon from "../components/app-icon";
-import {AuthContext} from "../core/auth-manager";
-import {AuthContextValue} from "../core/auth-manager/auth-manager";
+import { AuthContext } from "../core/auth-manager";
+import { AuthContextValue } from "../core/auth-manager/auth-manager";
 
 const drawerWidth = 250;
-
-const StyledAppBar = styled(AppBar)({
-  boxshadow: "none",
-  position: "fixed"
-});
-
-const StyledToolbar = styled(Box)({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  padding: "0 8px",
-  ...theme.mixins.toolbar
-});
 
 const StyledMain = styled(Box)({
   flexGrow: 1,
@@ -100,8 +83,10 @@ class PageLayout extends Component<Props, State> {
   renderProfile() {
     const user = (this.context as AuthContextValue).user;
     const userName = user ? `${user.firstName} ${user.lastName}` : "-";
-    const coinBalance = (this.context as AuthContextValue)?.coinBalance?.balance ?? 0
-    const coinsReceivedBalance = (this.context as AuthContextValue)?.coinsReceivedBalance ?? 0
+    const coinBalance =
+      (this.context as AuthContextValue)?.coinBalance?.balance ?? 0;
+    const coinsReceivedBalance =
+      (this.context as AuthContextValue)?.coinsReceivedBalance ?? 0;
 
     return (
       <List>
@@ -132,13 +117,13 @@ class PageLayout extends Component<Props, State> {
         <ListItem button>
           <ListItemAvatar>
             <Avatar>
-              <AppIcon icon={faUser}/>
+              <AppIcon icon={faUser} />
             </Avatar>
           </ListItemAvatar>
           <ListItemText
             aria-controls="user-menu"
             aria-haspopup="true"
-            style={{position: "relative"}}
+            style={{ position: "relative" }}
             onClick={this.handleClick}
             secondary="Current User"
           >
@@ -158,11 +143,11 @@ class PageLayout extends Component<Props, State> {
   }
 
   render() {
-    const {children, pageTitle, appBarContent} = this.props;
+    const { children } = this.props;
 
     return (
       <Box component="div" display="flex" height="100vh" width="100%">
-        <CssBaseline/>
+        <CssBaseline />
         <Box
           flexGrow={0}
           display="flex"
@@ -171,8 +156,8 @@ class PageLayout extends Component<Props, State> {
           justifyContent="space-between"
         >
           <Box width={drawerWidth}>
-            <Divider/>
-            <MainMenu/>
+            <Divider />
+            <MainMenu />
           </Box>
           {this.renderProfile()}
         </Box>

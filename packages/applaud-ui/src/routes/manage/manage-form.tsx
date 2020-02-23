@@ -1,12 +1,16 @@
-import React, {useContext, useState, useEffect} from "react";
-import {Grid, TextField, Button, Typography, Box} from "@material-ui/core";
+import React, { useContext, useState, useEffect } from "react";
+import { Grid, TextField, Button, Typography, Box } from "@material-ui/core";
 import PaperBox from "../../components/paper-box";
-import {useUpdateCoinBalanceMutation, useConstantsQuery, useUpdateConstantsMutation} from "../../generated/graphql";
-import {openSnackbar} from "../../components/notifier";
-import {AuthContext} from "../../core/auth-manager";
+import {
+  useUpdateCoinBalanceMutation,
+  useConstantsQuery,
+  useUpdateConstantsMutation
+} from "../../generated/graphql";
+import { openSnackbar } from "../../components/notifier";
+import { AuthContext } from "../../core/auth-manager";
 import theme from "../../core/mui-theme";
 import Loader from "../../components/loader";
-import {CONSTANTS, LOADER_TYPE, PAGE_LIMIT} from "../../constants/constants";
+import { CONSTANTS, LOADER_TYPE, PAGE_LIMIT } from "../../constants/constants";
 
 function ManageForm() {
   const context = useContext(AuthContext);
@@ -14,7 +18,7 @@ function ManageForm() {
   const [teamMultiplier, setTeamMultiplier] = useState();
   const [updateCoins, updateCoinsResult] = useUpdateCoinBalanceMutation();
   const [updateConstants, updateConstantsResult] = useUpdateConstantsMutation();
-  const {data, loading, refetch} = useConstantsQuery({
+  const { data, loading, refetch } = useConstantsQuery({
     variables: {
       limit: PAGE_LIMIT,
       offset: 0
@@ -30,7 +34,9 @@ function ManageForm() {
 
   const getTeamMultiplier = () => {
     if (data?.constants?.nodes) {
-      return data.constants.nodes.find(constant => constant.name === CONSTANTS.TEAM_MULTIPLIER);
+      return data.constants.nodes.find(
+        constant => constant.name === CONSTANTS.TEAM_MULTIPLIER
+      );
     }
     return {
       value: 0,
@@ -130,12 +136,7 @@ function ManageForm() {
   return (
     <PaperBox>
       <Box m={4}>
-        <Grid
-          container
-          spacing={0}
-          xs={12}
-          justify="space-between"
-        >
+        <Grid container spacing={0} xs={12} justify="space-between">
           <Grid xs={8} item>
             <TextField
               value={quantity}
@@ -154,7 +155,7 @@ function ManageForm() {
             <Button
               variant="contained"
               color="primary"
-              style={{marginRight: theme.spacing(1)}}
+              style={{ marginRight: theme.spacing(1) }}
               onClick={onSend}
               disabled={!quantity}
             >
@@ -164,12 +165,7 @@ function ManageForm() {
         </Grid>
       </Box>
       <Box m={4}>
-        <Grid
-          container
-          spacing={0}
-          xs={12}
-          justify="space-between"
-        >
+        <Grid container spacing={0} xs={12} justify="space-between">
           <Grid xs={8} item>
             <TextField
               value={teamMultiplier}
@@ -180,14 +176,15 @@ function ManageForm() {
               variant="outlined"
             />
             <Typography variant="caption">
-              The Total claps received by an employee from other teams will be multiplied by this number
+              The Total claps received by an employee from other teams will be
+              multiplied by this number
             </Typography>
           </Grid>
           <Grid xs={2} item>
             <Button
               variant="contained"
               color="primary"
-              style={{marginRight: theme.spacing(1)}}
+              style={{ marginRight: theme.spacing(1) }}
               onClick={onSave}
               disabled={!teamMultiplier}
             >
@@ -196,7 +193,11 @@ function ManageForm() {
           </Grid>
         </Grid>
       </Box>
-      {(loading || updateCoinsResult.loading || updateConstantsResult.loading) && <Loader type={LOADER_TYPE.fullView}/>}
+      {(loading ||
+        updateCoinsResult.loading ||
+        updateConstantsResult.loading) && (
+        <Loader type={LOADER_TYPE.fullView} />
+      )}
     </PaperBox>
   );
 }
