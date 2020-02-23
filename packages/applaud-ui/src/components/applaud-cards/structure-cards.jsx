@@ -52,7 +52,6 @@ const StructureCards = ({ data, onClick, selected }) => {
         color="textSecondary"
         gutterBottom
         style={{
-          fontFamily: "Griffy",
           color: "#3FBEED",
           fontWeight: "bold",
           fontSize: "16px"
