@@ -17,6 +17,8 @@ import AppIcon from "../../components/app-icon";
 import TeamSelectorContainer from "../../components/team-selector/team-selector";
 import theme from "../../core/mui-theme";
 import { openSnackbar } from "../../components/notifier";
+import Loader from "../../components/loader";
+import { LOADER_TYPE } from "../../constants/constants";
 
 interface Props {
   queryResult: UserDetailQueryResult;
@@ -29,9 +31,15 @@ export default function UserTeams(props: Props) {
 
   const [teamId, setTeamId] = useState<number>(0);
 
-  const [deleteUserTeam] = useDeleteUserTeamMutation();
+  const [
+    deleteUserTeam,
+    { loading: deleteLoading }
+  ] = useDeleteUserTeamMutation();
 
-  const [createUserTeam] = useCreateUserTeamMutation();
+  const [
+    createUserTeam,
+    { loading: createLoading }
+  ] = useCreateUserTeamMutation();
 
   async function onDelete(teamId: number) {
     if (userId && teamId) {
@@ -173,6 +181,9 @@ export default function UserTeams(props: Props) {
           <AppIcon icon={faPlus} onClick={onAdd} size="lg" />
         </Grid>
       </Grid>
+      {(deleteLoading || createLoading) && (
+        <Loader type={LOADER_TYPE.fullView} />
+      )}
     </Grid>
   );
 }

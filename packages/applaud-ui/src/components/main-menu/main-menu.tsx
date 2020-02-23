@@ -15,7 +15,8 @@ import {
   faUsers,
   faPeopleCarry,
   faStore,
-  faCog, faSignLanguage
+  faCog,
+  faSignLanguage
 } from "@fortawesome/free-solid-svg-icons";
 
 import AppLink from "../app-link";
@@ -31,7 +32,7 @@ const StyledListItemText = styled(ListItemText)({
 });
 
 const StyledFontAwesomeIcon = styled(FontAwesomeIcon)({
-  fontSize: "0.9rem",
+  fontSize: "0.9rem"
 });
 
 const useStyles = makeStyles(() =>
@@ -44,9 +45,9 @@ const useStyles = makeStyles(() =>
     },
     selected: {
       color: theme.palette.primary.main,
-      backgroundColor: 'rgba(255, 255, 255, 0.00) !important',
-      borderLeft: `2px solid ${theme.palette.primary.main}`,
-    },
+      backgroundColor: "rgba(255, 255, 255, 0.00) !important",
+      borderLeft: `2px solid ${theme.palette.primary.main}`
+    }
   })
 );
 
@@ -64,7 +65,11 @@ function MainMenuContent({ location }: { location: any }) {
         <img src={logo} alt="logo" className={classes.logo} />
       </ListItem>
       <AppLink to="/dashboard">
-        <ListItem button selected={basePath === "/dashboard"} className={basePath === "/dashboard" ? classes.selected : ''}>
+        <ListItem
+          button
+          selected={basePath === "/dashboard"}
+          className={basePath === "/dashboard" ? classes.selected : ""}
+        >
           <ListItemIcon>
             <StyledFontAwesomeIcon icon={faTachometerAlt} fixedWidth />
           </ListItemIcon>
@@ -72,7 +77,11 @@ function MainMenuContent({ location }: { location: any }) {
         </ListItem>
       </AppLink>
       <AppLink to="/applaud">
-        <ListItem button selected={basePath === "/applaud"} className={basePath === "/applaud" ? classes.selected : ''}>
+        <ListItem
+          button
+          selected={basePath === "/applaud"}
+          className={basePath === "/applaud" ? classes.selected : ""}
+        >
           {/*<ListItemIcon>*/}
           {/*  <img*/}
           {/*    alt="Applaud"*/}
@@ -89,7 +98,11 @@ function MainMenuContent({ location }: { location: any }) {
       {authContext && authContext.isAdmin && (
         <>
           <AppLink to="/users">
-            <ListItem button selected={basePath === "/users"} className={basePath === "/users" ? classes.selected : ''}>
+            <ListItem
+              button
+              selected={basePath === "/users"}
+              className={basePath === "/users" ? classes.selected : ""}
+            >
               <ListItemIcon>
                 <StyledFontAwesomeIcon icon={faUsers} fixedWidth />
               </ListItemIcon>
@@ -97,7 +110,11 @@ function MainMenuContent({ location }: { location: any }) {
             </ListItem>
           </AppLink>
           <AppLink to="/teams">
-            <ListItem button selected={basePath === "/teams"} className={basePath === "/teams" ? classes.selected : ''}>
+            <ListItem
+              button
+              selected={basePath === "/teams"}
+              className={basePath === "/teams" ? classes.selected : ""}
+            >
               <ListItemIcon>
                 <StyledFontAwesomeIcon icon={faPeopleCarry} fixedWidth />
               </ListItemIcon>
@@ -105,7 +122,11 @@ function MainMenuContent({ location }: { location: any }) {
             </ListItem>
           </AppLink>
           <AppLink to="/departments">
-            <ListItem button selected={basePath === "/departments"} className={basePath === "/departments" ? classes.selected : ''}>
+            <ListItem
+              button
+              selected={basePath === "/departments"}
+              className={basePath === "/departments" ? classes.selected : ""}
+            >
               <ListItemIcon>
                 <StyledFontAwesomeIcon icon={faStore} fixedWidth />
               </ListItemIcon>
@@ -113,7 +134,11 @@ function MainMenuContent({ location }: { location: any }) {
             </ListItem>
           </AppLink>
           <AppLink to="/manage">
-            <ListItem button selected={basePath === "/manage"} className={basePath === "/manage" ? classes.selected : ''}>
+            <ListItem
+              button
+              selected={basePath === "/manage"}
+              className={basePath === "/manage" ? classes.selected : ""}
+            >
               <ListItemIcon>
                 <StyledFontAwesomeIcon icon={faCog} fixedWidth />
               </ListItemIcon>
