@@ -16,7 +16,7 @@ export const themeOptions: ThemeOptions = {
   typography: {
     // useNextVariants: true,
     fontFamily:
-      'Fira Mono, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
+      'Comfortaa, Fira Mono, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
     fontWeightRegular: 400,
     fontWeightMedium: 500,
     fontWeightBold: 700
