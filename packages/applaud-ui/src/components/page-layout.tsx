@@ -19,6 +19,8 @@ import clap from "../clap.svg";
 import AppIcon from "../components/app-icon";
 import { AuthContext } from "../core/auth-manager";
 import { AuthContextValue } from "../core/auth-manager/auth-manager";
+import Loader from "./loader";
+import { LOADER_TYPE } from "../constants/constants";
 
 const drawerWidth = 250;
 
@@ -55,12 +57,14 @@ interface Props {
 
 interface State {
   openEl: HTMLElement | null;
+  loading: boolean;
 }
 
 class PageLayout extends Component<Props, State> {
   static contextType = AuthContext;
   state = {
-    openEl: null
+    openEl: null,
+    loading: false
   };
 
   handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -77,6 +81,9 @@ class PageLayout extends Component<Props, State> {
 
   signOut = async () => {
     this.handleClose();
+    this.setState({
+      loading: true
+    });
     (this.context as AuthContextValue).logout();
   };
 
@@ -114,7 +121,7 @@ class PageLayout extends Component<Props, State> {
             <span title="Available Claps">{coinBalance}</span>
           </ListItemText>
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={this.handleClick}>
           <ListItemAvatar>
             <Avatar>
               <AppIcon icon={faUser} />
@@ -124,20 +131,19 @@ class PageLayout extends Component<Props, State> {
             aria-controls="user-menu"
             aria-haspopup="true"
             style={{ position: "relative" }}
-            onClick={this.handleClick}
             secondary="Current User"
           >
             <span title={userName}>{userName}</span>
           </ListItemText>
-          <StyledMenu
-            id="user-menu"
-            anchorEl={this.state.openEl}
-            open={Boolean(this.state.openEl)}
-            onClose={this.handleClose}
-          >
-            <MenuItem onClick={this.signOut}>Sign out</MenuItem>
-          </StyledMenu>
         </ListItem>
+        <StyledMenu
+          id="user-menu"
+          anchorEl={this.state.openEl}
+          open={Boolean(this.state.openEl)}
+          onClose={this.handleClose}
+        >
+          <MenuItem onClick={this.signOut}>Sign out</MenuItem>
+        </StyledMenu>
       </List>
     );
   }
@@ -172,6 +178,7 @@ class PageLayout extends Component<Props, State> {
           {/*<StyledToolbar component="div"/>*/}
           <Box padding={2}>{children}</Box>
         </StyledMain>
+        {this.state.loading && <Loader type={LOADER_TYPE.fullView} />}
       </Box>
     );
   }
