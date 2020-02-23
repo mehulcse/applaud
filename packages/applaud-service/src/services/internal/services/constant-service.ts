@@ -32,15 +32,15 @@ export class ConstantService {
   }
 
   initializeAuthorizedQuery(): QueryInitializationResult<Constant> {
-    const viewer = ensureUser(this.context.viewer);
+    ensureUser(this.context.viewer);
 
     const query = Constant.query();
 
-    if (viewer.isAdmin) {
-      // No restrictions
-    } else {
-      throw new Error("Unauthorized access.");
-    }
+    // if (viewer.isAdmin) {
+    //   // No restrictions
+    // } else {
+    //   throw new Error("Unauthorized access.");
+    // }
 
     return {
       query

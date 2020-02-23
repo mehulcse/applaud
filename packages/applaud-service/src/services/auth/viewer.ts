@@ -10,8 +10,10 @@ import { AppContext } from "./app-context";
 import CoinBalance from "../internal/db/models/coin-balance";
 import { CoinBalanceService } from "../internal/services/coin-balance-service";
 import { CoinReceivedService } from "../internal/services/coin-received-service";
-import { getLogger } from "../../logger";
 import { TeamService } from "../internal/services/team-service";
+import { groupBy } from "../../helper/groupBy";
+import { ConstantService } from "../internal/services/constant-service";
+import { CONSTANTS } from "../internal/db/models/constant";
 
 export interface Viewer {
   userId: number;
@@ -29,8 +31,6 @@ interface GetViewerOptions {
   jwtToken: string;
   requestId?: string;
 }
-
-const logger = getLogger("Viewer");
 
 export const getViewer = async (options: GetViewerOptions): Promise<Viewer> => {
   const jwtSecret = Config.getJwtSecret();
@@ -51,46 +51,66 @@ export const getViewer = async (options: GetViewerOptions): Promise<Viewer> => {
     throw new Error("Invalid JWT specified.");
   }
 
-  const [userRoles] = await Promise.all([
+  const [
+    userRoles,
+    coinBalance,
+    coinsReceived,
+    userTeams,
+    constant
+  ] = await Promise.all([
     new UserRoleService(systemContext).getAll({
       userId: user.id
+    }),
+    new CoinBalanceService(systemContext).getFirst({
+      userId: user.id
+    }),
+    new CoinReceivedService(systemContext).getAll({
+      allocatedToUserId: user.id,
+      withTeam: true
+    }),
+    new TeamService(systemContext).getAll({
+      userId: user.id
+    }),
+    new ConstantService(systemContext).getFirst({
+      search: CONSTANTS.TEAM_MULTIPLIER
     })
   ]);
 
-  const coinBalance = await new CoinBalanceService(systemContext).getFirst({
-    userId: user.id
-  });
-
-  const coinsReceived = await new CoinReceivedService(systemContext).getAll({
-    allocatedToUserId: user.id
-  });
-
-  const userTeams = await new TeamService(systemContext).getAll({
-    userId: user.id
-  });
-
-  logger.debug(userTeams);
-
-  logger.debug(coinsReceived);
+  const userTeamsList = userTeams ? userTeams.map(team => team.id) : [];
+  const coinReceivedList = coinsReceived ? groupBy(coinsReceived, "id") : {};
 
   let coinsReceivedBalance = 0;
 
-  if (coinsReceived && coinsReceived.length > 0) {
-    coinsReceivedBalance = coinsReceived.reduce(
-      (result, data) => result + data.balance,
-      coinsReceivedBalance
-    );
-  }
+  coinsReceivedBalance = Object.values(coinReceivedList).reduce(
+    (result: number, data: any) => {
+      if (data) {
+        const overlappingTeams = data.teamIds.filter((value: number) =>
+          userTeamsList.includes(value)
+        );
+        if (overlappingTeams && overlappingTeams.length > 0) {
+          return result + data.balance;
+        } else {
+          return result + data.balance * parseInt(constant?.value ?? "1", 10);
+        }
+      }
+      return result;
+    },
+    coinsReceivedBalance
+  );
 
-  const isAdmin = !!userRoles.find(x => x.roleId === ROLES.ADMIN);
-  const isSuperAdmin = !!userRoles.find(x => x.roleId === ROLES.SUPER_ADMIN);
+  const isAdmin = !!(
+    userRoles && userRoles.find(x => x.roleId === ROLES.ADMIN)
+  );
+  const isSuperAdmin = !!(
+    userRoles && userRoles.find(x => x.roleId === ROLES.SUPER_ADMIN)
+  );
   const canViewAdmin = isAdmin || isSuperAdmin;
 
   return {
     userId,
     user,
-    userRoles: userRoles.map(x => x.roleId.toString()),
-    isAdmin: isAdmin || isSuperAdmin,
+    userRoles: userRoles ? userRoles.map(x => x.roleId.toString()) : [],
+    isAdmin: !!(isAdmin || isSuperAdmin),
     isSuperAdmin,
     isSystem: false,
     canViewAdmin,

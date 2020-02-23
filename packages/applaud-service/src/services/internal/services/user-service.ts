@@ -183,27 +183,25 @@ export class UserService {
       });
 
       logger.debug(user);
-
-      const userRole = await new UserRoleService(this.context).create(
-        {
-          userId: user.id,
-          roleId: ROLES.EMPLOYEE
-        },
-        true,
-        trx
-      );
-
+      const [userRole, coinBalance] = await Promise.all([
+        new UserRoleService(this.context).create(
+          {
+            userId: user.id,
+            roleId: ROLES.EMPLOYEE
+          },
+          true,
+          trx
+        ),
+        new CoinBalanceService(this.context).create(
+          {
+            userId: user.id,
+            balance: DEFAULT_BALANCE
+          },
+          true,
+          trx
+        )
+      ]);
       logger.debug(userRole);
-
-      const coinBalance = await new CoinBalanceService(this.context).create(
-        {
-          userId: user.id,
-          balance: DEFAULT_BALANCE
-        },
-        true,
-        trx
-      );
-
       logger.debug(coinBalance);
 
       return user;
