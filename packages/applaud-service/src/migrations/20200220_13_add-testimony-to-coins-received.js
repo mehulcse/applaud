@@ -6,8 +6,6 @@ const up = async (knex) => {
       .timestamp("createdAt")
       .notNullable()
       .defaultTo(knex.fn.now());
-    table.dropForeign(["testimonyId"]);
-    table.dropColumn("testimonyId");
   });
 };
 
@@ -16,12 +14,6 @@ const down = async (knex) => {
     table.dropColumn("message");
     table.dropColumn("type");
     table.dropColumn("createdAt");
-    table
-      .integer("testimonyId")
-      .unsigned()
-      .notNullable()
-      .references("id")
-      .inTable("testimonies");
   });
 };
 

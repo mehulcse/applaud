@@ -1,6 +1,6 @@
-const adminUsers = require("../admin-users");
-const appRoles = require("../app-roles");
-const appConstants = require("../app-constants");
+const adminUsers = require("../migrationsData/admin-users.json");
+const appRoles = require("../migrationsData/app-roles.json");
+const appConstants = require("../migrationsData/app-constants.json");
 
 const up = async (knex) => {
   // insert roles
@@ -23,6 +23,10 @@ const up = async (knex) => {
       userId: user.id,
       roleId: "super_admin"
     });
+    await knex("coinBalance").insert({
+      userId: user.id,
+      balance: 20
+    });
   });
 
   // insert constants
@@ -43,6 +47,11 @@ const down = async (knex) => {
   // delete userRoles
   adminUsers.map(async (user) => {
     await knex("userRoles").del().where("userId", user.id)
+  });
+
+  // delete coins
+  appRoles.map(async (role) => {
+    await knex("coinBalance").del().where("userId", user.id)
   });
 
   // delete users

@@ -17,12 +17,6 @@ const up = async (knex) => {
       .notNullable()
       .references("id")
       .inTable("users");
-    table
-      .integer("testimonyId")
-      .unsigned()
-      .notNullable()
-      .references("id")
-      .inTable("testimonies");
   });
   await knex.schema.raw("ALTER TABLE coinsReceived AUTO_INCREMENT=1001");
 };
