@@ -1,10 +1,10 @@
 [
   {
     "name": "TEAM_MULTIPLIER",
-    "value": 3
+    "value": 1
   },
   {
     "name": "DEPARTMENT_MULTIPLIER",
-    "value": 3
+    "value": 1
   }
 ]
