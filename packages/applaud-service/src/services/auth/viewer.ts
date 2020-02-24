@@ -14,7 +14,7 @@ import { TeamService } from "../internal/services/team-service";
 import { groupBy } from "../../helper/groupBy";
 import { ConstantService } from "../internal/services/constant-service";
 import { CONSTANTS } from "../internal/db/models/constant";
-import { getLogger } from "../../logger";
+// import { getLogger } from "../../logger";
 
 export interface Viewer {
   userId: number;
@@ -33,7 +33,7 @@ interface GetViewerOptions {
   requestId?: string;
 }
 
-const logger = getLogger("viewer");
+// const logger = getLogger("viewer");
 
 export const getViewer = async (options: GetViewerOptions): Promise<Viewer> => {
   const jwtSecret = Config.getJwtSecret();
@@ -94,16 +94,12 @@ export const getViewer = async (options: GetViewerOptions): Promise<Viewer> => {
 
   let coinsReceivedBalance = 0;
 
-  logger.debug(coinsReceived);
-  logger.debug(coinReceivedList);
-
   coinsReceivedBalance = Object.values(coinReceivedList).reduce(
     (result: number, data: any) => {
       if (data) {
         const overlappingTeams = data.teamIds.filter((value: number) =>
           userTeamsList.includes(value)
         );
-        logger.debug(overlappingTeams);
         if (overlappingTeams && overlappingTeams.length > 0) {
           return result + data.balance;
         } else {
@@ -114,8 +110,6 @@ export const getViewer = async (options: GetViewerOptions): Promise<Viewer> => {
     },
     coinsReceivedBalance
   );
-
-  logger.debug(coinsReceivedBalance);
 
   const isAdmin = !!(
     userRoles && userRoles.find(x => x.roleId === ROLES.ADMIN)
