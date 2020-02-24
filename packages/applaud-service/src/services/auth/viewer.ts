@@ -99,18 +99,12 @@ export const getViewer = async (options: GetViewerOptions): Promise<Viewer> => {
 
   coinsReceivedBalance = Object.values(coinReceivedList).reduce(
     (result: number, data: any) => {
-      logger.debug(data);
-      logger.debug(data.teamIds);
-      logger.debug(data.teamIds[0]);
       if (data) {
         const overlappingTeams = data.teamIds.filter((value: number) =>
           userTeamsList.includes(value)
         );
         logger.debug(overlappingTeams);
-        if (
-          (overlappingTeams && overlappingTeams.length > 0) ||
-          (data.teamIds && data.teamIds[0] === undefined)
-        ) {
+        if (overlappingTeams && overlappingTeams.length > 0) {
           return result + data.balance;
         } else {
           return result + data.balance * parseInt(constant?.value ?? "1", 10);
