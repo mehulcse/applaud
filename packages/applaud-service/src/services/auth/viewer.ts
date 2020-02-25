@@ -14,7 +14,7 @@ import { TeamService } from "../internal/services/team-service";
 import { groupBy } from "../../helper/groupBy";
 import { ConstantService } from "../internal/services/constant-service";
 import { CONSTANTS } from "../internal/db/models/constant";
-// import { getLogger } from "../../logger";
+import { getLogger } from "../../logger";
 
 export interface Viewer {
   userId: number;
@@ -33,7 +33,7 @@ interface GetViewerOptions {
   requestId?: string;
 }
 
-// const logger = getLogger("viewer");
+const logger = getLogger("viewer");
 
 export const getViewer = async (options: GetViewerOptions): Promise<Viewer> => {
   const jwtSecret = Config.getJwtSecret();
@@ -87,8 +87,12 @@ export const getViewer = async (options: GetViewerOptions): Promise<Viewer> => {
     ).getAll({
       allocatedToUserId: user.id
     });
+    logger.debug(coinsWithoutTeam);
     coinReceivedList = coinsWithoutTeam ? groupBy(coinsWithoutTeam, "id") : {};
   }
+
+  logger.debug(coinsReceived);
+  logger.debug(coinReceivedList);
 
   const userTeamsList = userTeams ? userTeams.map(team => team.id) : [];
 

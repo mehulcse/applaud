@@ -75,7 +75,7 @@ export class CoinReceivedService {
 
     if (options.withTeam) {
       query
-        .join(
+        .leftJoin(
           "userTeams",
           "userTeams.userId",
           "=",
