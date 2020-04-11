@@ -7,10 +7,12 @@ const up = async (knex) => {
     const user = await knex("users").where({
       email: userDetail.email
     });
-    await knex("userDetails").insert({
-      userId: user.id,
-      slackHandle: userDetail.slackHandle
-    });
+    if (user && user.id) {
+      await knex("userDetails").insert({
+        userId: user.id,
+        slackHandle: userDetail.slackHandle
+      });
+    }
   });
 };
 
@@ -20,7 +22,9 @@ const down = async (knex) => {
     const user = await knex("users").where({
       email: userDetail.email
     });
-    await knex("userDetails").del().where("userId", user.id)
+    if (user && user.id) {
+      await knex("userDetails").del().where("userId", user.id)
+    }
   });
 };
 

@@ -8,7 +8,7 @@ class Feedback extends Model {
   id: number;
   userId: number;
   feedback: string;
-  isActive: boolean;
+  isClosed: boolean;
 }
 
 export default Feedback;

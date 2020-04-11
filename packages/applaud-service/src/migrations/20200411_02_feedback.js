@@ -11,9 +11,10 @@ const up = async (knex) => {
       .references("id")
       .inTable("users");
     table
-      .text("feedback");
+      .text("feedback")
+      .notNullable();
     table
-      .boolean("isActive")
+      .boolean("isClosed")
       .defaultTo(false);
   });
   await knex.schema.raw("ALTER TABLE feedbacks AUTO_INCREMENT=1001");
