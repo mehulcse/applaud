@@ -1,0 +1,406 @@
+[
+  {
+    "slackHandle": "nate",
+    "email": "nate@tech9.com"
+  },
+  {
+    "slackHandle": "nick",
+    "email": "nick@tech9.com"
+  },
+  {
+    "slackHandle": "billy",
+    "email": "bill@tech9.com"
+  },
+  {
+    "slackHandle": "marc",
+    "email": "marc.wilkinson@tech9.com"
+  },
+  {
+    "slackHandle": "carrie_batten",
+    "email": "carrie.batten@tech9.com"
+  },
+  {
+    "slackHandle": "adam",
+    "email": "adam.larson@tech9.com"
+  },
+  {
+    "slackHandle": "jgifford",
+    "email": "jason.gifford@tech9.com"
+  },
+  {
+    "slackHandle": "rahuldole",
+    "email": "rahul.dole@tech9.com"
+  },
+  {
+    "slackHandle": "uttam",
+    "email": "uttam.gandhi@tech9.com"
+  },
+  {
+    "slackHandle": "mehul",
+    "email": "mehul.thakkar@tech9.com"
+  },
+  {
+    "slackHandle": "prateet",
+    "email": "prateet.kawalkar@tech9.com"
+  },
+  {
+    "slackHandle": "sushil",
+    "email": "sushil.shinde@tech9.com"
+  },
+  {
+    "slackHandle": "trentwignall",
+    "email": "trent.wignall@tech9.com"
+  },
+  {
+    "slackHandle": "mukesh",
+    "email": "mukesh.agarwal@tech9.com"
+  },
+  {
+    "slackHandle": "keith",
+    "email": "keith.crofts@tech9.com"
+  },
+  {
+    "slackHandle": "uttmesh",
+    "email": "uttmesh.shukla@tech9.com"
+  },
+  {
+    "slackHandle": "pankaj",
+    "email": "pankaj.bisane@tech9.com"
+  },
+  {
+    "slackHandle": "sanghamitra",
+    "email": "sanghamitra.shinde@tech9.com"
+  },
+  {
+    "slackHandle": "adurant",
+    "email": "alexi.durant@tech9.com"
+  },
+  {
+    "slackHandle": "somnath",
+    "email": "somnath.pawar@tech9.com"
+  },
+  {
+    "slackHandle": "sagar",
+    "email": "sagar.ratnaparkhi@tech9.com"
+  },
+  {
+    "slackHandle": "rajesh",
+    "email": "rajesh.chaudhari@tech9.com"
+  },
+  {
+    "slackHandle": "mayuri",
+    "email": "mayuri.dharmadhikari@tech9.com"
+  },
+  {
+    "slackHandle": "kapil.jagtap",
+    "email": "kapil.jagtap@tech9.com"
+  },
+  {
+    "slackHandle": "madhura",
+    "email": "madhura.pandita@tech9.com"
+  },
+  {
+    "slackHandle": "suhasg",
+    "email": "suhas.girgaonkar@tech9.com"
+  },
+  {
+    "slackHandle": "abhi-tech9",
+    "email": "abhijeet.suryawanshi@tech9.com"
+  },
+  {
+    "slackHandle": "aditimunet",
+    "email": "aditi.munet@tech9.com"
+  },
+  {
+    "slackHandle": "rajashree",
+    "email": "rajashree.khatoi@tech9.com"
+  },
+  {
+    "slackHandle": "sagar.mahajan",
+    "email": "sagar.mahajan@tech9.com"
+  },
+  {
+    "slackHandle": "jitesh.manglani",
+    "email": "jitesh.manglani@tech9.com"
+  },
+  {
+    "slackHandle": "durgaprasad.budhwani",
+    "email": "durgaprasad.budhwani@tech9.com"
+  },
+  {
+    "slackHandle": "nitish.kalra",
+    "email": "nitish.kalra@tech9.com"
+  },
+  {
+    "slackHandle": "amit.dubey",
+    "email": "amit.dubey@tech9.com"
+  },
+  {
+    "slackHandle": "joy.peterson",
+    "email": "joy.peterson@tech9.com"
+  },
+  {
+    "slackHandle": "robert",
+    "email": "robert@tech9.com"
+  },
+  {
+    "slackHandle": "deepti.nijampurkar",
+    "email": "deepti.nijampurkar@tech9.com"
+  },
+  {
+    "slackHandle": "kayla.morris",
+    "email": "kayla.morris@tech9.com"
+  },
+  {
+    "slackHandle": "jae.stice",
+    "email": "jae.stice@tech9.com"
+  },
+  {
+    "slackHandle": "andrew.kendall",
+    "email": "andrew.kendall@tech9.com"
+  },
+  {
+    "slackHandle": "shashank.prasad",
+    "email": "shashank.prasad@tech9.com"
+  },
+  {
+    "slackHandle": "emily.bonnett",
+    "email": "emily.bonnett@tech9.com"
+  },
+  {
+    "slackHandle": "chad.jacox",
+    "email": "chad.jacox@tech9.com"
+  },
+  {
+    "slackHandle": "ellery.howarth",
+    "email": "ellery.howarth@tech9.com"
+  },
+  {
+    "slackHandle": "rutvij.pandya",
+    "email": "rutvij.pandya@tech9.com"
+  },
+  {
+    "slackHandle": "brian.paul",
+    "email": "brian.paul@tech9.com"
+  },
+  {
+    "slackHandle": "soo.lee",
+    "email": "soo.lee@tech9.com"
+  },
+  {
+    "slackHandle": "craig",
+    "email": "craig@tech9.com"
+  },
+  {
+    "slackHandle": "deepak.mahajan",
+    "email": "deepak.mahajan@tech9.com"
+  },
+  {
+    "slackHandle": "aman.angira",
+    "email": "aman.angira@tech9.com"
+  },
+  {
+    "slackHandle": "kshitij.burman",
+    "email": "kshitij.burman@tech9.com"
+  },
+  {
+    "slackHandle": "pratik.bhagwat",
+    "email": "pratik.bhagwat@tech9.com"
+  },
+  {
+    "slackHandle": "bhargav.mashru",
+    "email": "bhargav.mashru@tech9.com"
+  },
+  {
+    "slackHandle": "david.brinton",
+    "email": "david.brinton@tech9.com"
+  },
+  {
+    "slackHandle": "mukesh.srivastav",
+    "email": "mukesh.srivastav@tech9.com"
+  },
+  {
+    "slackHandle": "mishi.gupta",
+    "email": "mishi.gupta@tech9.com"
+  },
+  {
+    "slackHandle": "ajeetesh.roy",
+    "email": "ajeetesh.roy@tech9.com"
+  },
+  {
+    "slackHandle": "kulbhushan.singh",
+    "email": "kulbhushan.singh@tech9.com"
+  },
+  {
+    "slackHandle": "nitin.pathak",
+    "email": "nitin.pathak@tech9.com"
+  },
+  {
+    "slackHandle": "philip.viningston",
+    "email": "philip.viningston@tech9.com"
+  },
+  {
+    "slackHandle": "eisha.dinesh",
+    "email": "eisha.dinesh@tech9.com"
+  },
+  {
+    "slackHandle": "jordan.farrer",
+    "email": "jordan.farrer@tech9.com"
+  },
+  {
+    "slackHandle": "suraj.adsul",
+    "email": "suraj.adsul@tech9.com"
+  },
+  {
+    "slackHandle": "kshitij.gugale",
+    "email": "kshitij.gugale@tech9.com"
+  },
+  {
+    "slackHandle": "mahesh.nalawade",
+    "email": "mahesh.nalawade@tech9.com"
+  },
+  {
+    "slackHandle": "nayan.agrawal",
+    "email": "nayan.agrawal@tech9.com"
+  },
+  {
+    "slackHandle": "devesh.golani",
+    "email": "devesh.golani@tech9.com"
+  },
+  {
+    "slackHandle": "dipen.nawani",
+    "email": "dipen.nawani@tech9.com"
+  },
+  {
+    "slackHandle": "junip.dewan",
+    "email": "junip.dewan@tech9.com"
+  },
+  {
+    "slackHandle": "sudeepto.dutta",
+    "email": "sudeepto.dutta@tech9.com"
+  },
+  {
+    "slackHandle": "deepali.bansal",
+    "email": "deepali.bansal@tech9.com"
+  },
+  {
+    "slackHandle": "nitin.pahal",
+    "email": "nitin.pahal@tech9.com"
+  },
+  {
+    "slackHandle": "vamshidhar.pasuladhi",
+    "email": "vamshidhar.pasuladhi@tech9.com"
+  },
+  {
+    "slackHandle": "jason.norton",
+    "email": "jason.norton@tech9.com"
+  },
+  {
+    "slackHandle": "niharika.kulkarni",
+    "email": "niharika.kulkarni@tech9.com"
+  },
+  {
+    "slackHandle": "abhishek.thorat",
+    "email": "abhishek.thorat@tech9.com"
+  },
+  {
+    "slackHandle": "amit.mohol",
+    "email": "amit.mohol@tech9.com"
+  },
+  {
+    "slackHandle": "kartik.shete",
+    "email": "kartik.shete@tech9.com"
+  },
+  {
+    "slackHandle": "sanjay.mangalaram",
+    "email": "sanjay.mangalaram@tech9.com"
+  },
+  {
+    "slackHandle": "chris.smith",
+    "email": "chris.smith@tech9.com"
+  },
+  {
+    "slackHandle": "greg.judd",
+    "email": "greg.judd@tech9.com"
+  },
+  {
+    "slackHandle": "gary.byington",
+    "email": "gary.byington@tech9.com"
+  },
+  {
+    "slackHandle": "monika.singh",
+    "email": "monika.singh@tech9.com"
+  },
+  {
+    "slackHandle": "ajay.reddy",
+    "email": "ajay.reddy@tech9.com"
+  },
+  {
+    "slackHandle": "nelson.dsouza",
+    "email": "nelson.dsouza@tech9.com"
+  },
+  {
+    "slackHandle": "pallabi.biswal",
+    "email": "pallabi.biswal@tech9.com"
+  },
+  {
+    "slackHandle": "anshaj.khare",
+    "email": "anshaj.khare@tech9.com"
+  },
+  {
+    "slackHandle": "pravin.kudale",
+    "email": "pravin.kudale@tech9.com"
+  },
+  {
+    "slackHandle": "rahul.srinath",
+    "email": "rahul.srinath@tech9.com"
+  },
+  {
+    "slackHandle": "harsh.agarwal",
+    "email": "harsh.agarwal@tech9.com"
+  },
+  {
+    "slackHandle": "sumanth.doddapaneni",
+    "email": "sumanth.doddapaneni@tech9.com"
+  },
+  {
+    "slackHandle": "tanmay.kulkarni",
+    "email": "tanmay.kulkarni@tech9.com"
+  },
+  {
+    "slackHandle": "kushal.vala",
+    "email": "kushal.vala@tech9.com"
+  },
+  {
+    "slackHandle": "kristin.adair",
+    "email": "kristin.adair@tech9.com"
+  },
+  {
+    "slackHandle": "mayuresh.gramopadhye",
+    "email": "mayuresh.gramopadhye@tech9.com"
+  },
+  {
+    "slackHandle": "hitesh.rawal",
+    "email": "hitesh.rawal@tech9.com"
+  },
+  {
+    "slackHandle": "ingemar.wiemer",
+    "email": "ingemar.wiemer@tech9.com"
+  },
+  {
+    "slackHandle": "sudarshan.patil",
+    "email": "sudarshan.patil@tech9.com"
+  },
+  {
+    "slackHandle": "robert.lamb",
+    "email": "robert.lamb@tech9.com"
+  },
+  {
+    "slackHandle": "ajay.kodam",
+    "email": "ajay.kodam@tech9.com"
+  },
+  {
+    "slackHandle": "nalin.dwivedi",
+    "email": "nalin.dwivedi@tech9.com"
+  }
+]
