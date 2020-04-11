@@ -8,6 +8,7 @@ import teamQuery from "./queries/team";
 import teamsQuery from "./queries/teams";
 import userQuery from "./queries/user";
 import usersQuery from "./queries/users";
+import constantsQuery from "./queries/constants";
 import createTeamMutation from "./mutations/create-team";
 import createApplaudMutation from "./mutations/create-applaud";
 import createDepartmentTeamMutation from "./mutations/create-department-team";
@@ -21,9 +22,14 @@ import createUserMutation from "./mutations/create-user";
 import createUserRoleMutation from "./mutations/create-user-role";
 import loginUserMutation from "./mutations/login-user";
 import logoutUserMutation from "./mutations/logout-user";
+import updateCoinBalanceMutation from "./mutations/update-coin-balance";
 import viewerQuery from "./queries/viewer";
 import rolesQuery from "./queries/roles";
 import userType from "./types/user";
+import applaudReceivedType from "./types/applaud-received";
+import teamType from "./types/team";
+import deleteUserTeamMutation from "./mutations/delete-user-team";
+import deleteDepartmentTeamMutation from "./mutations/delete-department-team";
 
 export default merge(
   { Date: GraphQLDate, DateTime: GraphQLDateTime, Time: GraphQLTime },
@@ -34,6 +40,7 @@ export default merge(
   applaudReceivedQuery,
   departmentQuery,
   departmentsQuery,
+  constantsQuery,
   teamQuery,
   teamsQuery,
   userQuery,
@@ -49,5 +56,10 @@ export default merge(
   updateUpdateConstantsMutation,
   updateTeamMutation,
   updateDepartmentMutation,
-  userType
+  userType,
+  applaudReceivedType,
+  teamType,
+  deleteUserTeamMutation,
+  deleteDepartmentTeamMutation,
+  updateCoinBalanceMutation
 );

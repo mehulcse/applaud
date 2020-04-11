@@ -11,10 +11,7 @@ import {
 } from "../helpers";
 import { UserService } from "./user-service";
 import CoinBalance from "../db/models/coin-balance";
-import {
-  ensureUser,
-  ensureAdmin
-} from "../../auth/helpers";
+import { ensureUser, ensureAdmin } from "../../auth/helpers";
 import { AppContext } from "../../auth/app-context";
 
 export interface CoinBalanceOptions extends PaginationArgs {
@@ -47,8 +44,6 @@ export class CoinBalanceService {
     const query = CoinBalance.query();
     if (viewer.isAdmin) {
       // No restrictions
-    } else {
-      throw new Error("Unauthorized access.");
     }
 
     return {
@@ -101,8 +96,12 @@ export class CoinBalanceService {
     return await executeSelectAll(query);
   }
 
-  async create(input: CreateCoinBalanceInput, trx?: Objection.Transaction) {
-    ensureAdmin(this.context.viewer)
+  async create(
+    input: CreateCoinBalanceInput,
+    skipValidation: boolean,
+    trx?: Objection.Transaction
+  ) {
+    ensureAdmin(this.context.viewer);
     // Validation
     const schema = yup.object().shape({
       userId: yup
@@ -121,16 +120,18 @@ export class CoinBalanceService {
       stripUnknown: true
     })) as CreateCoinBalanceInput;
 
-    const user = await new UserService(this.context).getById(
-      validatedInput.userId
-    );
+    if (!skipValidation) {
+      const user = await new UserService(this.context).getById(
+        validatedInput.userId
+      );
 
-    if (!user) {
-      throw new Error("Invalid User ID specified.");
+      if (!user) {
+        throw new Error("Invalid User ID specified.");
+      }
     }
 
-    let coinBalance = await CoinBalance.query(trx).insertAndFetch({
-      userId: user.id,
+    const coinBalance = await CoinBalance.query(trx).insertAndFetch({
+      userId: validatedInput.userId,
       balance: validatedInput.balance,
       allocatedAt: moment.utc().toDate()
     });
@@ -162,5 +163,15 @@ export class CoinBalanceService {
     );
 
     return coinBalance;
+  }
+
+  async bulkAllocation(quantity: number) {
+    ensureAdmin(this.context.viewer);
+
+    await CoinBalance.query().update({ balance: quantity });
+
+    return {
+      success: true
+    };
   }
 }

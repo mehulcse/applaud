@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import {
   Table,
   TableBody,
@@ -20,31 +20,35 @@ import {
   LOADER_TYPE,
   SCROLL_THRESHOLD
 } from "../../constants/constants";
+import { StyledTableWrapper } from "../../components/table-wrapper";
+import AppLink from "../../components/app-link";
 
 interface Props {
   queryResult: TeamsQueryResult;
   onEditClick: (teamId: number) => void;
 }
 
-function TeamsTable(props: Props) {
-  const { queryResult, onEditClick } = props;
-  const { loading, data, error } = queryResult;
+class TeamsTable extends React.Component<Props> {
+  private scrollableRef: HTMLElement | null = null;
 
-  const scrollableRef = useRef<Element>(null);
+  componentDidUpdate() {
+    window.addEventListener("scroll", this.handleScroll, true);
+  }
 
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll, true);
-    return () => window.removeEventListener("scroll", handleScroll);
-  });
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
+  }
 
-  function handleScroll() {
+  handleScroll = () => {
+    const { queryResult } = this.props;
+    const { loading, data } = queryResult;
     if (
       !loading &&
       data?.teams?.nodes &&
       data.teams.nodes.length < data.teams.totalCount &&
-      scrollableRef?.current &&
-      scrollableRef.current.scrollTop + scrollableRef.current.clientHeight >=
-        scrollableRef.current.scrollHeight * SCROLL_THRESHOLD
+      this.scrollableRef &&
+      this.scrollableRef.scrollTop + this.scrollableRef.clientHeight >=
+        this.scrollableRef.scrollHeight * SCROLL_THRESHOLD
     ) {
       queryResult.fetchMore({
         variables: {
@@ -71,20 +75,19 @@ function TeamsTable(props: Props) {
         }
       });
     }
-  }
+  };
 
-  let count = 0;
+  renderTableBody = () => {
+    const { queryResult, onEditClick } = this.props;
+    const { data, error, loading } = queryResult;
 
-  if (data?.teams?.totalCount) {
-    count = data.teams.totalCount;
-  }
-
-  function renderTableBody() {
     if (data?.teams?.nodes?.length) {
       return data.teams.nodes.map((team: any, index: number) => (
         <TableRow key={team.id} hover id={team.id}>
-          <TableCell>{team.id}</TableCell>
-          <TableCell>{team.name}</TableCell>
+          <TableCell>
+            <AppLink to={`/teams/${team.id}`}>{team.name}</AppLink>
+          </TableCell>
+          <TableCell>{team.description}</TableCell>
           <TableCell align="center">
             <Tooltip title="Edit">
               <IconButton
@@ -100,45 +103,58 @@ function TeamsTable(props: Props) {
           </TableCell>
         </TableRow>
       ));
-    } else if (error) {
+    } else if (!loading) {
+      if (error) {
+        return (
+          <TableRow>
+            <TableCell colSpan={3}>
+              <ErrorCard error={error} />
+            </TableCell>
+          </TableRow>
+        );
+      }
       return (
         <TableRow>
           <TableCell colSpan={3}>
-            <ErrorCard error={error} />
+            <NoDataAvailable />
           </TableCell>
         </TableRow>
       );
     }
+    return;
+  };
+
+  render() {
+    const { queryResult } = this.props;
+    const { loading } = queryResult;
+
     return (
-      <TableRow>
-        <TableCell colSpan={3}>
-          <NoDataAvailable />
-        </TableCell>
-      </TableRow>
+      <StyledTableWrapper>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                <strong>Name</strong>
+              </TableCell>
+              <TableCell>
+                <strong>Description</strong>
+              </TableCell>
+              <TableCell align="center">
+                <strong>Action</strong>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody
+            style={{ overflow: "auto" }}
+            ref={(ref: HTMLTableElement) => (this.scrollableRef = ref)}
+          >
+            {this.renderTableBody()}
+            {loading && <Loader type={LOADER_TYPE.table} />}
+          </TableBody>
+        </Table>
+      </StyledTableWrapper>
     );
   }
-
-  return (
-    <Table>
-      <TableHead>
-        <TableRow>
-          <TableCell>
-            <strong>Id</strong>
-          </TableCell>
-          <TableCell>
-            <strong>Name</strong>
-          </TableCell>
-          <TableCell align="center">
-            <strong>Action</strong>
-          </TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody style={{ overflow: "auto" }} ref={scrollableRef}>
-        {!loading && renderTableBody()}
-        {loading && <Loader type={LOADER_TYPE.table} />}
-      </TableBody>
-    </Table>
-  );
 }
 
 export default TeamsTable;

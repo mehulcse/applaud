@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useEffect, useReducer } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -16,6 +16,8 @@ import {
 import { ButtonList } from "../../components/button-list";
 import AppIcon from "../../components/app-icon";
 import { openSnackbar } from "../../components/notifier";
+import Loader from "../../components/loader";
+import { LOADER_TYPE } from "../../constants/constants";
 
 interface Props {
   departmentId: number;
@@ -30,6 +32,7 @@ function UpdateDepartmentDialog(props: Props) {
     variables: {
       id: departmentId
     },
+    skip: !departmentId,
     fetchPolicy: "network-only"
   });
   const [
@@ -44,6 +47,15 @@ function UpdateDepartmentDialog(props: Props) {
       description: data?.department?.description ?? ""
     }
   );
+
+  useEffect(() => {
+    if (data?.department?.name) {
+      setDepartment({ name: data.department.name });
+    }
+    if (data?.department?.description) {
+      setDepartment({ description: data.department.description });
+    }
+  }, [data]);
 
   async function handleUpdate() {
     const response = await updateDepartment({
@@ -72,37 +84,43 @@ function UpdateDepartmentDialog(props: Props) {
     <Dialog open={open} maxWidth="md">
       <DialogTitle>Update Department</DialogTitle>
       <DialogContent>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <TextField
-              label="Name"
-              id="name"
-              name="name"
-              fullWidth
-              value={name}
-              onChange={handleChange}
-            />
+        {(loading || updateLoading) && <Loader type={LOADER_TYPE.content} />}
+        {!(loading || updateLoading) && (
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <TextField
+                label="Name"
+                id="name"
+                name="name"
+                fullWidth
+                value={name}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                label="Description"
+                id="description"
+                name="description"
+                fullWidth
+                value={description}
+                onChange={handleChange}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <TextField
-              label="Description"
-              id="description"
-              name="description"
-              fullWidth
-              value={description}
-              onChange={handleChange}
-            />
-          </Grid>
-        </Grid>
+        )}
+        )}
       </DialogContent>
       <DialogActions>
         <ButtonList>
-          <Button onClick={() => onClose()}>Cancel</Button>
+          <Button onClick={() => onClose()} disabled={loading || updateLoading}>
+            Cancel
+          </Button>
           <Button
             variant="contained"
             color="primary"
             onClick={handleUpdate}
-            disabled={!updateLoading}
+            disabled={!name || !description || updateLoading || loading}
           >
             <AppIcon icon={faCheck} standardRightMargin />
             Update Department

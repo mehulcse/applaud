@@ -1,0 +1,31 @@
+body {
+  font-family: 'Comfortaa' !important;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.cardContainer {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  padding: 10px;
+  grid-gap: 20px;
+  position: relative;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 767px) {
+  .cardContainer {
+    display: block;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1200px) {
+  .cardContainer {
+    display: grid;
+    grid-template-columns: auto auto;
+  }
+}

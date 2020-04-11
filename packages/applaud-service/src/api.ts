@@ -1,35 +1,26 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-// import bugsnagExpress from "@bugsnag/plugin-express";
 import { getLogger } from "./logger";
 import Config from "./config";
 import authMiddleware from "./auth-middleware";
 import bodyParser from "body-parser";
 import helmet from "helmet";
 import { getServer as getAdminServer } from "./graphql/admin";
-// import { getServer as getPartnerServer } from "./graphql/partner";
-// import { getServer as getWorkerServer } from "./graphql/worker";
 import {
   middleware as gracefulShutdownMiddleware,
   gracefulExitHandler
 } from "./utilities/graceful-shutdown";
 import { getDb } from "./services/internal/db";
-// import { bugsnagClient } from "./services/bugsnag";
-// import Config from "./config";
 
 const PORT = process.env.PORT || 3000;
 
 const logger = getLogger("api.js");
 
 export async function start() {
-  // bugsnagClient.use(bugsnagExpress);
-  // const bugsnagMiddleware = bugsnagClient.getPlugin("express");
-
   const corsOrigin = Config.getCorsOrigin();
 
   const app = express();
-  // app.use(bugsnagMiddleware.requestHandler);
   app.use(helmet());
 
   const corsOptions = {
@@ -50,39 +41,11 @@ export async function start() {
   app.use(authMiddleware);
 
   const adminApiServer = await getAdminServer();
-  // const partnerApiServer = await getPartnerServer();
-  // const workerApiServer = await getWorkerServer();
 
   adminApiServer.applyMiddleware({
     app,
     cors: corsOptions,
-    path: "/local/admin/graphql"
-  });
-  // partnerApiServer.applyMiddleware({
-  //   app,
-  //   cors: corsOptions,
-  //   path: "/partner/graphql"
-  // });
-  // workerApiServer.applyMiddleware({
-  //   app,
-  //   cors: corsOptions,
-  //   path: "/worker/graphql"
-  // });
-
-  // app.use(bugsnagMiddleware.errorHandler);
-
-  // To handle intentionally malformed requests
-  app.use((err: any, _req: express.Request, res: any, next: any) => {
-    if (!err) return next();
-    if (err instanceof URIError) {
-      return res.status(400).json({
-        status: 400,
-        error: "Bad Request"
-      });
-    }
-    return res
-      .status(500)
-      .json({ message: "An error occurred while processing the request." });
+    path: "/admin/graphql"
   });
 
   const server = app.listen({ port: PORT }, () => {

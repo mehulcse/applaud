@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import {
   Table,
   TableBody,
@@ -20,31 +20,35 @@ import {
   LOADER_TYPE,
   SCROLL_THRESHOLD
 } from "../../constants/constants";
+import { StyledTableWrapper } from "../../components/table-wrapper";
 
 interface Props {
   queryResult: DepartmentsQueryResult;
   onEditClick: (departmentId: number) => void;
 }
 
-function DepartmentsTable(props: Props) {
-  const { queryResult, onEditClick } = props;
-  const { loading, data, error } = queryResult;
+class DepartmentsTable extends React.Component<Props> {
+  private scrollableRef: HTMLElement | null = null;
 
-  const scrollableRef = useRef<Element>(null);
+  componentDidUpdate() {
+    window.addEventListener("scroll", this.handleScroll, true);
+  }
 
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll, true);
-    return () => window.removeEventListener("scroll", handleScroll);
-  });
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
+  }
 
-  function handleScroll() {
+  handleScroll = () => {
+    const { queryResult } = this.props;
+    const { loading, data } = queryResult;
+
     if (
       !loading &&
       data?.departments?.nodes &&
       data.departments.nodes.length < data.departments.totalCount &&
-      scrollableRef?.current &&
-      scrollableRef.current.scrollTop + scrollableRef.current.clientHeight >=
-        scrollableRef.current.scrollHeight * SCROLL_THRESHOLD
+      this.scrollableRef &&
+      this.scrollableRef.scrollTop + this.scrollableRef.clientHeight >=
+        this.scrollableRef.scrollHeight * SCROLL_THRESHOLD
     ) {
       queryResult.fetchMore({
         variables: {
@@ -78,20 +82,17 @@ function DepartmentsTable(props: Props) {
         }
       });
     }
-  }
+  };
 
-  let count = 0;
+  renderTableBody = () => {
+    const { queryResult, onEditClick } = this.props;
+    const { data, error, loading } = queryResult;
 
-  if (data?.departments?.totalCount) {
-    count = data.departments.totalCount;
-  }
-
-  function renderTableBody() {
     if (data?.departments?.nodes?.length) {
       return data.departments.nodes.map((department: any, index: number) => (
         <TableRow key={department.id} hover id={department.id}>
-          <TableCell>{department.id}</TableCell>
           <TableCell>{department.name}</TableCell>
+          <TableCell>{department.description}</TableCell>
           <TableCell align="center">
             <Tooltip title="Edit">
               <IconButton
@@ -107,45 +108,57 @@ function DepartmentsTable(props: Props) {
           </TableCell>
         </TableRow>
       ));
-    } else if (error) {
+    } else if (!loading) {
+      if (error) {
+        return (
+          <TableRow>
+            <TableCell colSpan={3}>
+              <ErrorCard error={error} />
+            </TableCell>
+          </TableRow>
+        );
+      }
       return (
         <TableRow>
           <TableCell colSpan={3}>
-            <ErrorCard error={error} />
+            <NoDataAvailable />
           </TableCell>
         </TableRow>
       );
     }
+    return;
+  };
+
+  render() {
+    const { queryResult } = this.props;
+    const { loading } = queryResult;
     return (
-      <TableRow>
-        <TableCell colSpan={3}>
-          <NoDataAvailable />
-        </TableCell>
-      </TableRow>
+      <StyledTableWrapper>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                <strong>Name</strong>
+              </TableCell>
+              <TableCell>
+                <strong>Description</strong>
+              </TableCell>
+              <TableCell align="center">
+                <strong>Action</strong>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody
+            style={{ overflow: "auto" }}
+            ref={(ref: HTMLTableElement) => (this.scrollableRef = ref)}
+          >
+            {this.renderTableBody()}
+            {loading && <Loader type={LOADER_TYPE.table} />}
+          </TableBody>
+        </Table>
+      </StyledTableWrapper>
     );
   }
-
-  return (
-    <Table>
-      <TableHead>
-        <TableRow>
-          <TableCell>
-            <strong>Id</strong>
-          </TableCell>
-          <TableCell>
-            <strong>Name</strong>
-          </TableCell>
-          <TableCell align="center">
-            <strong>Action</strong>
-          </TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody style={{ overflow: "auto" }} ref={scrollableRef}>
-        {!loading && renderTableBody()}
-        {loading && <Loader type={LOADER_TYPE.table} />}
-      </TableBody>
-    </Table>
-  );
 }
 
 export default DepartmentsTable;

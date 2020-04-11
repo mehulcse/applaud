@@ -5,6 +5,7 @@ import Team from "../../../services/internal/db/models/teams";
 
 interface Args extends PaginationArgs {
   search?: string;
+  ids?: number[];
 }
 
 export default {

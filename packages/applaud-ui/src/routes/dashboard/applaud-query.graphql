@@ -1,0 +1,18 @@
+query Applaud($limit: Int, $offset: Int, $allocatedToUserId: Int, $allocatedByUserId: Int) {
+  applaud(limit: $limit, offset: $offset, allocatedToUserId:$allocatedToUserId, allocatedByUserId:$allocatedByUserId) {
+    totalCount
+    nodes {
+      id
+      allocatedToUserId
+      message
+      type
+      createdAt
+      allocatedToUser {
+        id
+        firstName
+        lastName
+        fullName
+      }
+    }
+  }
+}

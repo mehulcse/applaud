@@ -1,24 +1,27 @@
 import moment from "moment";
 import * as yup from "yup";
-import {QueryInitializationResult} from "../common";
-import {PaginationArgs} from "../common";
+import axios from "axios";
+import { QueryInitializationResult } from "../common";
+import { PaginationArgs } from "../common";
+import { getLogger } from "../../../logger";
 import {
   handlePagination,
   executeSelectFirst,
   executeSelectCount,
   executeSelectAll
 } from "../helpers";
-import {UserService} from "./user-service";
+import { UserService } from "./user-service";
 import CoinReceived from "../db/models/coin-received";
-import {
-  ensureUser,
-} from "../../auth/helpers";
-import {AppContext} from "../../auth/app-context";
-import {CARD_TYPES} from "../db/models/coin-received";
+import { ensureUser } from "../../auth/helpers";
+import { AppContext } from "../../auth/app-context";
+import { CARD_TYPES } from "../db/models/coin-received";
+import { CoinBalanceService } from "./coin-balance-service";
+import Config from "../../../config";
 
 export interface CoinReceivedOptions extends PaginationArgs {
   allocatedToUserId?: number;
   allocatedByUserId?: number;
+  withTeam?: boolean;
 }
 
 export interface CreateCoinReceivedInput {
@@ -33,6 +36,8 @@ const SORTS = {
   ID_ASC: "ID_ASC",
   ID_DESC: "ID_DESC"
 };
+
+const logger = getLogger("slackNotifications");
 
 export class CoinReceivedService {
   readonly context: AppContext;
@@ -50,22 +55,39 @@ export class CoinReceivedService {
   }
 
   async getById(id: number) {
-    const {query} = this.initializeAuthorizedQuery();
+    const { query } = this.initializeAuthorizedQuery();
     const coinReceived = await query.findById(id);
     return coinReceived || null;
   }
 
   getAllQuery(options: CoinReceivedOptions) {
-    const {query} = this.initializeAuthorizedQuery();
+    const { query } = this.initializeAuthorizedQuery();
 
     handlePagination(query, options);
 
     if (options.allocatedToUserId) {
-      query.where({allocatedToUserId: options.allocatedToUserId});
+      query.where({ allocatedToUserId: options.allocatedToUserId });
     }
 
     if (options.allocatedByUserId) {
-      query.where({allocatedByUserId: options.allocatedByUserId});
+      query.where({ allocatedByUserId: options.allocatedByUserId });
+    }
+
+    if (options.withTeam) {
+      query
+        .leftJoin(
+          "userTeams",
+          "userTeams.userId",
+          "=",
+          "coinsReceived.allocatedByUserId"
+        )
+        .select(
+          "userTeams.teamId",
+          "coinsReceived.allocatedByUserId",
+          "coinsReceived.allocatedToUserId",
+          "coinsReceived.balance",
+          "coinsReceived.id"
+        );
     }
 
     switch (options.sort) {
@@ -99,7 +121,7 @@ export class CoinReceivedService {
   }
 
   async create(input: CreateCoinReceivedInput) {
-    ensureUser(this.context.viewer)
+    ensureUser(this.context.viewer);
     // Validation
     const schema = yup.object().shape({
       balance: yup
@@ -127,7 +149,7 @@ export class CoinReceivedService {
         .label("Type")
         .required()
         .nullable(false)
-        .oneOf(Object.values(CARD_TYPES).map(card => card.id)),
+        .oneOf(Object.values(CARD_TYPES).map(card => card.id))
     });
     const validatedInput = (await schema.validate(input, {
       abortEarly: false,
@@ -150,7 +172,16 @@ export class CoinReceivedService {
       throw new Error("Invalid Allocated By User ID specified.");
     }
 
-    let coinReceived = await CoinReceived.query().insertAndFetch({
+    const coinBalance = await new CoinBalanceService(this.context).getFirst({
+      userId: validatedInput.allocatedByUserId
+    });
+
+    // check the available coins quantity
+    if (!coinBalance || coinBalance.balance < validatedInput.balance) {
+      throw new Error("Not enough claps available.");
+    }
+
+    const coinReceived = await CoinReceived.query().insertAndFetch({
       balance: validatedInput.balance,
       allocatedToUserId: validatedInput.allocatedToUserId,
       allocatedByUserId: validatedInput.allocatedByUserId,
@@ -159,7 +190,51 @@ export class CoinReceivedService {
       createdAt: moment.utc().toDate()
     });
 
-    // TODO: Slack trigger
+    const balanceCoins = coinBalance.balance - validatedInput.balance;
+
+    // Reduce the coins quantity
+    await new CoinBalanceService(this.context).update(coinBalance.id, {
+      balance: balanceCoins
+    });
+
+    logger.debug(CoinBalanceService);
+
+    // Slack trigger
+    const url = Config.getSlackEndpoint();
+
+    logger.debug(url);
+    const notificationMessage = {
+      unfurl_links: true,
+      text: `<@${allocatedToUser.email.substring(
+        0,
+        allocatedToUser.email.indexOf("@")
+      )}>, You have been applauded by a fellow :tech9:er \n\n`,
+      mrkdwn: true,
+      blocks: [
+        {
+          type: "section",
+          block_id: "descriptionSection",
+          text: {
+            type: "mrkdwn",
+            text: `<@${allocatedToUser.email.substring(
+              0,
+              allocatedToUser.email.indexOf("@")
+            )}>, You have been applauded by a fellow :tech9:er \n\n> ${
+              validatedInput.message
+            }\n\nLogin to <http://thegeekstribe.com/dashboard|Applaud> \n\n`
+          },
+          accessory: {
+            type: "image",
+            image_url:
+              "https://s3-us-west-2.amazonaws.com/applaud.chat/Applaud-logo.png",
+            alt_text: "Kudos"
+          }
+        }
+      ]
+    };
+
+    const res = await axios.post(url, JSON.stringify(notificationMessage));
+    logger.debug("slack response :", res);
 
     return coinReceived;
   }

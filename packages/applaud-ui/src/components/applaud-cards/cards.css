@@ -1,0 +1,4 @@
+.card-tiles:hover {
+  box-shadow: 0 6px 6px -3px rgba(255,255,255,0.2), 0 10px 14px 1px rgba(255,255,255,0.14), 0 4px 18px 3px rgba(255,255,255,0.12);
+  cursor: pointer;
+}

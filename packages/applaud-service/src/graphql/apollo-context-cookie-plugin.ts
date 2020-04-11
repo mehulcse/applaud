@@ -27,19 +27,21 @@ export const ApolloContextCookiePlugin: ApolloServerPlugin = {
           const cookieStrings = context.cookiesToAdd.map(cookie => {
             let cookieString = `${cookie.name}=${cookie.value}; `;
             if (cookie.domain) {
-              cookieString += `Domain=${cookie.domain}; `;
+              cookieString += `Domain=${
+                cookie.domain === "localhost" ? "" : cookie.domain
+              }; `;
             }
-            if (cookie.path) {
-              cookieString += `Path=${cookie.path}; `;
-            }
+            // if (cookie.path) {
+            cookieString += `Path="/"; `;
+            // }
             cookieString += `Expires=${cookie.expires.toUTCString()}; `;
             if (cookie.httpOnly === true) {
               cookieString += "HttpOnly; ";
             }
-            if (cookie.secure === true) {
-              cookieString += "Secure;";
-            }
-            cookieString += "SameSite=None;";
+            // if (cookie.secure === true) {
+            //   cookieString += "Secure; ";
+            // }
+            // cookieString += "SameSite=None; ";
             return cookieString;
           });
           getLogger().debug(cookieStrings);

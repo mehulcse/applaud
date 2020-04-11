@@ -26,6 +26,7 @@ yarn-error.log*
 /packages/applaud-*/.env
 /packages/applaud-*/.env.example
 /packages/applaud-*/.serverless
+/packages/applaud-service/serverless-local.yml
 /packages/applaud-*/.data
 
 .vscode

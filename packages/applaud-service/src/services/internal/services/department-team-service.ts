@@ -18,11 +18,17 @@ import { AppContext } from "../../auth/app-context";
 export interface DepartmentTeamsOptions extends PaginationArgs {
   departmentId?: number;
   teamsIds?: number[];
+  teamId?: number;
 }
 
 export interface CreateDepartmentTeamInput {
   departmentId: number;
   teamId: number;
+}
+
+export interface DeleteDepartmentTeamInput {
+  teamId: number;
+  departmentId: number;
 }
 
 const SORTS = {
@@ -60,6 +66,11 @@ export class DepartmentTeamService {
     if (options.departmentId) {
       query.where({ departmentId: options.departmentId });
     }
+
+    if (options.teamId) {
+      query.where({ teamId: options.teamId });
+    }
+
     if (options.teamsIds && options.teamsIds.length > 0) {
       query.whereIn("teamId", options.teamsIds);
     }
@@ -129,7 +140,10 @@ export class DepartmentTeamService {
     }
 
     const existingDepartmentTeam = await DepartmentTeam.query()
-      .where({ departmentId: validatedInput.departmentId, teamId: validatedInput.teamId })
+      .where({
+        departmentId: validatedInput.departmentId,
+        teamId: validatedInput.teamId
+      })
       .first();
     if (existingDepartmentTeam) {
       return {
@@ -144,5 +158,46 @@ export class DepartmentTeamService {
     });
 
     return departmentTeam;
+  }
+
+  async delete(input: DeleteDepartmentTeamInput) {
+    ensureAdmin(this.context.viewer);
+
+    const schema = yup.object().shape({
+      departmentId: yup
+        .number()
+        .label("Department ID")
+        .required()
+        .nullable(false),
+      teamId: yup
+        .number()
+        .label("Team ID")
+        .required()
+        .nullable(false)
+    });
+    const validatedInput = (await schema.validate(input, {
+      abortEarly: false,
+      stripUnknown: true
+    })) as CreateDepartmentTeamInput;
+
+    const departmentTeam = await this.getFirst({
+      teamId: validatedInput.teamId,
+      departmentId: validatedInput.departmentId
+    });
+
+    if (!departmentTeam) {
+      throw new Error("Invalid Department ID or Team ID specified.");
+    }
+
+    await DepartmentTeam.query()
+      .where({
+        teamId: validatedInput.teamId,
+        departmentId: validatedInput.departmentId
+      })
+      .delete();
+
+    return {
+      isDeleted: true
+    };
   }
 }

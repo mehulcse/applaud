@@ -6,32 +6,24 @@ export const CARD_TYPES = {
     name: "Thank You"
   },
   CONGRATULATION: {
-    id: "congratulation",
+    id: "congrats",
     name: "Congratulation"
   },
   ABOVE_AND_BEYOND: {
-      id: "aboveAndBeyond",
-      name: "Above And Beyond"
-  },
-  BRAVO: {
-      id: "bravo",
-      name: "Bravo"
-  },
-  MARVELOUS: {
-      id: "marvelous",
-      name: "Marvelous"
+    id: "aboveBeyond",
+    name: "Above And Beyond"
   },
   WELL_DONE: {
-      id: "wellDone",
-      name: "Well Done"
+    id: "wellDone",
+    name: "Well Done"
   },
-  WAY_2_GO: {
-      id: "way2Go",
-      name: "Way 2 Go"
+  NINJA: {
+    id: "ninja",
+    name: "Ninja"
   },
-  YOU_ROCK: {
-      id: "youRock",
-      name: "You Rock"
+  GLADIATOR: {
+    id: "gladiator",
+    name: "Gladiator"
   }
 };
 

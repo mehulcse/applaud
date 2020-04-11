@@ -64,13 +64,43 @@ functions:
       - http:
           method: post
           path: admin/graphql
-          cors: true
+          cors:
+            origins:
+              - http://localhost:3000
+              - http://localhost.com:3000
+              - http://thegeekstribe.com
+              - https://thegeekstribe.com
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+              - XSRF-TOKEN
+              - X-XSRF-TOKEN
+            allowCredentials: true
   adminGraphQLPlayground:
     handler: src/handlers.adminGraphQL
     events:
       - http:
           method: get
           path: admin/graphql
-          cors: true
+          cors:
+            origins:
+              - http://localhost:3000
+              - http://localhost.com:3000
+              - http://thegeekstribe.com
+              - https://thegeekstribe.com
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+              - XSRF-TOKEN
+              - X-XSRF-TOKEN
+            allowCredentials: true
   migrate:
     handler: migration.migrate

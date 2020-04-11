@@ -1,8 +1,17 @@
 query AuthManager {
-  viewer {
-    id
-    firstName
-    lastName
-    email
-  }
+    viewer {
+        userRoles
+        isAdmin
+        user{
+            id
+            firstName
+            lastName
+            email
+        }
+        coinBalance {
+            id
+            balance
+        }
+        coinsReceivedBalance
+    }
 }

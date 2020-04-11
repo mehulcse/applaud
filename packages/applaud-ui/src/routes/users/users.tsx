@@ -20,7 +20,8 @@ export default function Users() {
       limit: PAGE_LIMIT,
       offset: 0
     },
-    fetchPolicy: "network-only"
+    fetchPolicy: "network-only",
+    notifyOnNetworkStatusChange: true
   });
 
   function onChange(value: string) {
@@ -41,23 +42,29 @@ export default function Users() {
   return (
     <PageLayout pageTitle="Users">
       <PaperBox>
-        <Box marginY={2}>
-          <Button color="primary" onClick={handleAddUser} variant="outlined">
-            <AppIcon icon={faPlus} standardRightMargin />
-            Add User
-          </Button>
-        </Box>
-        <Box marginY={2}>
-          <Grid container>
-            <Grid container xs={6} item>
+        <Grid justify="space-between" container>
+          <Grid item xs={6}>
+            <Box marginY={2} display="flex">
               <SearchInput
                 inputValue={search}
                 placeholder="Search User"
                 onChange={onChange}
               />
-            </Grid>
+            </Box>
           </Grid>
-        </Box>
+          <Grid item>
+            <Box marginY={2} display="flex">
+              <Button
+                color="primary"
+                onClick={handleAddUser}
+                variant="outlined"
+              >
+                <AppIcon icon={faPlus} standardRightMargin />
+                Add User
+              </Button>
+            </Box>
+          </Grid>
+        </Grid>
         <Box marginY={2}>
           <UsersTable queryResult={queryResult} />
         </Box>

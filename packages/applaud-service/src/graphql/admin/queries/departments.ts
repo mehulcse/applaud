@@ -5,11 +5,12 @@ import Department from "../../../services/internal/db/models/department";
 
 interface Args extends PaginationArgs {
   search?: string;
+  ids?: number[];
 }
 
 export default {
   Query: {
-    department: async (
+    departments: async (
       _parent: any,
       args: Args,
       { context }: GraphQLContext

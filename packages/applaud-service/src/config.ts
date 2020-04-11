@@ -14,6 +14,7 @@ export default class Config {
     return Config.getParameter("ENVIRONMENT");
   };
   static getDbHost = () => Config.getParameter("DB_HOST");
+  static getSlackEndpoint = () => Config.getParameter("SLACK_ENDPOINT");
   static getDbName = () => Config.getParameter("DB_NAME");
   static getDbPassword = () => Config.getParameter("DB_PASSWORD");
   static getDbPort = () => Config.getParameter("DB_PORT");
@@ -56,34 +57,6 @@ export default class Config {
     const scheme = Config.getIsLocal() ? "http" : "https";
     return `${scheme}://${Config.getAppAdminDomain()}`;
   };
-  // static getAppPartnerDomain = () => {
-  //   if (Config.getIsLocal()) {
-  //     return "localhost:3001";
-  //   }
-  //   const isProduction = Config.getParameter("ENVIRONMENT") === "prod";
-  //   const subdomain = isProduction
-  //     ? APP_PARTNER_SUBDOMAIN
-  //     : `${APP_PARTNER_SUBDOMAIN}-${Config.getParameter("ENVIRONMENT")}`;
-  //   return `${subdomain}.${Config.getParameter("ROOT_DOMAIN")}`;
-  // };
-  // static getAppPartnerUrl = () => {
-  //   const scheme = Config.getIsLocal() ? "http" : "https";
-  //   return `${scheme}://${Config.getAppPartnerDomain()}`;
-  // };
-  // static getAppWorkerDomain = () => {
-  //   if (Config.getIsLocal()) {
-  //     return "localhost:3002";
-  //   }
-  //   const isProduction = Config.getParameter("ENVIRONMENT") === "prod";
-  //   const subdomain = isProduction
-  //     ? APP_WORKER_SUBDOMAIN
-  //     : `${APP_WORKER_SUBDOMAIN}-${Config.getParameter("ENVIRONMENT")}`;
-  //   return `${subdomain}.${Config.getParameter("ROOT_DOMAIN")}`;
-  // };
-  // static getAppWorkerUrl = () => {
-  //   const scheme = Config.getIsLocal() ? "http" : "https";
-  //   return `${scheme}://${Config.getAppWorkerDomain()}`;
-  // };
   static getCorsOrigin = () => {
     return [
       Config.getApiUrl(),
@@ -93,11 +66,12 @@ export default class Config {
       "localhost:3000",
       "http://localhost",
       "localhost",
-      "https://localhost"
-      // Config.getAppPartnerUrl(),
-      // Config.getAppWorkerUrl()
+      "https://localhost",
+      "http://localhost.com",
+      "http://localhost.com:3000",
+      "https://thegeekstribe.com",
+      "http://thegeekstribe.com"
     ];
-    // return "*";
   };
   static getAwsProfileName = () => Config.getParameter("AWS_PROFILE");
   static getAwsAccessKey = () =>
@@ -105,5 +79,4 @@ export default class Config {
   static getAwsSecretKey = () =>
     Config.getParameter("AWS_MAILER_SECRET_KEY_ID");
   static getAwsRegion = () => Config.getParameter("AWS_MAILER_REGION");
-  static getBugsnagApiKey = () => Config.getParameter("BUGSNAG_API_KEY");
 }

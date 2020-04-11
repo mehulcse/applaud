@@ -4,6 +4,7 @@ query Departments($search: String, $limit: Int, $offset: Int) {
     nodes {
       id
       name
+      description
     }
   }
 }

@@ -1,9 +1,14 @@
 query Users($search: String, $limit: Int, $offset: Int) {
-  users(search: $search, limit: $limit, offset: $offset) {
-    totalCount
-    nodes {
-      id
-      email
+    users(search: $search, limit: $limit, offset: $offset) {
+        totalCount
+        nodes {
+            id
+            email
+            fullName
+            teams {
+                id
+                name
+            }
+        }
     }
-  }
 }

@@ -1,0 +1,10 @@
+query Constants($search: String, $limit: Int, $offset: Int) {
+  constants(search: $search, limit: $limit, offset: $offset) {
+    totalCount
+    nodes {
+      id
+      name
+      value
+    }
+  }
+}

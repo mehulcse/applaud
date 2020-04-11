@@ -15,6 +15,8 @@ import { useUserDetailQuery } from "../../generated/graphql";
 import NoDataDetailsCard from "../../components/no-data-details-card";
 import AppIcon from "../../components/app-icon";
 import UserTeams from "./user-teams";
+import Loader from "../../components/loader";
+import { LOADER_TYPE } from "../../constants/constants";
 
 export default function UserDetail() {
   const { id } = useParams();
@@ -23,16 +25,17 @@ export default function UserDetail() {
     variables: {
       id: parseInt(id ?? "0", 10)
     },
-    fetchPolicy: "network-only"
+    fetchPolicy: "network-only",
+    notifyOnNetworkStatusChange: true
   });
 
-  if (queryResult.error) {
+  if (!queryResult.loading && queryResult.error) {
     return <NoDataDetailsCard isError error={queryResult.error} />;
   }
-  if (queryResult.loading) {
-    return <NoDataDetailsCard isLoading />;
-  }
-  if (!queryResult || !queryResult.data || !queryResult.data.user) {
+  if (
+    !queryResult ||
+    (!queryResult.loading && (!queryResult.data || !queryResult.data.user))
+  ) {
     return <NoDataDetailsCard />;
   }
 
@@ -47,7 +50,7 @@ export default function UserDetail() {
               </Avatar>
             </ListItemAvatar>
             <ListItemText secondary="Name">
-              {`${queryResult?.data?.user?.firstName} ${queryResult?.data?.user?.lastName}`}
+              {queryResult?.data?.user?.fullName}
             </ListItemText>
           </ListItem>
           <ListItem>
@@ -66,12 +69,18 @@ export default function UserDetail() {
   }
 
   function renderTeams() {
-    return <UserTeams teams={queryResult?.data ?? []} />;
+    return (
+      <UserTeams queryResult={queryResult} userId={parseInt(id ?? "0", 10)} />
+    );
   }
 
   return (
     <PageLayout pageTitle="User Details">
-      <PaperBox></PaperBox>
+      <PaperBox>
+        {renderUserDetail()}
+        {renderTeams()}
+        {queryResult.loading && <Loader type={LOADER_TYPE.fullView} />}
+      </PaperBox>
     </PageLayout>
   );
 }

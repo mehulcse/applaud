@@ -1,12 +1,11 @@
 import React from "react";
 import PageLayout from "../../components/page-layout";
-import ApplaudDetails from "./applaud-details";
+import ApplaudForm from "./applaud-form";
 
 function Applaud() {
-
   return (
     <PageLayout pageTitle="Applaud">
-      <ApplaudDetails />
+      <ApplaudForm />
     </PageLayout>
   );
 }

@@ -1,0 +1,15 @@
+mutation UpdateCoinBalance($input: UpdateCoinBalanceInput!) {
+  updateCoinBalance(input: $input) {
+    success
+  }
+}
+
+mutation UpdateConstants($input: UpdateConstantInput!) {
+  updateConstants(input: $input) {
+    constant {
+      id
+      name
+      value
+    }
+  }
+}

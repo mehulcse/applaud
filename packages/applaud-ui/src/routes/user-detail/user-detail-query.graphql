@@ -1,8 +1,11 @@
 query UserDetail($id: Int!) {
   user(id: $id) {
     id
-    firstName
-    lastName
+    fullName
     email
+    teams {
+      id
+      name
+    }
   }
 }

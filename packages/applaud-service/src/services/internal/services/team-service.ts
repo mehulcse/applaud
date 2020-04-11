@@ -1,21 +1,21 @@
 import * as yup from "yup";
-import {QueryInitializationResult} from "../common";
-import {PaginationArgs} from "../common";
+import { QueryInitializationResult } from "../common";
+import { PaginationArgs } from "../common";
 import {
   handlePagination,
   executeSelectFirst,
   executeSelectCount,
   executeSelectAll
 } from "../helpers";
-import {
-  ensureAdmin,
-  ensureUser,
-} from "../../auth/helpers";
+import { ensureAdmin, ensureUser } from "../../auth/helpers";
 import Team from "../db/models/teams";
-import {AppContext} from "../../auth/app-context";
+import { AppContext } from "../../auth/app-context";
+import { UserTeamService } from "./user-team-service";
 
 export interface TeamsOptions extends PaginationArgs {
   search?: string;
+  ids?: number[];
+  userId?: number;
 }
 
 export interface CreateTeamInput {
@@ -41,15 +41,15 @@ export class TeamService {
   }
 
   initializeAuthorizedQuery(): QueryInitializationResult<Team> {
-    const viewer = ensureUser(this.context.viewer);
+    ensureUser(this.context.viewer);
 
     const query = Team.query();
 
-    if (viewer.isAdmin) {
-      // No restrictions
-    } else {
-      throw new Error("Unauthorized access.");
-    }
+    // if (viewer.isAdmin) {
+    //   // No restrictions
+    // } else {
+    //   throw new Error("Unauthorized access.");
+    // }
 
     return {
       query
@@ -57,18 +57,33 @@ export class TeamService {
   }
 
   async getById(id: number) {
-    const {query} = this.initializeAuthorizedQuery();
+    const { query } = this.initializeAuthorizedQuery();
     const team = await query.findById(id);
     return team || null;
   }
 
   private getAllQuery(options: TeamsOptions) {
-    const {query} = this.initializeAuthorizedQuery();
+    const { query } = this.initializeAuthorizedQuery();
 
     handlePagination(query, options);
 
     if (options.search) {
       query.where(`name`, "like", `%${options.search}%`);
+    }
+
+    if (options.ids && options.ids.length > 0) {
+      query.whereIn("id", options.ids);
+    }
+
+    if (options.userId) {
+      query.whereIn(
+        "id",
+        new UserTeamService(this.context)
+          .getAllQuery({
+            userId: options.userId
+          })
+          .select("teamId")
+      );
     }
 
     switch (options.sort) {

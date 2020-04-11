@@ -22,7 +22,8 @@ export default function Departments() {
       limit: PAGE_LIMIT,
       offset: 0
     },
-    fetchPolicy: "network-only"
+    fetchPolicy: "network-only",
+    notifyOnNetworkStatusChange: true
   });
 
   function onChange(value: string) {
@@ -40,8 +41,8 @@ export default function Departments() {
     }
   }
 
-  function onEdit(teamId: number) {
-    setEditDepartmentId(teamId);
+  function onEdit(departmentId: number) {
+    setEditDepartmentId(departmentId);
   }
 
   function updateCloseDialog(id?: number) {
@@ -52,29 +53,31 @@ export default function Departments() {
   }
 
   return (
-    <PageLayout pageTitle="Teams">
+    <PageLayout pageTitle="Departments">
       <PaperBox>
-        <Box marginY={2}>
-          <Button
-            color="primary"
-            onClick={handleAddDepartment}
-            variant="outlined"
-          >
-            <AppIcon icon={faPlus} standardRightMargin />
-            Add Department
-          </Button>
-        </Box>
-        <Box marginY={2}>
-          <Grid container>
-            <Grid container xs={6} item>
+        <Grid justify="space-between" container>
+          <Grid item xs={6}>
+            <Box marginY={2} display="flex">
               <SearchInput
                 inputValue={search}
                 placeholder="Search Department"
                 onChange={onChange}
               />
-            </Grid>
+            </Box>
           </Grid>
-        </Box>
+          <Grid item>
+            <Box marginY={2} display="flex">
+              <Button
+                color="primary"
+                onClick={handleAddDepartment}
+                variant="outlined"
+              >
+                <AppIcon icon={faPlus} standardRightMargin />
+                Add Department
+              </Button>
+            </Box>
+          </Grid>
+        </Grid>
         <Box marginY={2}>
           <DepartmentsTable queryResult={queryResult} onEditClick={onEdit} />
         </Box>

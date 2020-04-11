@@ -1,21 +1,21 @@
 import * as yup from "yup";
-import {QueryInitializationResult} from "../common";
-import {PaginationArgs} from "../common";
+import { QueryInitializationResult } from "../common";
+import { PaginationArgs } from "../common";
 import {
   handlePagination,
   executeSelectFirst,
   executeSelectCount,
   executeSelectAll
 } from "../helpers";
-import {
-  ensureAdmin,
-  ensureUser,
-} from "../../auth/helpers";
+import { ensureAdmin, ensureUser } from "../../auth/helpers";
 import Department from "../db/models/department";
-import {AppContext} from "../../auth/app-context";
+import { AppContext } from "../../auth/app-context";
+import { DepartmentTeamService } from "./department-team-service";
 
 export interface DepartmentsOptions extends PaginationArgs {
   search?: string;
+  ids?: number[];
+  teamId?: number;
 }
 
 export interface CreateDepartmentInput {
@@ -57,18 +57,33 @@ export class DepartmentService {
   }
 
   async getById(id: number) {
-    const {query} = this.initializeAuthorizedQuery();
+    const { query } = this.initializeAuthorizedQuery();
     const department = await query.findById(id);
     return department || null;
   }
 
   private getAllQuery(options: DepartmentsOptions) {
-    const {query} = this.initializeAuthorizedQuery();
+    const { query } = this.initializeAuthorizedQuery();
 
     handlePagination(query, options);
 
     if (options.search) {
       query.where(`name`, "like", `%${options.search}%`);
+    }
+
+    if (options.ids && options.ids.length > 0) {
+      query.whereIn("id", options.ids);
+    }
+
+    if (options.teamId) {
+      query.whereIn(
+        "id",
+        new DepartmentTeamService(this.context)
+          .getAllQuery({
+            teamId: options.teamId
+          })
+          .select("departmentId")
+      );
     }
 
     switch (options.sort) {
