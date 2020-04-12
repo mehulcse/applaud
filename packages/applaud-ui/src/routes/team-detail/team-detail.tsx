@@ -82,7 +82,7 @@ export default function TeamDetail() {
       <PaperBox>
         {renderTeamDetail()}
         {renderDepartment()}
-        {queryResult.loading && <Loader type={LOADER_TYPE.fullView} />}}
+        {queryResult.loading && <Loader type={LOADER_TYPE.fullView} />}
       </PaperBox>
     </PageLayout>
   );
