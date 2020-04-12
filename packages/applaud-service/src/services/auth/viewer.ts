@@ -91,9 +91,6 @@ export const getViewer = async (options: GetViewerOptions): Promise<Viewer> => {
     coinReceivedList = coinsWithoutTeam ? groupBy(coinsWithoutTeam, "id") : {};
   }
 
-  logger.debug(coinsReceived);
-  logger.debug(coinReceivedList);
-
   const userTeamsList = userTeams ? userTeams.map(team => team.id) : [];
 
   let coinsReceivedBalance = 0;

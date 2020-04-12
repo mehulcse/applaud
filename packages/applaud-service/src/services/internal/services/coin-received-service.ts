@@ -161,7 +161,9 @@ export class CoinReceivedService {
       validatedInput.allocatedToUserId
     );
 
-    const allocatedToUserDetails = await new UserDetailService(this.context).getFirst({
+    const allocatedToUserDetails = await new UserDetailService(
+      this.context
+    ).getFirst({
       userId: validatedInput.allocatedToUserId
     });
 
@@ -210,10 +212,14 @@ export class CoinReceivedService {
     logger.debug(url);
     const notificationMessage = {
       unfurl_links: true,
-      text: `<@${allocatedToUserDetails && allocatedToUserDetails.slackHandle ? allocatedToUserDetails.slackHandle : allocatedToUser.email.substring(
-        0,
-        allocatedToUser.email.indexOf("@")
-      )}>, You have been applauded by a fellow :tech9:er \n\n`,
+      text: `<@${
+        allocatedToUserDetails && allocatedToUserDetails.slackHandle
+          ? allocatedToUserDetails.slackHandle
+          : allocatedToUser.email.substring(
+              0,
+              allocatedToUser.email.indexOf("@")
+            )
+      }>, You have been applauded by a fellow :tech9:er \n\n`,
       mrkdwn: true,
       blocks: [
         {
@@ -221,16 +227,25 @@ export class CoinReceivedService {
           block_id: "descriptionSection",
           text: {
             type: "mrkdwn",
-            text: `<@${allocatedToUserDetails && allocatedToUserDetails.slackHandle ? allocatedToUserDetails.slackHandle : allocatedToUser.email.substring(
-              0,
-              allocatedToUser.email.indexOf("@")
-            )}>, You have been applauded by a fellow :tech9:er \n\n> ${
-              validatedInput.message.replace('\n', '\n>')
-            }\n\nLogin to <http://thegeekstribe.com/dashboard|Applaud> \n\n`
+            text: `<@${
+              allocatedToUserDetails && allocatedToUserDetails.slackHandle
+                ? allocatedToUserDetails.slackHandle
+                : allocatedToUser.email.substring(
+                    0,
+                    allocatedToUser.email.indexOf("@")
+                  )
+            }>, You have been applauded by a fellow :tech9:er \n\n> ${validatedInput.message.replace(
+              /[\r\n\x0B\x0C\u0085\u2028\u2029]+/g,
+              "\n>"
+            )}\n\nLogin to <http://thegeekstribe.com/dashboard|Applaud> \n\n`
           },
           accessory: {
             type: "image",
-            image_url: `${ Object.values(CARD_TYPES).find(card => card.id === validatedInput.type).imageURL }`,
+            image_url: `${
+              Object.values(CARD_TYPES).find(
+                card => card.id === validatedInput.type
+              ).imageURL
+            }`,
             alt_text: "Kudos"
           }
         }
