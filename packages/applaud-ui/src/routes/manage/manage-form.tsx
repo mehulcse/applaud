@@ -45,12 +45,12 @@ function ManageForm() {
   };
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const value = event.target.value ? parseInt(event.target.value, 10) : null;
+    const value = event.target.value && event.target.value >= 0 ? parseInt(event.target.value, 10) : null;
     setQuantity(value);
   }
 
   function onMultiplierChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const value = event.target.value ? parseInt(event.target.value, 10) : null;
+    const value = event.target.value && event.target.value > 0 ? parseInt(event.target.value, 10) : null;
     setTeamMultiplier(value);
   }
 

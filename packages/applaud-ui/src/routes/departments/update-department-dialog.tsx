@@ -109,7 +109,6 @@ function UpdateDepartmentDialog(props: Props) {
             </Grid>
           </Grid>
         )}
-        )}
       </DialogContent>
       <DialogActions>
         <ButtonList>
