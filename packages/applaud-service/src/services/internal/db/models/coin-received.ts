@@ -3,27 +3,33 @@ import { Model } from "objection";
 export const CARD_TYPES = {
   THANK_YOU: {
     id: "thankYou",
-    name: "Thank You"
+    name: "Thank You",
+    imageURL: "https://s3-us-west-2.amazonaws.com/applaud.chat/Thank_You.png"
   },
   CONGRATULATION: {
     id: "congrats",
-    name: "Congratulation"
+    name: "Congratulation",
+    imageURL: "https://s3-us-west-2.amazonaws.com/applaud.chat/Congrats.png"
   },
   ABOVE_AND_BEYOND: {
     id: "aboveBeyond",
-    name: "Above And Beyond"
+    name: "Above And Beyond",
+    imageURL: "https://s3-us-west-2.amazonaws.com/applaud.chat/AboveAndBeyond.png"
   },
   WELL_DONE: {
     id: "wellDone",
-    name: "Well Done"
+    name: "Well Done",
+    imageURL: "https://s3-us-west-2.amazonaws.com/applaud.chat/WellDone.png"
   },
   NINJA: {
     id: "ninja",
-    name: "Ninja"
+    name: "Ninja",
+    imageURL: "https://s3-us-west-2.amazonaws.com/applaud.chat/Ninja.png"
   },
   GLADIATOR: {
     id: "gladiator",
-    name: "Gladiator"
+    name: "Gladiator",
+    imageURL: "https://s3-us-west-2.amazonaws.com/applaud.chat/Gladiator.png"
   }
 };
 
