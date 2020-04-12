@@ -11,6 +11,7 @@ import {
   executeSelectAll
 } from "../helpers";
 import { UserService } from "./user-service";
+import { UserDetailService } from "./user-detail-service";
 import CoinReceived from "../db/models/coin-received";
 import { ensureUser } from "../../auth/helpers";
 import { AppContext } from "../../auth/app-context";
@@ -160,6 +161,12 @@ export class CoinReceivedService {
       validatedInput.allocatedToUserId
     );
 
+    const allocatedToUserDetails = await new UserDetailService(
+      this.context
+    ).getFirst({
+      userId: validatedInput.allocatedToUserId
+    });
+
     if (!allocatedToUser) {
       throw new Error("Invalid Allocated To User ID specified.");
     }
@@ -205,10 +212,14 @@ export class CoinReceivedService {
     logger.debug(url);
     const notificationMessage = {
       unfurl_links: true,
-      text: `<@${allocatedToUser.email.substring(
-        0,
-        allocatedToUser.email.indexOf("@")
-      )}>, You have been applauded by a fellow :tech9:er \n\n`,
+      text: `<@${
+        allocatedToUserDetails && allocatedToUserDetails.slackHandle
+          ? allocatedToUserDetails.slackHandle
+          : allocatedToUser.email.substring(
+              0,
+              allocatedToUser.email.indexOf("@")
+            )
+      }>, You have been applauded by a fellow :tech9:er \n\n`,
       mrkdwn: true,
       blocks: [
         {
@@ -216,17 +227,25 @@ export class CoinReceivedService {
           block_id: "descriptionSection",
           text: {
             type: "mrkdwn",
-            text: `<@${allocatedToUser.email.substring(
-              0,
-              allocatedToUser.email.indexOf("@")
-            )}>, You have been applauded by a fellow :tech9:er \n\n> ${
-              validatedInput.message
-            }\n\nLogin to <http://thegeekstribe.com/dashboard|Applaud> \n\n`
+            text: `<@${
+              allocatedToUserDetails && allocatedToUserDetails.slackHandle
+                ? allocatedToUserDetails.slackHandle
+                : allocatedToUser.email.substring(
+                    0,
+                    allocatedToUser.email.indexOf("@")
+                  )
+            }>, You have been applauded by a fellow :tech9:er \n\n> ${validatedInput.message.replace(
+              /[\r\n\x0B\x0C\u0085\u2028\u2029]+/g,
+              "\n>"
+            )}\n\nLogin to <http://thegeekstribe.com/dashboard|Applaud> \n\n`
           },
           accessory: {
             type: "image",
-            image_url:
-              "https://s3-us-west-2.amazonaws.com/applaud.chat/Applaud-logo.png",
+            image_url: `${
+              Object.values(CARD_TYPES).find(
+                card => card.id === validatedInput.type
+              ).imageURL
+            }`,
             alt_text: "Kudos"
           }
         }
