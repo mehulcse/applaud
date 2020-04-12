@@ -1,16 +1,16 @@
-import React, { useContext, useState, useEffect } from "react";
-import { Grid, TextField, Button, Typography, Box } from "@material-ui/core";
+import React, {useContext, useState, useEffect} from "react";
+import {Grid, TextField, Button, Typography, Box} from "@material-ui/core";
 import PaperBox from "../../components/paper-box";
 import {
   useUpdateCoinBalanceMutation,
   useConstantsQuery,
   useUpdateConstantsMutation
 } from "../../generated/graphql";
-import { openSnackbar } from "../../components/notifier";
-import { AuthContext } from "../../core/auth-manager";
+import {openSnackbar} from "../../components/notifier";
+import {AuthContext} from "../../core/auth-manager";
 import theme from "../../core/mui-theme";
 import Loader from "../../components/loader";
-import { CONSTANTS, LOADER_TYPE, PAGE_LIMIT } from "../../constants/constants";
+import {CONSTANTS, LOADER_TYPE, PAGE_LIMIT} from "../../constants/constants";
 
 function ManageForm() {
   const context = useContext(AuthContext);
@@ -18,7 +18,7 @@ function ManageForm() {
   const [teamMultiplier, setTeamMultiplier] = useState();
   const [updateCoins, updateCoinsResult] = useUpdateCoinBalanceMutation();
   const [updateConstants, updateConstantsResult] = useUpdateConstantsMutation();
-  const { data, loading, refetch } = useConstantsQuery({
+  const {data, loading, refetch} = useConstantsQuery({
     variables: {
       limit: PAGE_LIMIT,
       offset: 0
@@ -45,12 +45,12 @@ function ManageForm() {
   };
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const value = event.target.value && event.target.value >= 0 ? parseInt(event.target.value, 10) : null;
+    const value = event.target.value && parseInt(event.target.value, 10) >= 0 ? parseInt(event.target.value, 10) : null;
     setQuantity(value);
   }
 
   function onMultiplierChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const value = event.target.value && event.target.value > 0 ? parseInt(event.target.value, 10) : null;
+    const value = event.target.value && parseInt(event.target.value, 10) > 0 ? parseInt(event.target.value, 10) : null;
     setTeamMultiplier(value);
   }
 
@@ -155,7 +155,7 @@ function ManageForm() {
             <Button
               variant="contained"
               color="primary"
-              style={{ marginRight: theme.spacing(1) }}
+              style={{marginRight: theme.spacing(1)}}
               onClick={onSend}
               disabled={!quantity}
             >
@@ -184,7 +184,7 @@ function ManageForm() {
             <Button
               variant="contained"
               color="primary"
-              style={{ marginRight: theme.spacing(1) }}
+              style={{marginRight: theme.spacing(1)}}
               onClick={onSave}
               disabled={!teamMultiplier}
             >
@@ -196,7 +196,7 @@ function ManageForm() {
       {(loading ||
         updateCoinsResult.loading ||
         updateConstantsResult.loading) && (
-        <Loader type={LOADER_TYPE.fullView} />
+        <Loader type={LOADER_TYPE.fullView}/>
       )}
     </PaperBox>
   );
