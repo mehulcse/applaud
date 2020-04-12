@@ -17,6 +17,7 @@ import Departments from "./routes/departments/departments";
 import Applaud from "./routes/applaud/applaud";
 import NotFoundRouteHandler from "./routes/not-found";
 import Manage from "./routes/manage/manage";
+import Feedback from "./routes/feedback/feedback";
 import LandingPage from "./routes/landing-page";
 import "./app.css";
 
@@ -38,6 +39,7 @@ function App() {
                   <Route path="/teams/:id" exact component={TeamDetail} />
                   <Route path="/departments" exact component={Departments} />
                   <Route path="/manage" exact component={Manage} />
+                  <Route path="/feedback" exact component={Feedback} />
                   <Route path="/" exact component={LandingPage} />
                   <Route path="*" component={NotFoundRouteHandler} />
                 </Switch>
