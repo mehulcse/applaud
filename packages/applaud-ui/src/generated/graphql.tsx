@@ -122,6 +122,15 @@ export type CreateDepartmentTeamResponse = {
   departmentTeam: DepartmentTeam;
 };
 
+export type CreateFeedbackInput = {
+  feedback: Scalars["String"];
+};
+
+export type CreateFeedbackResponse = {
+  __typename?: "CreateFeedbackResponse";
+  feedback?: Maybe<Feedback>;
+};
+
 export type CreateTeamInput = {
   name: Scalars["String"];
   description: Scalars["String"];
@@ -222,6 +231,14 @@ export enum DepartmentTeamsSort {
   IdDesc = "ID_DESC"
 }
 
+export type Feedback = {
+  __typename?: "Feedback";
+  id: Scalars["Int"];
+  userId: Scalars["Int"];
+  feedback: Scalars["String"];
+  isClosed: Scalars["Boolean"];
+};
+
 export type LoginUserInput = {
   googleIdToken?: Maybe<Scalars["String"]>;
   email?: Maybe<Scalars["String"]>;
@@ -248,6 +265,7 @@ export type Mutation = {
   createUserTeam: CreateUserTeamResponse;
   createUser: CreateUserResponse;
   createUserRole: CreateUserRoleResponse;
+  createFeedback: CreateFeedbackResponse;
   loginUser: LoginUserResponse;
   logoutUser: LogoutUserResponse;
   updateTeam: UpdateTeamResponse;
@@ -285,6 +303,10 @@ export type MutationCreateUserArgs = {
 
 export type MutationCreateUserRoleArgs = {
   input: CreateUserRoleInput;
+};
+
+export type MutationCreateFeedbackArgs = {
+  input: CreateFeedbackInput;
 };
 
 export type MutationLoginUserArgs = {
@@ -702,6 +724,18 @@ export type DepartmentsQuery = { __typename?: "Query" } & {
         >;
       }
   >;
+};
+
+export type CreateFeedbackMutationVariables = {
+  input: CreateFeedbackInput;
+};
+
+export type CreateFeedbackMutation = { __typename?: "Mutation" } & {
+  createFeedback: { __typename?: "CreateFeedbackResponse" } & {
+    feedback: Maybe<
+      { __typename?: "Feedback" } & Pick<Feedback, "id" | "isClosed">
+    >;
+  };
 };
 
 export type LoginUserMutationVariables = {
@@ -1829,6 +1863,85 @@ export type DepartmentsQueryHookResult = ReturnType<typeof useDepartmentsQuery>;
 export type DepartmentsQueryResult = ApolloReactCommon.QueryResult<
   DepartmentsQuery,
   DepartmentsQueryVariables
+>;
+export const CreateFeedbackDocument = gql`
+  mutation CreateFeedback($input: CreateFeedbackInput!) {
+    createFeedback(input: $input) {
+      feedback {
+        id
+        isClosed
+      }
+    }
+  }
+`;
+export type CreateFeedbackMutationFn = ApolloReactCommon.MutationFunction<
+  CreateFeedbackMutation,
+  CreateFeedbackMutationVariables
+>;
+export type CreateFeedbackComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<
+    CreateFeedbackMutation,
+    CreateFeedbackMutationVariables
+  >,
+  "mutation"
+>;
+
+export const CreateFeedbackComponent = (
+  props: CreateFeedbackComponentProps
+) => (
+  <ApolloReactComponents.Mutation<
+    CreateFeedbackMutation,
+    CreateFeedbackMutationVariables
+  >
+    mutation={CreateFeedbackDocument}
+    {...props}
+  />
+);
+
+export type CreateFeedbackProps<TChildProps = {}> = ApolloReactHoc.MutateProps<
+  CreateFeedbackMutation,
+  CreateFeedbackMutationVariables
+> &
+  TChildProps;
+export function withCreateFeedback<TProps, TChildProps = {}>(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    CreateFeedbackMutation,
+    CreateFeedbackMutationVariables,
+    CreateFeedbackProps<TChildProps>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    CreateFeedbackMutation,
+    CreateFeedbackMutationVariables,
+    CreateFeedbackProps<TChildProps>
+  >(CreateFeedbackDocument, {
+    alias: "withCreateFeedback",
+    ...operationOptions
+  });
+}
+
+export function useCreateFeedbackMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    CreateFeedbackMutation,
+    CreateFeedbackMutationVariables
+  >
+) {
+  return ApolloReactHooks.useMutation<
+    CreateFeedbackMutation,
+    CreateFeedbackMutationVariables
+  >(CreateFeedbackDocument, baseOptions);
+}
+export type CreateFeedbackMutationHookResult = ReturnType<
+  typeof useCreateFeedbackMutation
+>;
+export type CreateFeedbackMutationResult = ApolloReactCommon.MutationResult<
+  CreateFeedbackMutation
+>;
+export type CreateFeedbackMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  CreateFeedbackMutation,
+  CreateFeedbackMutationVariables
 >;
 export const LoginUserDocument = gql`
   mutation loginUser($input: LoginUserInput!) {

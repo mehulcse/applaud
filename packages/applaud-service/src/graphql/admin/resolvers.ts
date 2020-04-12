@@ -30,6 +30,7 @@ import applaudReceivedType from "./types/applaud-received";
 import teamType from "./types/team";
 import deleteUserTeamMutation from "./mutations/delete-user-team";
 import deleteDepartmentTeamMutation from "./mutations/delete-department-team";
+import createFeedbackMutation from "./mutations/create-feedback";
 
 export default merge(
   { Date: GraphQLDate, DateTime: GraphQLDateTime, Time: GraphQLTime },
@@ -52,6 +53,7 @@ export default merge(
   createTeamMutation,
   createUserTeamMutation,
   createDepartmentMutation,
+  createFeedbackMutation,
   updateApplaudBalanceMutation,
   updateUpdateConstantsMutation,
   updateTeamMutation,

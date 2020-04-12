@@ -1,0 +1,8 @@
+mutation CreateFeedback($input: CreateFeedbackInput!) {
+    createFeedback(input: $input) {
+        feedback {
+            id
+            isClosed
+        }
+    }
+}

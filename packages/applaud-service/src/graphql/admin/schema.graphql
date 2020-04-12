@@ -347,6 +347,21 @@ type CreateUserRoleResponse {
     userRole: UserRole
 }
 
+type Feedback {
+    id: Int!
+    userId: Int!
+    feedback: String!
+    isClosed: Boolean!
+}
+
+input CreateFeedbackInput {
+    feedback: String!
+}
+
+type CreateFeedbackResponse {
+    feedback: Feedback
+}
+
 type Mutation {
     createApplaud(input: CreateApplaudInput!): CreateApplaudResponse!
     createTeam(input: CreateTeamInput!): CreateTeamResponse!
@@ -355,6 +370,7 @@ type Mutation {
     createUserTeam(input: CreateUserTeamInput!): CreateUserTeamResponse!
     createUser(input: CreateUserInput!): CreateUserResponse!
     createUserRole(input: CreateUserRoleInput!): CreateUserRoleResponse!
+    createFeedback(input: CreateFeedbackInput!): CreateFeedbackResponse!
     loginUser(input: LoginUserInput!): LoginUserResponse!
     logoutUser: LogoutUserResponse!
     updateTeam(input: UpdateTeamInput!): UpdateTeamResponse!
