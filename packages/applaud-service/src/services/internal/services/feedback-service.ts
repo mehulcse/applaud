@@ -17,7 +17,6 @@ export interface FeedbackOptions extends PaginationArgs {
 }
 
 export interface CreateFeedbackInput {
-  userId: number;
   feedback: string;
 }
 
@@ -89,14 +88,9 @@ export class FeedbackService {
   }
 
   async create(input: CreateFeedbackInput) {
-    ensureUser(this.context.viewer);
+    const viewer = ensureUser(this.context.viewer);
 
     const schema = yup.object().shape({
-      userId: yup
-        .number()
-        .label("User ID")
-        .required()
-        .nullable(false),
       feedback: yup
         .string()
         .label("Feedback")
@@ -109,16 +103,14 @@ export class FeedbackService {
       stripUnknown: true
     })) as CreateFeedbackInput;
 
-    const user = await new UserService(this.context).getById(
-      validatedInput.userId
-    );
+    const user = await new UserService(this.context).getById(viewer.user.id);
 
     if (!user) {
       throw new Error("User ID is not valid.");
     }
 
     const feedback = await Feedback.query().insertAndFetch({
-      userId: validatedInput.userId,
+      userId: viewer.user.id,
       feedback: validatedInput.feedback
     });
     return feedback;

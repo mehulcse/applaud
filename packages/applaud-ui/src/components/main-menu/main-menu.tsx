@@ -16,7 +16,8 @@ import {
   faPeopleCarry,
   faStore,
   faCog,
-  faSignLanguage
+  faSignLanguage,
+  faComments
 } from "@fortawesome/free-solid-svg-icons";
 
 import AppLink from "../app-link";
@@ -149,6 +150,18 @@ function MainMenuContent({location}: { location: any }) {
           </AppLink>
         </>
       )}
+      <AppLink to="/feedback">
+        <ListItem
+          button
+          selected={basePath === "/feedback"}
+          className={basePath === "/feedback" ? classes.selected : ""}
+        >
+          <ListItemIcon>
+            <StyledFontAwesomeIcon icon={faComments} fixedWidth/>
+          </ListItemIcon>
+          <StyledListItemText primary="Feedback"/>
+        </ListItem>
+      </AppLink>
     </List>
   );
 }
