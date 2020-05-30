@@ -1,5 +1,5 @@
-import React, {Component} from "react";
-import {Redirect, RouteComponentProps, withRouter} from "react-router-dom";
+import React, { Component } from "react";
+import { Redirect, RouteComponentProps, withRouter } from "react-router-dom";
 import Loader from "../../components/loader";
 import {
   AuthManagerQueryResult,
@@ -7,14 +7,18 @@ import {
   LogoutUserMutationFn,
   User
 } from "../../generated/graphql";
-import {ConnectivityContext} from "../connectivity-monitor";
-import {LOADER_TYPE} from "../../constants/constants";
+import { ConnectivityContext } from "../connectivity-monitor";
+import { LOADER_TYPE } from "../../constants/constants";
 
-type ViewerUser = { __typename?: "User" } & Pick<User,
-  "id" | "firstName" | "lastName" | "email">;
+type ViewerUser = { __typename?: "User" } & Pick<
+  User,
+  "id" | "firstName" | "lastName" | "email"
+>;
 
-type CoingBalanceViewer = { __typename?: "CoinBalance" } & Pick<CoinBalance,
-  "id" | "balance">;
+type CoingBalanceViewer = { __typename?: "CoinBalance" } & Pick<
+  CoinBalance,
+  "id" | "balance"
+>;
 
 export interface AuthContextValue {
   isLoading: boolean;
@@ -37,10 +41,8 @@ interface Props extends RouteComponentProps {
 export const AuthContext = React.createContext<AuthContextValue>({
   isLoading: true,
   isLoggedIn: false,
-  refresh: async () => {
-  },
-  logout: async () => {
-  },
+  refresh: async () => {},
+  logout: async () => {},
   user: null,
   userRoles: [],
   isAdmin: false,
@@ -50,7 +52,7 @@ export const AuthContext = React.createContext<AuthContextValue>({
 
 class AuthManager extends Component<Props> {
   render() {
-    const {queryResult, logoutUserMutation} = this.props;
+    const { queryResult, logoutUserMutation } = this.props;
     const contextValue: AuthContextValue = {
       isLoading: queryResult.loading,
       isLoggedIn: false,
@@ -67,7 +69,7 @@ class AuthManager extends Component<Props> {
     };
 
     if (!queryResult.loading) {
-      const {data, error} = queryResult;
+      const { data, error } = queryResult;
       if (data) {
         contextValue.isLoggedIn = !error && !!data.viewer && !!data.viewer.user;
         contextValue.user =
@@ -78,8 +80,14 @@ class AuthManager extends Component<Props> {
             : [];
         contextValue.isAdmin =
           data && data.viewer ? !!data.viewer.isAdmin : false;
-        contextValue.coinBalance = data && data.viewer && data.viewer.coinBalance ? data.viewer.coinBalance : null;
-        contextValue.coinsReceivedBalance = data && data.viewer && data.viewer.coinsReceivedBalance ? data.viewer.coinsReceivedBalance : 0;
+        contextValue.coinBalance =
+          data && data.viewer && data.viewer.coinBalance
+            ? data.viewer.coinBalance
+            : null;
+        contextValue.coinsReceivedBalance =
+          data && data.viewer && data.viewer.coinsReceivedBalance
+            ? data.viewer.coinsReceivedBalance
+            : 0;
       }
     }
 
@@ -94,13 +102,12 @@ class AuthManager extends Component<Props> {
     );
   }
 
-  logout = () => {
-  };
+  logout = () => {};
 
   renderContent(contextValue: AuthContextValue, isConnected: boolean) {
     const {
       children,
-      location: {pathname}
+      location: { pathname }
     } = this.props;
     if (!contextValue) {
       return null;
@@ -109,17 +116,17 @@ class AuthManager extends Component<Props> {
       // If API connectivity goes down, prevent redirects for an improved user experience.
       return null;
     }
-    const {isLoading, isLoggedIn} = contextValue;
+    const { isLoading, isLoggedIn } = contextValue;
 
     if (isLoading) {
-      return <Loader type={LOADER_TYPE.fullView}/>;
+      return <Loader type={LOADER_TYPE.fullView} />;
     }
     if (!isLoggedIn && !pathname.startsWith("/login") && pathname !== "/") {
-      return <Redirect to="/"/>;
+      return <Redirect to="/" />;
     }
 
     if (isLoggedIn && (pathname.startsWith("/login") || pathname === "/")) {
-      return <Redirect to="/dashboard"/>;
+      return <Redirect to="/dashboard" />;
     }
     return children;
   }

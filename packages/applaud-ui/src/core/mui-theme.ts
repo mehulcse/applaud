@@ -29,14 +29,14 @@ export const themeOptions: ThemeOptions = {
     },
     primary: {
       main: COLORS.primary,
-      light: '#ffff5a',
-      dark: '#c7cc00',
+      light: "#ffff5a",
+      dark: "#c7cc00"
       // contrastText: '#000'
     },
     secondary: {
       main: COLORS.secondary,
-      light: '#ffffff',
-      dark: '#9b9b9b',
+      light: "#ffffff",
+      dark: "#9b9b9b"
       // contrastText: '#000'
     }
   }

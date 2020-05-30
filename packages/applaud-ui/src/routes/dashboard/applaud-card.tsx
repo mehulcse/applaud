@@ -3,10 +3,10 @@ import Lottie from "react-lottie";
 import { Typography, Box } from "@material-ui/core";
 import MarkdownIt from "markdown-it";
 import { applaudCardData } from "../../helper/getApplaudCard";
-import {makeStyles, Theme} from "@material-ui/core/styles";
+import { makeStyles, Theme } from "@material-ui/core/styles";
 import PaperBox from "../../components/paper-box";
-import {getDate} from "../../helper/getDate";
-import "./dashboard.css"
+import { getDate } from "../../helper/getDate";
+import "./dashboard.css";
 
 const mdParser = new MarkdownIt();
 
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-const ApplaudCard = ({data, showName, hideGifs}: Props) => {
+const ApplaudCard = ({ data, showName, hideGifs }: Props) => {
   const classes = useStyles();
   const defaultOptions = {
     loop: true,
@@ -80,8 +80,14 @@ const ApplaudCard = ({data, showName, hideGifs}: Props) => {
             <div
               dangerouslySetInnerHTML={{ __html: renderHTML(data.message) }}
             />
-            <Typography variant="body2" component="span" className='author'>
-              <Typography variant="body2" component="i" className={classes.date}>{getDate(data.createdAt)}</Typography>
+            <Typography variant="body2" component="span" className="author">
+              <Typography
+                variant="body2"
+                component="i"
+                className={classes.date}
+              >
+                {getDate(data.createdAt)}
+              </Typography>
             </Typography>
           </blockquote>
         )}

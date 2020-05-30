@@ -1,5 +1,5 @@
-import React, {useContext} from "react";
-import {withRouter} from "react-router-dom";
+import React, { useContext } from "react";
+import { withRouter } from "react-router-dom";
 import {
   createStyles,
   List,
@@ -7,9 +7,9 @@ import {
   ListItemIcon,
   ListItemText
 } from "@material-ui/core";
-import {styled} from "@material-ui/styles";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {AuthContext} from "../../core/auth-manager";
+import { styled } from "@material-ui/styles";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { AuthContext } from "../../core/auth-manager";
 import {
   faTachometerAlt,
   faUsers,
@@ -22,7 +22,7 @@ import {
 
 import AppLink from "../app-link";
 import logo from "../../logo.svg";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import theme from "../../core/mui-theme";
 
 const StyledListItemText = styled(ListItemText)({
@@ -52,7 +52,7 @@ const useStyles = makeStyles(() =>
   })
 );
 
-function MainMenuContent({location}: { location: any }) {
+function MainMenuContent({ location }: { location: any }) {
   const pathParts = location.pathname.match(/^\/([a-zA-Z-]+)/i);
   const authContext = useContext(AuthContext);
   let basePath = "/";
@@ -64,7 +64,7 @@ function MainMenuContent({location}: { location: any }) {
     <List>
       <AppLink to="/dashboard">
         <ListItem className={classes.logoWrapper}>
-          <img src={logo} alt="logo" className={classes.logo}/>
+          <img src={logo} alt="logo" className={classes.logo} />
         </ListItem>
       </AppLink>
       <AppLink to="/dashboard">
@@ -74,9 +74,9 @@ function MainMenuContent({location}: { location: any }) {
           className={basePath === "/dashboard" ? classes.selected : ""}
         >
           <ListItemIcon>
-            <StyledFontAwesomeIcon icon={faTachometerAlt} fixedWidth/>
+            <StyledFontAwesomeIcon icon={faTachometerAlt} fixedWidth />
           </ListItemIcon>
-          <StyledListItemText primary="Dashboard"/>
+          <StyledListItemText primary="Dashboard" />
         </ListItem>
       </AppLink>
       <AppLink to="/applaud">
@@ -93,9 +93,9 @@ function MainMenuContent({location}: { location: any }) {
           {/*  />*/}
           {/*</ListItemIcon>*/}
           <ListItemIcon>
-            <StyledFontAwesomeIcon icon={faSignLanguage} fixedWidth/>
+            <StyledFontAwesomeIcon icon={faSignLanguage} fixedWidth />
           </ListItemIcon>
-          <StyledListItemText primary="Applaud"/>
+          <StyledListItemText primary="Applaud" />
         </ListItem>
       </AppLink>
       {authContext && authContext.isAdmin && (
@@ -107,9 +107,9 @@ function MainMenuContent({location}: { location: any }) {
               className={basePath === "/users" ? classes.selected : ""}
             >
               <ListItemIcon>
-                <StyledFontAwesomeIcon icon={faUsers} fixedWidth/>
+                <StyledFontAwesomeIcon icon={faUsers} fixedWidth />
               </ListItemIcon>
-              <StyledListItemText primary="Users"/>
+              <StyledListItemText primary="Users" />
             </ListItem>
           </AppLink>
           <AppLink to="/teams">
@@ -119,9 +119,9 @@ function MainMenuContent({location}: { location: any }) {
               className={basePath === "/teams" ? classes.selected : ""}
             >
               <ListItemIcon>
-                <StyledFontAwesomeIcon icon={faPeopleCarry} fixedWidth/>
+                <StyledFontAwesomeIcon icon={faPeopleCarry} fixedWidth />
               </ListItemIcon>
-              <StyledListItemText primary="Teams"/>
+              <StyledListItemText primary="Teams" />
             </ListItem>
           </AppLink>
           <AppLink to="/departments">
@@ -131,9 +131,9 @@ function MainMenuContent({location}: { location: any }) {
               className={basePath === "/departments" ? classes.selected : ""}
             >
               <ListItemIcon>
-                <StyledFontAwesomeIcon icon={faStore} fixedWidth/>
+                <StyledFontAwesomeIcon icon={faStore} fixedWidth />
               </ListItemIcon>
-              <StyledListItemText primary="Departments"/>
+              <StyledListItemText primary="Departments" />
             </ListItem>
           </AppLink>
           <AppLink to="/manage">
@@ -143,9 +143,9 @@ function MainMenuContent({location}: { location: any }) {
               className={basePath === "/manage" ? classes.selected : ""}
             >
               <ListItemIcon>
-                <StyledFontAwesomeIcon icon={faCog} fixedWidth/>
+                <StyledFontAwesomeIcon icon={faCog} fixedWidth />
               </ListItemIcon>
-              <StyledListItemText primary="Manage"/>
+              <StyledListItemText primary="Manage" />
             </ListItem>
           </AppLink>
         </>

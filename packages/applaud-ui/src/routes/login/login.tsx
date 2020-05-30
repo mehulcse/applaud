@@ -1,8 +1,8 @@
-import React, {useState, useContext, Fragment} from "react";
+import React, { useState, useContext, Fragment } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import {Typography, Box} from "@material-ui/core";
-import {makeStyles} from "@material-ui/core/styles";
+import { Typography, Box } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import GoogleLogin, {
   GoogleLoginResponse,
   GoogleLoginResponseOffline
@@ -13,7 +13,7 @@ import { AuthContext } from "../../core/auth-manager";
 import AppIcon from "../../components/app-icon";
 import LoginContainer from "../../components/login-container";
 import Loader from "../../components/loader";
-import {LOADER_TYPE} from "../../constants/constants";
+import { LOADER_TYPE } from "../../constants/constants";
 
 const useStyles = makeStyles(theme => ({
   // "@global": {
@@ -158,7 +158,7 @@ export default function SignIn() {
                     variant="outlined"
                     className={classes.submit}
                   >
-                    <AppIcon icon={faGoogle} wideRightMargin/> Login with
+                    <AppIcon icon={faGoogle} wideRightMargin /> Login with
                     Google
                   </Button>
                 )}
@@ -182,7 +182,7 @@ export default function SignIn() {
                   setIsLoading(false);
                 }}
                 onFailure={err => {
-                  console.error("Error", {err});
+                  console.error("Error", { err });
                 }}
               />
             </form>

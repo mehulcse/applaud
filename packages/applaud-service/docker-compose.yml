@@ -10,8 +10,8 @@ services:
       DB_HOST: mysql
       DB_PORT: 3306
       DB_USER: root
-      DB_PASSWORD: alita
-      DB_NAME: alita
+      DB_PASSWORD: Kalam-002
+      DB_NAME: applaud
   api:
     build: .
     ports:
@@ -26,8 +26,8 @@ services:
       DB_HOST: mysql
       DB_PORT: 3306
       DB_USER: root
-      DB_PASSWORD: alita
-      DB_NAME: alita
+      DB_PASSWORD: Kalam-002
+      DB_NAME: applaud
   worker:
     build: .
     depends_on:
@@ -40,22 +40,16 @@ services:
       DB_HOST: mysql
       DB_PORT: 3306
       DB_USER: root
-      DB_PASSWORD: alita
-      DB_NAME: alita
+      DB_PASSWORD: Kalam-002
+      DB_NAME: applaud
   mysql:
     image: mysql:5.7.25
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: alita
+      MYSQL_ROOT_PASSWORD: Kalam-002
       MYSQL_ROOT_HOST: "%"
-      MYSQL_DATABASE: alita
+      MYSQL_DATABASE: applaud
     ports:
-      - 33306:3306
+      - 32769:3306
     volumes:
       - ./.data/mysql:/var/lib/mysql
-#  sqs:
-#    image: docker.pkg.github.com/jordanfarrer/alpine-sqs/alpine-sqs:1.0
-#    restart: unless-stopped
-#    ports:
-#      - 9324:9324
-#      - 9325:9325
