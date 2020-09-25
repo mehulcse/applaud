@@ -120,6 +120,16 @@ const useStyles = makeStyles(() =>
       height: 24,
       display: 'inline',
       verticalAlign: 'sub',
+    },
+    tech9Link: {
+      display: 'flex',
+      textDecoration: 'none',
+    },
+    byLabel: {
+      color: 'white',
+      display: 'flex',
+      alignItems: 'flex-end',
+      marginLeft: 10
     }
   })
 );
@@ -160,7 +170,16 @@ function LandingPage() {
       <ColorChangeScroll>
         <AppBar color="transparent" className={classes.bar}>
           <Toolbar className={classes.toolbar}>
-            <img src={logo} alt="logo" className={classes.logo}/>
+            <Box display="flex" alignItems="flex-end" flexDirection="column">
+              <img src={logo} alt="logo" className={classes.logo}/>
+              <a href="//www.tech9.com" title="Tech9" className={classes.tech9Link}>
+                <Typography variant="body2" className={classes.byLabel}>
+                  A <img src="images/Tech9.png"
+                         alt="tech9"
+                         className={classes.tech9Logo}/> Product
+                </Typography>
+              </a>
+            </Box>
             <AppLink to="/login">
               <Button
                 variant="contained"
