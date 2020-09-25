@@ -7,7 +7,7 @@ import {
   Button,
   Toolbar,
   AppBar,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import AppLink from "../../components/app-link";
@@ -115,6 +115,11 @@ const useStyles = makeStyles(() =>
     },
     logo: {
       maxWidth: 200
+    },
+    tech9Logo: {
+      height: 24,
+      display: 'inline',
+      verticalAlign: 'sub',
     }
   })
 );
@@ -182,7 +187,10 @@ function LandingPage() {
       </Box>
       <Box mt={5}>
         <Typography align="center">
-          Handcrafted with <span style={{color: '#ea4e4e'}}>&#9829;</span> by theGeeksTribe
+          Handcrafted with <span style={{color: '#ea4e4e'}}>&#9829;</span> by theGeeksTribe at
+          <a href="//www.tech9.com" title="Tech9">
+            <img src="images/Tech9.png" alt="tech9" className={classes.tech9Logo}/>
+          </a>
         </Typography>
       </Box>
     </div>
