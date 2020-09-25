@@ -187,7 +187,7 @@ function LandingPage() {
       </Box>
       <Box mt={5}>
         <Typography align="center">
-          Handcrafted with <span style={{color: '#ea4e4e'}}>&#9829;</span> by theGeeksTribe at&nbsp;
+          Handcrafted with <span style={{color: '#ea4e4e'}}>&#9829;</span> by theGeeksTribe at
           <a href="//www.tech9.com" title="Tech9">
             <img src="images/Tech9.png" alt="tech9" className={classes.tech9Logo}/>
           </a>
