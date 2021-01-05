@@ -39,7 +39,7 @@
     "apollo-server-plugin-base": "^0.6.10",
     "aws-lambda": "^1.0.5",
     "aws-sdk": "^2.622.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "cookie-parser": "^1.4.4",
     "copy-webpack-plugin": "^5.1.1",
     "cors": "^2.8.5",
