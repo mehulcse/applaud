@@ -1,8 +1,10 @@
 import moment from "moment";
 import * as yup from "yup";
 import Objection from "objection";
+import axios from "axios";
 import { QueryInitializationResult } from "../common";
 import { PaginationArgs } from "../common";
+import { getLogger } from "../../../logger";
 import {
   handlePagination,
   executeSelectFirst,
@@ -13,6 +15,7 @@ import { UserService } from "./user-service";
 import CoinBalance from "../db/models/coin-balance";
 import { ensureUser, ensureAdmin } from "../../auth/helpers";
 import { AppContext } from "../../auth/app-context";
+import Config from "../../../config";
 
 export interface CoinBalanceOptions extends PaginationArgs {
   userId?: number;
@@ -31,6 +34,8 @@ const SORTS = {
   ID_ASC: "ID_ASC",
   ID_DESC: "ID_DESC"
 };
+
+const logger = getLogger("slackResetNotifications");
 
 export class CoinBalanceService {
   readonly context: AppContext;
@@ -169,6 +174,34 @@ export class CoinBalanceService {
     ensureAdmin(this.context.viewer);
 
     await CoinBalance.query().update({ balance: quantity });
+
+    // Slack trigger
+    const url = Config.getSlackEndpoint();
+
+    logger.debug(url);
+    const notificationMessage = {
+      unfurl_links: true,
+      text: `<!channel>, the claps on Applaud have been reset :slightly_smiling_face: \n\n`,
+      mrkdwn: true,
+      blocks: [
+        {
+          type: "section",
+          block_id: "descriptionSection",
+          text: {
+            type: "mrkdwn",
+            text: `<!channel>, the claps on Applaud have been reset :slightly_smiling_face: \n\nLogin to <http://thegeekstribe.com/dashboard|Applaud> \n\n`
+          },
+          accessory: {
+            type: "image",
+            image_url: "https://s3-us-west-2.amazonaws.com/applaud.chat/Applaud-logo.png",
+            alt_text: "Applaud"
+          }
+      }
+      ]
+    };
+
+    const res = await axios.post(url, JSON.stringify(notificationMessage));
+    logger.debug("slack response :", res);
 
     return {
       success: true
